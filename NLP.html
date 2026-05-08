@@ -1,0 +1,4289 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NLP — Complete Study Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #141414;
+            --bg2: #1c1c1c;
+            --bg3: #242424;
+            --bg4: #2c2c2c;
+            --card: #1e1e1e;
+            --border: #363636;
+            --accent: #5b8dee;
+            --accent2: #7aa3f7;
+            --gold: #c9a84c;
+            --gold2: #e0be5a;
+            --text: #e4e4e0;
+            --text2: #a0a09c;
+            --text3: #686864;
+            --green: #162416;
+            --green-border: #3dba6f;
+            --green-text: #8cf5b4;
+            --red: #281616;
+            --red-border: #e05555;
+            --red-text: #ffaaaa;
+            --yellow: #201e00;
+            --yellow-border: #c8a820;
+            --yellow-text: #ffd870;
+            --purple: #1e1628;
+            --purple-border: #9b6dda;
+            --purple-text: #d4aaff;
+            --teal: #0c2020;
+            --teal-border: #25b5a0;
+            --teal-text: #80ffe8;
+            --shadow: 0 4px 28px rgba(0, 0, 0, .7);
+            --transition: 0.25s cubic-bezier(.4, 0, .2, 1);
+            --sidebar-w: 280px;
+            --topbar-h: 56px;
+            --radius: 10px;
+            --m1: #e05555;
+            --m2: #e08828;
+            --m3: #3dba6f;
+            --m4: #5b8dee;
+            --m5: #9b6dda;
+            --m6: #25b5a0;
+            --m7: #d4aa20;
+
+        }
+
+        [data-theme="light"] {
+            --bg: #f5f0e8;
+            --bg2: #ede8df;
+            --bg3: #e4dfd5;
+            --bg4: #dbd5ca;
+            --card: #f0ebe2;
+            --border: #ccc7bc;
+            --accent: #3b6fd4;
+            --accent2: #4a7de0;
+            --gold: #a07820;
+            --gold2: #b08a2a;
+            --text: #1e1e1c;
+            --text2: #504e48;
+            --text3: #888680;
+            --green: #d0eed0;
+            --green-border: #2a9a50;
+            --green-text: #1a5a2a;
+            --red: #f5d8d8;
+            --red-border: #c04040;
+            --red-text: #6a1a1a;
+            --yellow: #fdf3c0;
+            --yellow-border: #a08010;
+            --yellow-text: #5a4400;
+            --purple: #ede0f5;
+            --purple-border: #7040b0;
+            --purple-text: #3a1060;
+            --teal: #d0f0ee;
+            --teal-border: #1a8a78;
+            --teal-text: #0a4a40;
+            --shadow: 0 4px 28px rgba(0, 0, 0, .15);
+            --m1: #c04040;
+            --m2: #c07020;
+            --m3: #2a8a50;
+            --m4: #3a60a0;
+            --m5: #7040a0;
+            --m6: #1a8070;
+            --m7: #b09020
+        }
+
+        .m1c {
+            color: #e05555
+        }
+
+        .m2c {
+            color: #e08828
+        }
+
+        .m3c {
+            color: #3dba6f
+        }
+
+        .m4c {
+            color: #5b8dee
+        }
+
+        .m5c {
+            color: #9b6dda
+        }
+
+        .m6c {
+            color: #25b5a0
+        }
+
+        .m7c {
+            color: #d4aa20
+        }
+
+        [data-theme="light"] .m1c {
+            color: #c04040
+        }
+
+        [data-theme="light"] .m2c {
+            color: #c07020
+        }
+
+        [data-theme="light"] .m3c {
+            color: #2a8a50
+        }
+
+        [data-theme="light"] .m4c {
+            color: #3a60a0
+        }
+
+        [data-theme="light"] .m5c {
+            color: #7040a0
+        }
+
+        [data-theme="light"] .m6c {
+            color: #1a8070
+        }
+
+        [data-theme="light"] .m7c {
+            color: #b09020
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        html {
+            scroll-behavior: smooth;
+            overscroll-behavior-y: none
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            font-size: 15px
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5 {
+            font-family: 'Syne', sans-serif
+        }
+
+        code,
+        pre,
+        kbd {
+            font-family: 'JetBrains Mono', monospace
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg2)
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 3px
+        }
+
+        .highlight {
+            background: #ffe066;
+            color: #1a1a00;
+            border-radius: 2px;
+            padding: 0 2px
+        }
+
+        /* TOPBAR */
+        #topbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--topbar-h);
+            z-index: 1000;
+            background: var(--bg2);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            padding: 0 14px;
+            gap: 12px
+        }
+
+        #hamburger {
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 6px 8px;
+            border-radius: 6px;
+            transition: background var(--transition)
+        }
+
+        #hamburger:hover {
+            background: var(--bg4)
+        }
+
+        .title-block {
+            display: flex;
+            flex-direction: column;
+            gap: 1px
+        }
+
+        .title-block .subject-code {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: 1rem;
+            background: linear-gradient(135deg, var(--accent2), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2
+        }
+
+        .title-block .roll {
+            font-size: .7rem;
+            color: var(--text3);
+            line-height: 1
+        }
+
+        .search-wrap {
+            flex: 1;
+            max-width: 340px;
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            position: relative
+        }
+
+        #search-input {
+            width: 100%;
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 7px 16px;
+            border-radius: 20px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: .82rem;
+            outline: none;
+            transition: border var(--transition)
+        }
+
+        #search-input:focus {
+            border-color: var(--accent)
+        }
+
+        #search-count {
+            font-size: .72rem;
+            color: var(--text3);
+            white-space: nowrap;
+            min-width: 70px
+        }
+
+        .topbar-btn {
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: .78rem;
+            cursor: pointer;
+            transition: background var(--transition);
+            white-space: nowrap
+        }
+
+        .topbar-btn:hover {
+            background: var(--bg4)
+        }
+
+        /* PROGRESS */
+        #progress-bar {
+            position: fixed;
+            top: var(--topbar-h);
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--border);
+            z-index: 999
+        }
+
+        #progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent), var(--gold));
+            transition: width .2s ease
+        }
+
+        /* SIDEBAR */
+        #sidebar {
+            position: fixed;
+            left: 0;
+            top: calc(var(--topbar-h) + 3px);
+            width: var(--sidebar-w);
+            height: calc(100vh - var(--topbar-h) - 3px);
+            background: var(--bg2);
+            border-right: 1px solid var(--border);
+            overflow-y: auto;
+            z-index: 900;
+            transition: transform var(--transition)
+        }
+
+        #sidebar.collapsed {
+            transform: translateX(-100%)
+        }
+
+        .sidebar-header {
+            padding: 14px 16px 8px;
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: .7rem;
+            color: var(--text3);
+            letter-spacing: .1em;
+            text-transform: uppercase
+        }
+
+        .sidebar-section {
+            border-bottom: 1px solid var(--border)
+        }
+
+        .sidebar-module-btn {
+            width: 100%;
+            background: none;
+            border: none;
+            color: var(--text);
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            font-family: 'Syne', sans-serif;
+            font-size: .82rem;
+            font-weight: 600;
+            text-align: left;
+            transition: background var(--transition)
+        }
+
+        .sidebar-module-btn:hover {
+            background: var(--bg3)
+        }
+
+        .mod-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0
+        }
+
+        .sidebar-module-btn .arrow {
+            margin-left: auto;
+            font-size: .7rem;
+            color: var(--text3);
+            transition: transform var(--transition)
+        }
+
+        .sidebar-sub {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height .35s cubic-bezier(.4, 0, .2, 1)
+        }
+
+        .sidebar-link {
+            display: block;
+            padding: 6px 16px 6px 32px;
+            font-size: .78rem;
+            color: var(--text2);
+            text-decoration: none;
+            border-left: 3px solid transparent;
+            transition: all var(--transition)
+        }
+
+        .sidebar-link:hover {
+            color: var(--text);
+            background: var(--bg3)
+        }
+
+        .sidebar-link.active {
+            color: var(--accent2);
+            border-left-color: var(--accent2);
+            background: var(--bg3)
+        }
+
+        /* MAIN */
+        #main {
+            margin-left: var(--sidebar-w);
+            margin-top: calc(var(--topbar-h) + 3px);
+            padding: 0 40px 80px;
+            max-width: 1100px;
+            transition: margin var(--transition)
+        }
+
+        #main.sidebar-collapsed {
+            margin-left: auto;
+            margin-right: auto
+        }
+
+        @media(max-width:768px) {
+            #main {
+                margin-left: 0;
+                padding: 0 16px 60px
+            }
+
+            #sidebar {
+                transform: translateX(-100%)
+            }
+
+            #sidebar.collapsed {
+                transform: translateX(-100%)
+            }
+        }
+
+        /* MODULE HEADER */
+        .module-header {
+            position: sticky;
+            top: calc(var(--topbar-h) + 3px);
+            z-index: 50;
+            background: var(--bg);
+            padding: 18px 0 12px;
+            border-bottom: 2px solid var(--border);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 14px
+        }
+
+        .mod-badge {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: .85rem;
+            color: #fff;
+            flex-shrink: 0
+        }
+
+        .module-title {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: 1.5rem;
+            line-height: 1.2
+        }
+
+        .module-subtitle {
+            font-size: .78rem;
+            color: var(--text3);
+            margin-top: 2px
+        }
+
+        .module-section {
+            margin-bottom: 60px
+        }
+
+        /* TOPIC */
+        .topic-section {
+            margin-bottom: 48px;
+            scroll-margin-top: var(--local-scroll-margin, 145px)
+        }
+
+        .topic-title {
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: var(--text);
+            margin-bottom: 14px;
+            padding-bottom: 7px;
+            border-bottom: 1px solid var(--border)
+        }
+
+        /* CONTENT BOXES */
+        .def-box,
+        .tip-box,
+        .pro-box,
+        .con-box,
+        .info-box,
+        .teal-box {
+            border-radius: 0 var(--radius) var(--radius) 0;
+            padding: 14px 18px;
+            margin: 10px 0;
+            border-left-width: 4px;
+            border-left-style: solid;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, .2)
+        }
+
+        .def-box {
+            border-left-color: var(--accent);
+            background: var(--bg3);
+            color: var(--text)
+        }
+
+        .def-box strong {
+            color: var(--accent2)
+        }
+
+        .tip-box {
+            border-left-color: var(--yellow-border);
+            background: var(--yellow);
+            color: var(--yellow-text)
+        }
+
+        .tip-title {
+            font-weight: 700;
+            color: var(--gold2);
+            display: block;
+            margin-bottom: 4px
+        }
+
+        .pro-box {
+            border-left-color: var(--green-border);
+            background: var(--green);
+            color: var(--green-text)
+        }
+
+        .con-box {
+            border-left-color: var(--red-border);
+            background: var(--red);
+            color: var(--red-text)
+        }
+
+        .info-box {
+            border-left-color: var(--purple-border);
+            background: var(--purple);
+            color: var(--purple-text)
+        }
+
+        .teal-box {
+            border-left-color: var(--teal-border);
+            background: var(--teal);
+            color: var(--teal-text)
+        }
+
+        .teal-box code {
+            background: rgba(37, 181, 160, .15);
+            padding: 1px 4px;
+            border-radius: 3px
+        }
+
+        /* TABLE */
+        .table-wrap {
+            overflow-x: auto;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            margin: 12px 0
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse
+        }
+
+        th {
+            background: var(--accent);
+            color: #fff;
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            padding: 10px 14px;
+            text-align: left;
+            font-size: .82rem
+        }
+
+        td {
+            padding: 9px 14px;
+            border-bottom: 1px solid var(--border);
+            font-size: .83rem
+        }
+
+        tr:nth-child(even) td {
+            background: var(--bg3)
+        }
+
+        tr:hover td {
+            background: var(--bg4)
+        }
+
+        tr:last-child td {
+            border-bottom: none
+        }
+
+        /* LISTS */
+        ul.kp {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0
+        }
+
+        ul.kp li {
+            padding: 6px 0 6px 18px;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            font-size: .88rem;
+            color: var(--text2)
+        }
+
+        ul.kp li:last-child {
+            border-bottom: none
+        }
+
+        ul.kp li::before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: var(--accent2)
+        }
+
+        ol.steps {
+            padding-left: 22px;
+            margin: 10px 0
+        }
+
+        ol.steps li {
+            padding: 5px 0;
+            color: var(--text2);
+            font-size: .88rem
+        }
+
+        ol.steps li strong {
+            color: var(--text)
+        }
+
+        /* GRID */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 10px 0
+        }
+
+        .three-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 14px;
+            margin: 10px 0
+        }
+
+        @media(max-width:600px) {
+
+            .two-col,
+            .three-col {
+                grid-template-columns: 1fr
+            }
+        }
+
+        /* DIAGRAM */
+        .diagram-wrap {
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 16px;
+            margin: 14px 0;
+            text-align: center
+        }
+
+        .diagram-title {
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: .8rem;
+            color: var(--text3);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: .05em
+        }
+
+        .diagram-wrap pre {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--accent2);
+            white-space: pre;
+            font-size: .78rem;
+            text-align: left;
+            display: inline-block;
+            line-height: 1.6
+        }
+
+        /* COLLAPSIBLE */
+        .collapsible-header {
+            cursor: pointer;
+            user-select: none;
+            position: relative;
+            padding-right: 22px
+        }
+
+        .collapsible-header::after {
+            content: '▾';
+            font-size: .85rem;
+            color: var(--text3);
+            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: rotate(-90deg);
+            position: absolute;
+            right: 2px;
+            top: 2px
+        }
+
+        .collapsible-header.is-active::after {
+            transform: rotate(0deg)
+        }
+
+        .collapsible-header:hover {
+            color: var(--accent2)
+        }
+
+        .collapsible-body {
+            overflow: hidden;
+            max-height: 0;
+            opacity: 0;
+            transform: translateY(-6px);
+            transition: max-height 0.42s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.35s cubic-bezier(0.4, 0, 0.2, 1)
+        }
+
+        .collapsible-body.is-open {
+            opacity: 1;
+            transform: translateY(0)
+        }
+
+        /* PRINT */
+        @media print {
+
+            #topbar,
+            #sidebar,
+            #progress-bar {
+                display: none
+            }
+
+            #main {
+                margin: 0;
+                padding: 20px;
+                max-width: 100%
+            }
+
+            .module-header {
+                position: static
+            }
+
+            body {
+                background: white;
+                color: black
+            }
+        }
+
+        /* TAG */
+        .tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: .7rem;
+            font-weight: 600;
+            margin: 2px
+        }
+
+        .tag-blue {
+            background: rgba(91, 141, 238, .2);
+            color: var(--accent2);
+            border: 1px solid var(--accent)
+        }
+
+        .tag-gold {
+            background: rgba(201, 168, 76, .2);
+            color: var(--gold2);
+            border: 1px solid var(--gold)
+        }
+
+        .tag-green {
+            background: var(--green);
+            color: var(--green-text);
+            border: 1px solid var(--green-border)
+        }
+
+        p {
+            margin-bottom: 10px;
+            color: var(--text2);
+            font-size: .9rem
+        }
+
+        p strong {
+            color: var(--text)
+        }
+
+        h4 {
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: .9rem;
+            color: var(--accent2);
+            margin: 12px 0 6px
+        }
+
+        .topic-title::before {
+            content: '●';
+            margin-right: 2px;
+        }
+
+        #module-1 .topic-title::before,
+        #module1 .topic-title::before {
+            color: var(--m1);
+        }
+
+        #module-2 .topic-title::before,
+        #module2 .topic-title::before {
+            color: var(--m2);
+        }
+
+        #module-3 .topic-title::before,
+        #module3 .topic-title::before {
+            color: var(--m3);
+        }
+
+        #module-4 .topic-title::before,
+        #module4 .topic-title::before {
+            color: var(--m4);
+        }
+
+        #module-5 .topic-title::before,
+        #module5 .topic-title::before {
+            color: var(--m5);
+        }
+
+        #module-6 .topic-title::before,
+        #module6 .topic-title::before {
+            color: var(--m6);
+        }
+
+        #module-7 .topic-title::before,
+        #module-7 .topic-title::before {
+            color: var(--m7);
+        }
+
+        #module-8 .topic-title::before,
+        #module8 .topic-title::before {
+            color: var(--gold);
+        }
+
+        #quick-ref .topic-title::before,
+        #t-cheat-sheet .topic-title::before,
+        #quick-revision .topic-title::before {
+            color: var(--gold);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- TOPBAR -->
+    <div id="topbar">
+        <button id="hamburger" title="Toggle Sidebar">☰</button>
+        <div class="title-block">
+            <span class="subject-code">NLP — Natural Language Processing</span>
+            <span class="roll">23BCE0737</span>
+        </div>
+        <div class="search-wrap">
+            <input type="text" id="search-input" placeholder="Search topics…" autocomplete="off">
+            <span id="search-count"></span>
+        </div>
+        <button class="topbar-btn" id="theme-toggle">🌙 Dark</button>
+        <button class="topbar-btn" onclick="window.print()">🖨️ Print</button>
+    </div>
+
+    <!-- PROGRESS BAR -->
+    <div id="progress-bar">
+        <div id="progress-fill"></div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <nav id="sidebar">
+        <div class="sidebar-header">Modules</div>
+
+        <div class="sidebar-section">
+            <button class="sidebar-module-btn" onclick="toggleModule(this)">
+                <span class="mod-dot" style="background:#e05555"></span>M1 — Introduction to NLP<span
+                    class="arrow">▶</span>
+            </button>
+            <div class="sidebar-sub open">
+                <a class="sidebar-link" href="#t-what-nlp">What is NLP?</a>
+                <a class="sidebar-link" href="#t-history">History of NLP</a>
+                <a class="sidebar-link" href="#t-components">NLU & NLG Components</a>
+                <a class="sidebar-link" href="#t-stages">Stages of NLP</a>
+                <a class="sidebar-link" href="#t-ambiguity">Ambiguities in NLP</a>
+                <a class="sidebar-link" href="#t-applications">NLP Applications</a>
+            </div>
+        </div>
+
+        <div class="sidebar-section">
+            <button class="sidebar-module-btn" onclick="toggleModule(this)">
+                <span class="mod-dot" style="background:#3dba6f"></span>M2 — Text Processing<span class="arrow">▶</span>
+            </button>
+            <div class="sidebar-sub">
+                <a class="sidebar-link" href="#t-tokenization">Tokenization</a>
+                <a class="sidebar-link" href="#t-segmentation">Sentence Segmentation</a>
+                <a class="sidebar-link" href="#t-morphology">Morphology</a>
+                <a class="sidebar-link" href="#t-morphemes">Morphemes & Types</a>
+                <a class="sidebar-link" href="#t-inflectional">Inflectional Morphology</a>
+                <a class="sidebar-link" href="#t-derivational">Derivational Morphology</a>
+                <a class="sidebar-link" href="#t-stemming">Stemming & Lemmatization</a>
+            </div>
+        </div>
+
+        <div class="sidebar-section">
+            <button class="sidebar-module-btn" onclick="toggleModule(this)">
+                <span class="mod-dot" style="background:#9b6dda"></span>M3 — Syntax & Parsing<span
+                    class="arrow">▶</span>
+            </button>
+            <div class="sidebar-sub">
+                <a class="sidebar-link" href="#t-pos">POS Tagging</a>
+                <a class="sidebar-link" href="#t-hmm">Hidden Markov Model</a>
+                <a class="sidebar-link" href="#t-cfg">Context-Free Grammar</a>
+                <a class="sidebar-link" href="#t-constituency">Constituency Parsing</a>
+                <a class="sidebar-link" href="#t-dependency">Dependency Parsing</a>
+                <a class="sidebar-link" href="#t-transition">Transition-based Parsing</a>
+            </div>
+        </div>
+
+        <div class="sidebar-section">
+            <button class="sidebar-module-btn" onclick="toggleModule(this)">
+                <span class="mod-dot" style="background:#25b5a0"></span>M4 — Semantics<span class="arrow">▶</span>
+            </button>
+            <div class="sidebar-sub">
+                <a class="sidebar-link" href="#t-semantic-analysis">Semantic Analysis</a>
+                <a class="sidebar-link" href="#t-thematic">Thematic Roles</a>
+                <a class="sidebar-link" href="#t-wsd">Word Sense Disambiguation</a>
+                <a class="sidebar-link" href="#t-wordnet">WordNet & Lexical Relations</a>
+                <a class="sidebar-link" href="#t-coreference">Coreference Resolution</a>
+            </div>
+        </div>
+
+        <div class="sidebar-section">
+            <button class="sidebar-module-btn" onclick="toggleModule(this)">
+                <span class="mod-dot" style="background:#c9a84c"></span>M5 — Language Models<span class="arrow">▶</span>
+            </button>
+            <div class="sidebar-sub">
+                <a class="sidebar-link" href="#t-ngram">N-Gram Language Models</a>
+                <a class="sidebar-link" href="#t-perplexity">Perplexity</a>
+                <a class="sidebar-link" href="#t-smoothing">Smoothing Techniques</a>
+                <a class="sidebar-link" href="#t-tfidf">TF-IDF</a>
+            </div>
+        </div>
+
+        <div class="sidebar-section">
+            <button class="sidebar-module-btn" onclick="toggleModule(this)">
+                <span class="mod-dot" style="background:#5b8dee"></span>M6 — Deep Learning & NLP<span
+                    class="arrow">▶</span>
+            </button>
+            <div class="sidebar-sub">
+                <a class="sidebar-link" href="#t-transformer">Transformer Architecture</a>
+                <a class="sidebar-link" href="#t-bert">BERT</a>
+                <a class="sidebar-link" href="#t-bert-pretraining">BERT Pre-training</a>
+                <a class="sidebar-link" href="#t-text-classification">Text Classification</a>
+                <a class="sidebar-link" href="#t-nmt">Neural Machine Translation</a>
+            </div>
+        </div>
+
+        <div class="sidebar-section">
+            <button class="sidebar-module-btn" onclick="toggleModule(this)">
+                <span class="mod-dot" style="background:#e0be5a"></span>M7 — Text Summarization<span
+                    class="arrow">▶</span>
+            </button>
+            <div class="sidebar-sub">
+                <a class="sidebar-link" href="#t-ts-intro">What is Text Summarization?</a>
+                <a class="sidebar-link" href="#t-extractive">Extractive Summarization</a>
+                <a class="sidebar-link" href="#t-abstractive">Abstractive Summarization</a>
+                <a class="sidebar-link" href="#t-bertsum">BERTSUM</a>
+                <a class="sidebar-link" href="#t-rouge">ROUGE Evaluation</a>
+            </div>
+        </div>
+
+        <div class="sidebar-section">
+            <button class="sidebar-module-btn" onclick="toggleModule(this)">
+                <span class="mod-dot" style="background:#ff3366"></span>M8 — Quick Revision<span class="arrow">▶</span>
+            </button>
+            <div class="sidebar-sub">
+                <a class="sidebar-link" href="#t-cheat-sheet">1-Hour Cheat Sheet</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main id="main">
+
+        <!-- ==================== MODULE 1 ==================== -->
+        <section class="module-section" id="module-1">
+            <div class="module-header">
+                <div class="mod-badge" style="background:#e05555">M1</div>
+                <div class="module-title-group">
+                    <div class="module-title">Introduction to NLP</div>
+                    <div class="module-subtitle">Fundamentals, History, Components & Applications</div>
+
+
+                </div>
+            </div>
+            <div class="topic-section" id="t-what-nlp">
+                <h3 onclick="toggleCollapse(this)" class="topic-title collapsible-header">What is Natural Language
+                    Processing?</h3>
+                <div class="collapsible-body">
+
+
+
+
+
+
+
+
+
+
+
+                    <div class="def-box">
+                        <strong>Natural Language Processing (NLP)</strong> is a subfield of computer science,
+                        information
+                        engineering, and artificial intelligence concerned with the interactions between computers and
+                        human
+                        (natural) languages — in particular, how to program computers to process and analyze large
+                        amounts
+                        of natural language data.
+                    </div>
+
+                    <ul class="kp">
+                        <li>NLP describes the ability of computers to understand human speech as it is spoken</li>
+                        <li>It is a branch of AI that helps computers <strong>understand, interpret and
+                                manipulate</strong>
+                            human language</li>
+                        <li>NLP helps developers organize and structure knowledge to perform tasks like translation,
+                            summarization, NER, speech recognition, etc.</li>
+                        <li>Machine learning has helped computers parse the <strong>ambiguity</strong> of human language
+                        </li>
+                        <li>NLP is a way of computers to analyze, understand and derive meaning from human languages
+                            (English, Spanish, Hindi, etc.)</li>
+                    </ul>
+                    <div class="two-col">
+                        <div class="def-box"><strong>AI:</strong> Theory and development of computer systems able to
+                            perform
+                            tasks normally requiring human intelligence — visual perception, speech recognition,
+                            decision
+                            making, translation.</div>
+                        <div class="def-box"><strong>ML:</strong> A subset of AI that uses statistical techniques to
+                            give
+                            computers the ability to learn from data, without being explicitly programmed.</div>
+                    </div>
+                    <div class="tip-box"><span class="tip-title">💡 NLP Covers Three Human Activities</span>
+                        <strong>We speak</strong> → Speech Recognition (ASR), Spoken Dialogue Systems,
+                        Speech-to-Text<br>
+                        <strong>We write</strong> → Text Generation (NLG), Machine Translation, Auto-complete, Grammar
+                        correction<br>
+                        <strong>We read</strong> → Information Extraction, NER, Text Classification, Question Answering,
+                        Summarization
+                    </div>
+
+                </div>
+            </div>
+            </div>
+
+
+            </div>
+
+            </div>
+
+            </div>
+            </div>
+            <div class="topic-section" id="t-history">
+                <h3 onclick="toggleCollapse(this)" class="topic-title collapsible-header">📅 History of NLP</h3>
+                <div class="collapsible-body">
+
+
+
+
+
+
+
+
+
+
+
+                    <div class="table-wrap">
+                        <table>
+                            <tr>
+                                <th>Year</th>
+                                <th>Event</th>
+                            </tr>
+                            <tr>
+                                <td>1950</td>
+                                <td>Alan Turing published "Computing Machinery and Intelligence" — proposed the
+                                    <strong>Turing Test</strong> as a criterion of intelligence. NLP formally begins.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>1950</td>
+                                <td>Attempts to automate translation between Russian and English</td>
+                            </tr>
+                            <tr>
+                                <td>1954</td>
+                                <td>Georgetown-IBM experiment: fully automatically translated 60+ Russian sentences into
+                                    English</td>
+                            </tr>
+                            <tr>
+                                <td>1960s</td>
+                                <td>Chomsky introduced <strong>formal language models</strong> (context-free grammars)
+                                    that
+                                    influenced early NLP parsing techniques</td>
+                            </tr>
+                            <tr>
+                                <td>1980s</td>
+                                <td>Most NLP systems based on complex hand-written rules</td>
+                            </tr>
+                            <tr>
+                                <td>1990s</td>
+                                <td>Probabilistic and data-driven models became standard</td>
+                            </tr>
+                            <tr>
+                                <td>2000s</td>
+                                <td>Large amounts of spoken and textual data became available</td>
+                            </tr>
+                            <tr>
+                                <td>2010s</td>
+                                <td>Representation learning and deep neural networks became widespread in NLP</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+            <div class="diagram-wrap">
+                <div class="diagram-title">Chomsky's Context-Free Grammar (1960s)</div>
+                <pre>
+S  → NP VP
+NP → Det N
+VP → V NP
+Det → the | a
+N  → cat | dog
+V  → chases | sees
+
+Example: "The dog chases a cat"</pre>
+            </div>
+            </div>
+            </div>
+
+
+            </div>
+
+            </div>
+
+            </div>
+            </div>
+            <div class="topic-section" id="t-components">
+                <h3 onclick="toggleCollapse(this)" class="topic-title collapsible-header">🧩 Components of NLP: NLU &
+                    NLG</h3>
+                <div class="collapsible-body">
+
+
+
+
+
+
+
+
+
+
+
+                    <div class="two-col">
+                        <div>
+                            <div class="info-box">
+                                <strong>Natural Language Understanding (NLU)</strong><br><br>
+                                Helps machines understand and analyze human language by extracting metadata from content
+                                —
+                                concepts, entities, keywords, emotion, relations, semantic roles.<br><br>
+                                Used in business applications to understand customer problems in both spoken and written
+                                language.<br><br>
+                                Tasks: mapping input to useful representations, analyzing different aspects of the
+                                language.
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="teal-box">
+                            <strong>Natural Language Generation (NLG)</strong><br><br>
+                            The process of producing meaningful phrases and sentences in the form of natural language
+                            from some internal representation.<br><br>
+                            <strong>Three stages:</strong><br>
+                            1. <strong>Text Planning</strong> — Retrieve relevant content from knowledge base<br>
+                            2. <strong>Sentence Planning</strong> — Choose words, form phrases, set tone<br>
+                            3. <strong>Text Realization</strong> — Map sentence plan to sentence structure<br><br>
+                            Note: NLU is harder than NLG.
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            </div>
+            </div>
+
+
+            </div>
+
+            </div>
+
+            </div>
+            </div>
+            <div class="topic-section" id="t-stages">
+                <h3 onclick="toggleCollapse(this)" class="topic-title collapsible-header">🔄 Stages of NLP</h3>
+                <div class="collapsible-body">
+
+
+
+
+
+
+
+
+
+
+
+                    <div class="table-wrap">
+                        <table>
+                            <tr>
+                                <th>Stage</th>
+                                <th>Description</th>
+                                <th>Example</th>
+                            </tr>
+                            <tr>
+                                <td><strong>Morphological Analysis</strong></td>
+                                <td>Individual words analyzed into their components (root, affixes, POS)</td>
+                                <td>Playing = Play + ing</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Syntactic Analysis</strong></td>
+                                <td>Linear word sequences transformed into structures showing word relationships</td>
+                                <td>Parse tree for a sentence</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Semantic Analysis</strong></td>
+                                <td>Transformation from input text to internal representation that reflects meaning</td>
+                                <td>Understanding "bank" as financial vs river</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Discourse Analysis</strong></td>
+                                <td>Resolving references between sentences; coherence, anaphora, topic flow</td>
+                                <td>"Ravi bought a book. He read it." → he=Ravi, it=book</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Pragmatic Analysis</strong></td>
+                                <td>Reinterpreting what was said to what was actually meant</td>
+                                <td>Context and speaker intention</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+            <div class="tip-box">
+                <span class="tip-title">⚠️ Exam Tip: Order of Stages</span>
+                Morphological → Syntactic → Semantic → Discourse → Pragmatic. Think: <strong>M-S-S-D-P</strong> (My
+                Syntax Semantics Discourse Pragmatics).
+            </div>
+            <div class="info-box">
+                <strong>Discourse Example:</strong> "Ravi bought a book. <em>He</em> read <em>it</em> yesterday." —
+                Understanding <em>he</em> → Ravi and <em>it</em> → book is a discourse-level phenomenon (anaphora
+                resolution).
+            </div>
+            <div class="def-box">
+                <strong>Pragmatics:</strong> Focuses on how context, speaker intention, background knowledge, and
+                real-world reasoning affect the meaning of a single utterance. Interprets the hidden meaning behind
+                one utterance using real-world knowledge.
+            </div>
+            </div>
+            </div>
+
+
+            </div>
+
+            </div>
+
+            </div>
+            </div>
+            <div class="topic-section" id="t-ambiguity">
+                <h3 onclick="toggleCollapse(this)" class="topic-title collapsible-header">⚡ Ambiguities in NLP</h3>
+                <div class="collapsible-body">
+
+
+
+
+
+
+
+
+
+
+
+                    <div class="def-box">
+                        Ambiguity is one of the core challenges of NLP. The same word, phrase, or sentence can have
+                        multiple
+                        valid interpretations.
+                    </div>
+
+                </div>
+            </div>
+            <div class="two-col">
+                <div class="con-box">
+                    <strong>Lexical Ambiguity</strong><br><br>
+                    A word has multiple meanings (same form, different senses).<br><br>
+                    • "Look" — verb (He gave me a warm look) or noun (Look at the stars!)<br>
+                    • "Silver" — noun, adjective, or verb<br>
+                    • "Park" — verb (to park the car) or noun (a park near the beach)<br>
+                    • "Bank" — financial institution or river bank
+                </div>
+                <div class="con-box">
+                    <strong>Syntactic Ambiguity</strong><br><br>
+                    A sentence can be parsed in two or more distinct structural ways.<br><br>
+                    • "The chicken is ready to eat." — Is the chicken cooked, or is it hungry?<br>
+                    • "I saw the man with the telescope." — Did I use a telescope, or did the man have one?<br>
+                    • "Time flies like an arrow" — multiple parse trees!
+                </div>
+            </div>
+            <div class="info-box">
+                <strong>Why NLP is Hard:</strong> Non-standard English (u 2 #neversaynever), idioms (dark horse, get
+                cold feet), neologisms (unfriend, retweet), segmentation issues, tricky entity names (A Bug's Life),
+                world knowledge requirements.
+            </div>
+            <h4>Word Analogy Example (How NLP Works)</h4>
+            <div class="teal-box">
+                NLP draws on <strong>contextual patterns</strong>, not just rules.<br><br>
+                • <strong>Man → Woman</strong> as <strong>King → ?</strong> → Queen (gender/role analogy)<br>
+                &nbsp;&nbsp;&nbsp;Meaning(king) – Meaning(man) + Meaning(woman) = queen<br>
+                • <strong>King → Kings</strong> as <strong>Queen → ?</strong> → Queens (morphology analogy, singular
+                → plural)
+            </div>
+            </div>
+            </div>
+
+
+            </div>
+
+            </div>
+
+            </div>
+            </div>
+            <div class="topic-section" id="t-applications">
+                <h3 onclick="toggleCollapse(this)" class="topic-title collapsible-header">🚀 NLP Applications</h3>
+                <div class="collapsible-body">
+
+
+
+
+
+
+
+
+
+
+
+                    <div class="three-col">
+                        <div class="pro-box"><strong>Mostly Solved</strong><br>Spam detection, POS tagging, Named Entity
+                            Recognition, Coreference resolution</div>
+                        <div class="tip-box"><strong>Making Progress</strong><br>Sentiment analysis, Machine
+                            translation,
+                            Question answering, Summarization, Information extraction</div>
+                        <div class="info-box"><strong>Still Hard</strong><br>Parsing complex structures, full dialogue,
+                            deep
+                            language understanding</div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="def-box">
+                <strong>Key Applications:</strong> Spell check, Autocomplete, Voice messaging (Siri/Alexa/Google),
+                Spam filters, Search engines, Machine Translation, Grammar checking, Text summarization, Document
+                classification, Sentiment analysis, NER, Information extraction, Question answering.
+            </div>
+            <div class="tip-box">
+                <span class="tip-title">📚 Important NLP Tools & Concepts</span>
+                <strong>LDA</strong> (Latent Dirichlet Allocation), <strong>LSI</strong> (Latent Semantic Indexing),
+                <strong>PCFG</strong> (Probabilistic Context-Free Grammar), <strong>Word2Vec</strong> — two-layer
+                neural net that processes text into feature vectors for words.
+            </div>
+            </div>
+        </section>
+
+        <!-- ==================== MODULE 2 ==================== -->
+        <section class="module-section" id="module-2">
+            </div>
+
+
+            </div>
+            </div>
+            <div class="module-header">
+                <div class="mod-badge" style="background:#3dba6f">M2</div>
+                <div class="module-title-group">
+                    <div class="module-title">Text Processing</div>
+                    <div class="module-subtitle">Tokenization, Morphology, Stemming & Lemmatization
+                    </div>
+
+                </div>
+            </div>
+            <div class="topic-section" id="t-tokenization">
+                <h3 onclick="toggleCollapse(this)" class="topic-title collapsible-header">✂️ Tokenization</h3>
+                <div class="collapsible-body">
+
+
+
+
+
+
+
+
+
+
+
+                    <div class="def-box">
+                        <strong>Tokenization</strong> is the process of breaking text into individual units called
+                        tokens
+                        (words, subwords, or characters). It is the first step in almost all NLP pipelines.
+                    </div>
+
+                </div>
+            </div>
+            <h4>Types of Tokenization Challenges</h4>
+            <div class="two-col">
+                <div class="info-box">
+                    <strong>Punctuation Ambiguity</strong><br><br>
+                    <strong>Quotation marks & Apostrophes:</strong><br>
+                    • Genitive case: Peter's bag<br>
+                    • Contractions: I'm, won't (expand with language knowledge)<br>
+                    • Plurals: M.D.'s, D.O.'s<br>
+                    • Possessives: llama's, children's<br>
+                    Apostrophes ≠ Single quotes. Apostrophes denote possessive form or omission. Single quotes
+                    indicate a quotation within a quotation.
+                </div>
+                <div class="info-box">
+                    <strong>Multi-part Words (Agglutinations)</strong><br><br>
+                    • Compound words: hyphenated (English) vs not (German)<br>
+                    • German: Nachkriegszeit, Nichtraucher (single token)<br>
+                    • French: va-t-il (will it?), c'est-à-dire (that is)<br>
+                    • Delhi-based → multi-token word<br>
+                    • end-of-line → single token word<br>
+                    Contractions should be expanded. Hyphen usage varies by language.
+                </div>
+            </div>
+            <div class="def-box">
+                <strong>Multi-Word Expressions:</strong> "In spite of" = Despite (one semantic meaning). Loaned
+                words: au pair, de facto. Dates can appear in many formats: November 18, 1989 = Nov. 18, 1989 =
+                11/18/89 — should be treated as single tokens. Numbers like $3.9 to $4 million.
+            </div>
+            <h4>Tokenization in Unsegmented Languages (CJK + Thai)</h4>
+            <div class="teal-box">
+                <strong>Languages without word spaces:</strong> Chinese, Japanese, Korean (CJK), Thai, Balinese,
+                Javanese, Khmer.<br>
+                <strong>Common approaches:</strong><br>
+                1. <strong>Extensive Word List</strong> — but no widely accepted definition of "word"<br>
+                2. <strong>Maximum Matching Algorithm (Greedy)</strong> — find longest word starting at current
+                character<br>
+                3. <strong>FMM</strong> (Forward Maximum Matching — Left to Right)<br>
+                4. <strong>BMM</strong> (Backward Maximum Matching — Right to Left)<br>
+                5. <strong>BiMM</strong> (Bidirectional) — compares FMM & BMM, chooses better output using
+                linguistic criteria
+            </div>
+            <div class="diagram-wrap">
+                <div class="diagram-title">Greedy Algorithm Failure in English (Why BiMM is Needed)</div>
+                <pre>
+Input: "thetabledownthere"  (remove spaces from "the table down there")
+
+FMM result:  theta | bled | own | there   ← WRONG!
+BMM result:  the | table | down | there   ← CORRECT!
+
+BiMM compares both outputs and picks the linguistically better one.</pre>
+            </div>
+            <div class="two-col">
+                <div class="def-box"><strong>Chinese Segmentation (Hanzi):</strong> Thousands of characters; words =
+                    1 or more. Approaches: Statistical (mutual information), Lexical rule-based (syntax/semantics),
+                    Hybrid (weighted FST to identify dictionary entries).</div>
+                <div class="def-box"><strong>Japanese Segmentation:</strong> Uses Kanji + Hiragana + Katakana +
+                    Romanji. Challenges: identifying base, mix of writing systems. Statistical techniques similar to
+                    Chinese apply.</div>
+            </div>
+            </div>
+            </div>
+
+
+            </div>
+
+            </div>
+
+            </div>
+            </div>
+            <div class="topic-section" id="t-segmentation">
+                <h3 onclick="toggleCollapse(this)" class="topic-title collapsible-header">📄 Sentence Segmentation</h3>
+                <div class="collapsible-body">
+
+
+
+
+
+
+
+
+
+
+
+                    <div class="def-box">
+                        <strong>Sentence Segmentation</strong> (Sentence Boundary Detection) is the task of finding
+                        where
+                        one sentence ends and the next begins.
+                    </div>
+
+                    <ul class="kp">
+                        <li><strong>! and ?</strong> are relatively unambiguous sentence terminators</li>
+                        <li><strong>Period "."</strong> is highly ambiguous: sentence boundary, abbreviation (Inc.,
+                            Dr.),
+                            decimal (0.02%, 4.3)</li>
+                        <li>In most NLP applications, a sentence begins with a capital letter and ends with a
+                            period/question/exclamation</li>
+                        <li>A semicolon can also connect two sentences with the same meaning as a period</li>
+                    </ul>
+                    <div class="teal-box">
+                        <strong>Solution: Binary Classifier on "."</strong><br>
+                        Build a classifier that looks at each "." and decides:
+                        <code>EndOfSentence / NotEndOfSentence</code><br>
+                        Classifier types: hand-written rules, regular expressions, or machine learning models.<br>
+                        Features: word before ".", word after ".", is it an abbreviation?, capitalization of next word?
+                    </div>
+                    <div class="tip-box">
+                        <span class="tip-title">⚠️ Thai Sentence Segmentation</span>
+                        Thai doesn't use periods. Spaces are used like commas to mark clauses. Carriage returns can be
+                        mixed
+                        with spaces — requires special handling.
+                    </div>
+
+                </div>
+            </div>
+            </div>
+
+
+            </div>
+
+            </div>
+
+            </div>
+            </div>
+            <div class="topic-section" id="t-morphology">
+                <h3 onclick="toggleCollapse(this)" class="topic-title collapsible-header">🔬 Introduction to Morphology
+                </h3>
+                <div class="collapsible-body">
+
+
+
+
+
+
+
+
+
+
+
+                    <div class="def-box">
+                        <strong>Morphology</strong> is the branch of linguistics that studies the internal structure of
+                        words and how words are formed from smaller meaningful units.<br><br>
+                        In NLP: Morphology explains how words are built and how their forms change. This is critical for
+                        stemming, lemmatization, POS tagging, and word generation.
+                    </div>
+
+                </div>
+            </div>
+            <div class="two-col">
+                <div class="info-box">
+                    <strong>Morphology vs Syntax</strong><br><br>
+                    <strong>Morphology</strong> = study of the structure of <em>words</em><br>
+                    <strong>Syntax</strong> = study of the structure of <em>sentences</em><br><br>
+                    Together they help linguists understand how language works.
+                </div>
+                <div class="tip-box">
+                    <strong>Why Morphology Matters in NLP</strong><br><br>
+                    play, plays, played, playing — all from the same base word "play" but convey different
+                    meanings/grammatical roles.<br><br>
+                    Helps identify word meanings, recognize grammatical info, analyze word variations.
+                </div>
+            </div>
+            <h4>Three Dimensions of Morphology</h4>
+            <div class="table-wrap">
+                <table>
+                    <tr>
+                        <th>Dimension</th>
+                        <th>Question</th>
+                        <th>NLP Application</th>
+                    </tr>
+                    <tr>
+                        <td>Morpheme Count</td>
+                        <td>How many morphemes?</td>
+                        <td>Text analysis, tokenization</td>
+                    </tr>
+                    <tr>
+                        <td>Morphological Process</td>
+                        <td>What functions do morphemes perform?</td>
+                        <td>Stemming, Lemmatization, POS tagging</td>
+                    </tr>
+                    <tr>
+                        <td>Morpheme Combination</td>
+                        <td>How do morphemes combine?</td>
+                        <td>Morphological parsing, word generation</td>
+                    </tr>
+                </table>
+            </div>
+            <h4>Word Complexity by Language Type</h4>
+            <div class="three-col">
+                <div class="def-box"><strong>Isolating Languages</strong> (e.g., Mandarin Chinese)<br>No inflections
+                    — words are single morphemes. Context determines meaning (tense, number, etc.).<br><br><em>Gou
+                        bu ai chi qingcai</em> = "dog not like eat vegetable" (can be present/past, singular/plural
+                    based on context)</div>
+                <div class="def-box"><strong>Agglutinative Languages</strong> (e.g., Turkish, Finnish,
+                    Tamil)<br>Words built by attaching multiple morphemes, each encoding one piece of
+                    info.<br><br><em>ev-ler-im-den</em> = house+plural+my+from = "from my houses"</div>
+                <div class="def-box"><strong>Inflectional Languages</strong> (e.g., Latin)<br>A single bound
+                    morpheme simultaneously conveys multiple pieces of linguistic information (case, number, gender,
+                    tense).</div>
+            </div>
+            </div>
+            </div>
+
+
+            </div>
+
+            </div>
+
+            </div>
+            </div>
+            <div class="topic-section" id="t-morphemes">
+                <h3 onclick="toggleCollapse(this)" class="topic-title collapsible-header">🧱 Morphemes & Types</h3>
+                <div class="collapsible-body">
+
+
+
+
+
+
+
+
+
+
+
+                    <div class="def-box">
+                        A <strong>morpheme</strong> is the minimum word-bearing unit — the smallest meaningful unit of
+                        language.<br>
+                        Fox = 1 morpheme (Fox) | Cats = 2 morphemes (Cat + s)
+                    </div>
+
+                </div>
+            </div>
+            <div class="two-col">
+                <div class="pro-box">
+                    <strong>Free Morphemes</strong><br>
+                    Can occur as words by themselves.<br>
+                    Examples: go, book, eat, date, weak<br><br>
+                    They carry the core meaning and can stand alone without modification.
+                </div>
+                <div class="con-box">
+                    <strong>Bound Morphemes</strong><br>
+                    Cannot stand alone — must be attached to a free morpheme.<br>
+                    Examples: -ing, -s, -ness, -ed, -er, un-, re-, pre-<br><br>
+                    Also called affixes: prefix (before stem), suffix (after), infix (inside), circumfix (both
+                    ends).
+                </div>
+            </div>
+            <div class="def-box">
+                <strong>Stems vs Affixes:</strong><br>
+                • <strong>Stems (Roots)</strong>: Core meaning-bearing units — the main morpheme of the word<br>
+                • <strong>Affixes</strong>: Bits and pieces that adhere to stems to change meanings and grammatical
+                functions<br>
+                • <strong>Prefix</strong>: Incomplete = <em>In</em>+complete | <strong>Suffix</strong>: Browser =
+                Browse+<em>er</em> | <strong>Circumfix</strong>: Prefix + Suffix together
+            </div>
+            <div class="diagram-wrap">
+                <div class="diagram-title">Word Formation Chains</div>
+                <pre>
+compute → computer → computerize → computerization
+compute → computation → computational
+compute → computerize → computerizable</pre>
+            </div>
+            </div>
+            </div>
+
+
+            </div>
+
+            </div>
+
+            </div>
+            </div>
+            <div class="topic-section" id="t-inflectional">
+                <h3 onclick="toggleCollapse(this)" class="topic-title collapsible-header">🔄 Inflectional Morphology
+                </h3>
+                <div class="collapsible-body">
+
+
+
+
+
+
+
+
+
+
+
+                    <div class="def-box">
+                        <strong>Inflectional Morphology:</strong> Combination of a word stem with a grammatical morpheme
+                        that keeps it in the <em>same</em> word class (same POS).<br>
+                        Purpose: Express grammatical relationships — tense, number, person, case.
+                    </div>
+
+                    <ul class="kp">
+                        <li>English has a relatively simple inflectional system — nouns, verbs, and adjectives can be
+                            inflected</li>
+                        <li>Regular: Walk → walks/walking/walked (can be generated by general rules)</li>
+                        <li>Irregular: Eat → ate/eaten, Catch → caught, Cut → cut/cut, Goose → geese</li>
+                        <li>English noun inflections: plural (-s/-es/-ies/irregular) and possessive ('s)</li>
+                    </ul>
+                    <div class="table-wrap">
+                        <table>
+                            <tr>
+                                <th>Type</th>
+                                <th>Example</th>
+                                <th>Rule</th>
+                            </tr>
+                            <tr>
+                                <td>Regular Plural</td>
+                                <td>cat → cats, box → boxes, butterfly → butterflies</td>
+                                <td>+s / +es / -y → ies</td>
+                            </tr>
+                            <tr>
+                                <td>Irregular Plural</td>
+                                <td>goose → geese, ox → oxen, mouse → mice</td>
+                                <td>No rule — memorize</td>
+                            </tr>
+                            <tr>
+                                <td>Possessive</td>
+                                <td>llama's, children's, Euripides' comedies</td>
+                                <td>+'s or ' alone</td>
+                            </tr>
+                            <tr>
+                                <td>3rd person singular verb</td>
+                                <td>I run → John runs</td>
+                                <td>+s marks 3rd person singular</td>
+                            </tr>
+                            <tr>
+                                <td>Past tense regular</td>
+                                <td>walk → walked</td>
+                                <td>+ed</td>
+                            </tr>
+                            <tr>
+                                <td>Past tense irregular</td>
+                                <td>go → went, catch → caught</td>
+                                <td>No rule</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="tip-box">
+                        <span class="tip-title">⚠️ Exam Tip</span>
+                        Inflectional morphology: same word class (verb stays verb, noun stays noun). -s on noun =
+                        plural, -s
+                        on verb = 3rd person singular. -ed = past tense. Irregular verbs: eat/ate/eaten, catch/caught,
+                        cut/cut.
+                    </div>
+
+                </div>
+            </div>
+            </div>
+
+
+            </div>
+
+            </div>
+
+            </div>
+            </div>
+            <div class="topic-section" id="t-derivational">
+                <h3 onclick="toggleCollapse(this)" class="topic-title collapsible-header">🔧 Derivational Morphology
+                </h3>
+                <div class="collapsible-body">
+
+
+
+
+
+
+
+
+
+
+
+                    <div class="def-box">
+                        <strong>Derivational Morphology:</strong> Produces a NEW word, usually with a different
+                        part-of-speech category. The new word is <em>derived</em> from the old word.
+                    </div>
+
+                </div>
+            </div>
+            <div class="two-col">
+                <div class="info-box">
+                    <strong>Noun → Verb Examples:</strong><br>
+                    Critic → Criticize (-ize)<br>
+                    Organ → Organize (-ize)<br>
+                    Standard → Standardize (-ize)<br>
+                    Product → Produce (changes stem)<br>
+                    Regulation → Regulate (-ate)
+                </div>
+                <div class="info-box">
+                    <strong>Verb → Noun Examples:</strong><br>
+                    Establish → Establishment (-ment)<br>
+                    Sing → Singer (-er)<br>
+                    Employ → Employee (-ee)<br>
+                    Create → Creation (-tion)
+                </div>
+            </div>
+            <div class="table-wrap">
+                <table>
+                    <tr>
+                        <th></th>
+                        <th>Inflectional</th>
+                        <th>Derivational</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Changes POS?</strong></td>
+                        <td>No (stays same class)</td>
+                        <td>Yes (usually)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Productivity</strong></td>
+                        <td>More regular/productive</td>
+                        <td>Less productive</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Example</strong></td>
+                        <td>run → runs (verb stays verb)</td>
+                        <td>establish → establishment (verb → noun)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>NLP Use</strong></td>
+                        <td>POS tagging, stemming</td>
+                        <td>Morphological parsing, word generation</td>
+                    </tr>
+                </table>
+            </div>
+            </div>
+            </div>
+
+
+            </div>
+
+            </div>
+
+            </div>
+            </div>
+            <div class="topic-section" id="t-stemming">
+                <h3 onclick="toggleCollapse(this)" class="topic-title collapsible-header">✂️ Stemming & Lemmatization
+                </h3>
+                <div class="collapsible-body">
+
+
+
+
+
+
+
+
+
+
+
+                    <div class="two-col">
+                        <div class="def-box">
+                            <strong>Stemming</strong> is the process of reducing a word to its stem/root form, often by
+                            chopping off suffixes. Results may not be a real word.<br><br>
+                            • "playing" → "play"<br>
+                            • "studies" → "studi"<br>
+                            • "running" → "run"<br><br>
+                            Common algorithm: <strong>Porter Stemmer</strong><br>
+                            Fast but imprecise — may over-stem (studies → studi) or under-stem.
+                        </div>
+                    </div>
+                    <div class="def-box">
+                        <strong>Lemmatization</strong> is the process of reducing a word to its canonical base form
+                        (lemma) using vocabulary and morphological analysis. Always returns a valid word.<br><br>
+                        • "better" → "good"<br>
+                        • "am/is/are" → "be"<br>
+                        • "studies" → "study"<br><br>
+                        Uses a dictionary/WordNet. More accurate but slower.<br>
+                        Requires knowing the POS to lemmatize correctly.
+                    </div>
+
+                </div>
+            </div>
+            <div class="table-wrap">
+                <table>
+                    <tr>
+                        <th>Word</th>
+                        <th>Stemming Result</th>
+                        <th>Lemmatization Result</th>
+                    </tr>
+                    <tr>
+                        <td>studies</td>
+                        <td>studi</td>
+                        <td>study</td>
+                    </tr>
+                    <tr>
+                        <td>running</td>
+                        <td>run</td>
+                        <td>run</td>
+                    </tr>
+                    <tr>
+                        <td>better</td>
+                        <td>better</td>
+                        <td>good</td>
+                    </tr>
+                    <tr>
+                        <td>went</td>
+                        <td>went</td>
+                        <td>go</td>
+                    </tr>
+                    <tr>
+                        <td>are</td>
+                        <td>are</td>
+                        <td>be</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="tip-box">
+                <span class="tip-title">💡 When to Use Which?</span>
+                Use <strong>stemming</strong> when speed matters and slight inaccuracy is acceptable (information
+                retrieval, search engines). Use <strong>lemmatization</strong> when accuracy is important (chatbots,
+                text analytics, NLU).
+            </div>
+            </div>
+        </section>
+
+        <!-- ==================== MODULE 3 ==================== -->
+        <section class="module-section" id="module-3">
+            </div>
+
+
+            </div>
+            </div>
+            <div class="module-header">
+                <div class="mod-badge" style="background:#9b6dda">M3</div>
+                <div class="module-title-group">
+                    <div class="module-title">Syntax & Parsing</div>
+                    <div class="module-subtitle">POS Tagging, HMM, CFG, Constituency & Dependency Parsing
+                    </div>
+
+                </div>
+            </div>
+            <div class="topic-section" id="t-pos">
+                <h3 onclick="toggleCollapse(this)" class="topic-title collapsible-header">🏷️ Part-of-Speech (POS)
+                    Tagging</h3>
+                <div class="collapsible-body">
+
+
+
+
+
+
+
+
+
+
+
+                    <div class="def-box">
+                        <strong>POS Tagging</strong> is the process of assigning each word in a sentence its
+                        part-of-speech
+                        category (noun, verb, adjective, etc.) based on its definition and its context.
+                    </div>
+
+                </div>
+            </div>
+            <div class="diagram-wrap">
+                <div class="diagram-title">Penn Treebank POS Tags (Common)</div>
+                <pre>
+NN  = Noun (singular)           NNS = Noun (plural)
+NNP = Proper Noun (singular)    NNPS = Proper Noun (plural)
+VB  = Verb (base form)          VBD = Verb (past tense)
+VBZ = Verb (3rd sing. present)  VBG = Verb (gerund/participle)
+JJ  = Adjective                 RB  = Adverb
+DT  = Determiner                IN  = Preposition/Subordinating conjunction
+CC  = Coordinating conjunction  PRP = Personal pronoun
+TO  = "to"
+
+Example: John/NNP saw/VBD the/DT cat/NN</pre>
+            </div>
+            <div class="info-box">
+                <strong>Ambiguity Example:</strong> "John saw the <em>saw</em> and decided to take it to the
+                <em>table</em>."<br>
+                The word "saw" can be NNP (proper noun), VBD (past verb), or NN (noun). "Table" can be NN or VB.<br>
+                Forward classification and backward classification can give different results — the full sentence
+                context is needed.
+            </div>
+            <h4>Approaches to POS Tagging</h4>
+            <div class="three-col">
+                <div class="def-box"><strong>Rule-based:</strong> Hand-written rules. E.g., "if word ends in -ing
+                    and follows 'is', tag as VBG"</div>
+                <div class="def-box"><strong>Statistical (ML):</strong> Trained on labeled corpora. Forward/Backward
+                    classification using features.</div>
+                <div class="def-box"><strong>Probabilistic Sequence Models:</strong> HMM (generative) and CRF
+                    (discriminative) — consider full sequence context.</div>
+            </div>
+            <div class="tip-box">
+                <span class="tip-title">⚠️ Key Problem: "Time flies like an arrow"</span>
+                Is "flies" a noun or verb? Is "like" a verb, preposition, or conjunction? Syntax alone cannot
+                resolve this — semantic and pragmatic knowledge are required. This is why probabilistic sequence
+                models (HMM, CRF) are preferred over simple classifiers.
+            </div>
+            </div>
+            </div>
+
+
+            </div>
+
+            </div>
+
+            </div>
+            </div>
+            <div class="topic-section" id="t-hmm">
+                <h3 onclick="toggleCollapse(this)" class="topic-title collapsible-header">🎲 Hidden Markov Model (HMM)
+                </h3>
+                <div class="collapsible-body">
+
+
+
+
+
+
+
+
+
+
+
+                    <div class="def-box">
+                        <strong>HMM</strong> is a probabilistic generative model for sequences. In POS tagging: hidden
+                        states = POS tags, observations = words. The model generates words from tags.
+                    </div>
+
+                </div>
+            </div>
+            <h4>Formal Definition</h4>
+            <div class="teal-box">
+                <strong>Components of an HMM:</strong><br><br>
+                • <strong>N states</strong>: S = {s₀, s₁, s₂, ..., sₙ, sF} (start s₀, end sF)<br>
+                • <strong>M observations</strong>: V = {v₁, v₂, ..., vM} (vocabulary)<br>
+                • <strong>Initial state probabilities</strong>: π(sᵢ) — probability of starting at state sᵢ<br>
+                • <strong>State Transition Matrix A</strong>: aᵢⱼ = P(state j at t+1 | state i at t)<br>
+                • <strong>Observation/Emission Probability Matrix B</strong>: bᵢ(oₖ) = P(oₖ | state i)<br>
+                • <strong>Total parameter set</strong>: λ = {A, B, π}
+            </div>
+            <h4>Three Fundamental Tasks</h4>
+            <div class="table-wrap">
+                <table>
+                    <tr>
+                        <th>Task</th>
+                        <th>Problem</th>
+                        <th>Algorithm</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Learning</strong></td>
+                        <td>Given training data, determine A, B, π</td>
+                        <td>Forward-Backward (Baum-Welch)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Likelihood</strong></td>
+                        <td>Given HMM λ and observation O, find P(O|λ)</td>
+                        <td>Forward Algorithm — O(TN²)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Decoding</strong></td>
+                        <td>Given HMM λ and O, find most likely state sequence</td>
+                        <td>Viterbi Algorithm</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="info-box">
+                <strong>Bayes' Theorem for POS Tagging:</strong><br>
+                We want: argmax_T P(T|W) = argmax_T [P(W|T) × P(T)] / P(W)<br>
+                Since P(W) is constant for all tags, compare: P(W|T) × P(T)<br>
+                • P(W|T) = emission probability (how likely the word given the tag)<br>
+                • P(T) = tag transition probability
+            </div>
+            <div class="teal-box">
+                <strong>Forward Algorithm (Observation Likelihood):</strong><br>
+                Uses dynamic programming. Exploits the Markov assumption: probability of being in any state at time
+                t only depends on state at t-1.<br>
+                Computes a forward trellis — O(TN²) vs naive O(TN^T).<br><br>
+                <strong>Viterbi Algorithm (Decoding):</strong><br>
+                Finds the most likely sequence of hidden states for a given observation sequence. Uses dynamic
+                programming on the same trellis structure.
+            </div>
+            <div class="tip-box">
+                <span class="tip-title">💡 HMM Generation Procedure</span>
+                1. Set initial state q₁ = s₀<br>
+                2. For t = 1 to T: Transit to qt+1 = sⱼ based on transition A; pick observation oₜ = vₖ based on
+                emission B<br>
+                HMM generates <em>word sequences from tag sequences</em> (generative model).
+            </div>
+            <div class="two-col">
+                <div class="def-box"><strong>Generative Model (HMM):</strong> Captures joint probability P(X, Y).
+                    Can generate new data instances. Models the full data distribution. Less discriminative power.
+                </div>
+                <div class="def-box"><strong>Discriminative Model (CRF):</strong> Captures conditional probability
+                    P(Y|X). Directly discriminates between different classes. Better for classification tasks like
+                    POS tagging.</div>
+            </div>
+            </div>
+            </div>
+
+
+            </div>
+
+            </div>
+
+            </div>
+            </div>
+            <div class="topic-section" id="t-cfg">
+                <h3 onclick="toggleCollapse(this)" class="topic-title collapsible-header">📐 Context-Free Grammar (CFG)
+                </h3>
+                <div class="collapsible-body">
+
+
+
+
+
+
+
+
+
+
+
+                    <div class="def-box">
+                        A <strong>Context-Free Grammar (CFG)</strong> is a formal grammar used to describe the syntactic
+                        structure of language. It consists of production rules that define how sentences are structured.
+                    </div>
+
+                </div>
+            </div>
+            <div class="diagram-wrap">
+                <div class="diagram-title">CFG Rules & Parse Tree</div>
+                <pre>
+S  → NP VP          (Sentence = Noun Phrase + Verb Phrase)
+NP → Det N          (Noun Phrase = Determiner + Noun)
+VP → V NP | V PP    (Verb Phrase = Verb + NP or Verb + PrepP)
+PP → P NP           (Prepositional Phrase = Preposition + NP)
+Det → the | a
+N  → dog | cat | mat
+V  → sat | saw
+P  → on
+
+Parse of "The dog sat on the mat":
+         S
+       /   \
+      NP    VP
+     / \   /  \
+   Det  N  V    PP
+   the dog sat  / \
+              P   NP
+             on  / \
+               Det  N
+               the  mat</pre>
+            </div>
+            <div class="table-wrap">
+                <table>
+                    <tr>
+                        <th>Grammar Type</th>
+                        <th>Rules</th>
+                        <th>NLP Use</th>
+                    </tr>
+                    <tr>
+                        <td>Regular Grammar</td>
+                        <td>A → aB or A → a</td>
+                        <td>Lexical analysis, tokenization</td>
+                    </tr>
+                    <tr>
+                        <td>Context-Free Grammar (CFG)</td>
+                        <td>A → α (any string of terminals/nonterminals)</td>
+                        <td>Syntactic parsing, constituency analysis</td>
+                    </tr>
+                    <tr>
+                        <td>Probabilistic CFG (PCFG)</td>
+                        <td>CFG + probability for each rule</td>
+                        <td>Disambiguation of parse trees</td>
+                    </tr>
+                </table>
+            </div>
+            </div>
+            </div>
+
+
+            </div>
+
+            </div>
+
+            </div>
+            </div>
+            <div class="topic-section" id="t-constituency">
+                <h3 onclick="toggleCollapse(this)" class="topic-title collapsible-header">🌲 Constituency Parsing</h3>
+                <div class="collapsible-body">
+
+
+
+
+
+
+
+
+
+
+
+                    <div class="def-box">
+                        <strong>Constituency Parsing</strong> (phrase structure parsing) analyzes sentences by
+                        identifying
+                        constituents (phrases) — groups of words that function as a single unit. Based on CFG rules.
+                    </div>
+
+                    <ul class="kp">
+                        <li>NP (Noun Phrase), VP (Verb Phrase), PP (Prepositional Phrase), AP (Adjective Phrase)</li>
+                        <li>The parse tree shows the hierarchical phrase structure</li>
+                        <li>Ambiguous sentences have multiple valid parse trees — PCFG assigns probabilities to choose
+                            the
+                            most likely</li>
+                        <li>The CYK (Cocke-Younger-Kasami) algorithm is used for efficient constituency parsing</li>
+                    </ul>
+                    <div class="tip-box">
+                        <span class="tip-title">⚠️ Structural Ambiguity</span>
+                        "I saw the man with the telescope" has two parse trees:<br>
+                        (1) [VP saw [NP the man with the telescope]] — man has telescope<br>
+                        (2) [VP saw [NP the man] [PP with the telescope]] — I used telescope<br>
+                        PCFG resolves by assigning higher probability to the more common structure.
+                    </div>
+
+                </div>
+            </div>
+            </div>
+
+
+            </div>
+
+            </div>
+
+            </div>
+            </div>
+            <div class="topic-section" id="t-dependency">
+                <h3 onclick="toggleCollapse(this)" class="topic-title collapsible-header">🔗 Dependency Parsing</h3>
+                <div class="collapsible-body">
+
+
+
+
+
+
+
+
+
+
+
+                    <div class="def-box">
+                        <strong>Dependency Parsing</strong> analyzes the grammatical structure of a sentence by
+                        establishing
+                        relationships (dependencies) between words. Each word has a HEAD (the word it depends on) and a
+                        DEPENDENCY RELATION.
+                    </div>
+
+                </div>
+            </div>
+            <div class="diagram-wrap">
+                <div class="diagram-title">Dependency Tree: "She writes a letter"</div>
+                <pre>
+       writes (ROOT)
+      /       \
+    She        letter
+   (nsubj)    (dobj)
+               /
+              a
+            (det)
+
+Token  | Dep Relation | Head
+-------|--------------|------
+She    | nsubj        | writes
+writes | ROOT         | writes
+a      | det          | letter
+letter | dobj         | writes</pre>
+
+                <ul class="kp">
+                    <li><strong>The verb is the root</strong> — it is the central element around which all other words
+                        are organized</li>
+                    <li>The verb determines subject-verb agreement and governs object/complement relationships</li>
+                    <li><strong>Common dependency relations:</strong> nsubj (nominal subject), dobj (direct object), det
+                        (determiner), prep (preposition), pobj (prepositional object), amod (adjectival modifier)</li>
+                    <li>Tools: spaCy, Stanford NLP, NLTK</li>
+                    <li>In complex sentences, each clause may have its own root verb</li>
+                </ul>
+                <div class="two-col">
+                    <div class="pro-box"><strong>Constituency vs Dependency</strong><br>Constituency: groups words into
+                        hierarchical phrases<br>Dependency: captures direct word-to-word relationships<br>Dependency is
+                        more direct for semantic analysis</div>
+                    <div class="def-box"><strong>ADP</strong> = Adposition
+                        (Preposition/Postposition)<br><strong>DET</strong> = Determiner<br><strong>NOUN</strong> =
+                        Noun<br><strong>VERB</strong> = Verb<br><strong>ADJ</strong> = Adjective<br><strong>ADV</strong>
+                        = Adverb</div>
+                </div>
+            </div>
+            </div>
+
+
+            </div>
+
+            </div>
+
+            </div>
+            </div>
+            <div class="topic-section" id="t-transition">
+                <h3 onclick="toggleCollapse(this)" class="topic-title collapsible-header">⚙️ Transition-based Parsing
+                </h3>
+                <div class="collapsible-body">
+
+
+
+
+
+
+
+
+
+
+
+                    <div class="def-box">
+                        <strong>Transition-based dependency parsing</strong> builds the dependency tree incrementally by
+                        processing words one-by-one and applying a sequence of transitions. Known for efficiency.
+                    </div>
+
+                </div>
+            </div>
+            <h4>Data Structures</h4>
+            <div class="two-col">
+                <div class="teal-box"><strong>Stack:</strong> Holds partially parsed
+                    words<br><strong>Buffer:</strong> Contains remaining unprocessed words<br><strong>Parse
+                        Tree:</strong> Final structure being built</div>
+                <div class="teal-box"><strong>Transitions:</strong><br>• <strong>Shift</strong>: Move next word from
+                    buffer to stack<br>• <strong>Left Arc</strong>: Create dependency from top to below-top, remove
+                    top<br>• <strong>Right Arc</strong>: Create dependency from below-top to top, remove top</div>
+            </div>
+            <div class="diagram-wrap">
+                <div class="diagram-title">Example: "John eats an apple"</div>
+                <pre>
+Step | Action     | Stack          | Buffer             | Dependencies
+-----|------------|----------------|--------------------|-------------
+  0  | Init       | []             | [John, eats, an, apple] | {}
+  1  | Shift      | [John]         | [eats, an, apple]  | {}
+  2  | Shift      | [John, eats]   | [an, apple]        | {}
+  3  | Right Arc  | [eats]         | [an, apple]        | {eats → John (nsubj)}
+  4  | Shift      | [eats, an]     | [apple]            | ...
+  5  | Shift      | [eats, an, apple] | []             | ...
+  6  | Left Arc   | [eats, apple]  | []                 | {apple ← an (det)}
+  7  | Right Arc  | [eats]         | []                 | {eats → apple (dobj)}
+</pre>
+            </div>
+            <div class="tip-box">
+                <span class="tip-title">⚠️ Termination Condition</span>
+                Parsing terminates when the buffer is empty AND the stack contains only the root node of the parse
+                tree.
+            </div>
+            </div>
+        </section>
+
+        <!-- ==================== MODULE 4 ==================== -->
+        <section class="module-section" id="module-4">
+            </div>
+
+
+            </div>
+            </div>
+            <div class="module-header">
+                <div class="mod-badge" style="background:#25b5a0">M4</div>
+                <div class="module-title-group">
+                    <div class="module-title">Semantics</div>
+                    <div class="module-subtitle">Semantic Analysis, WSD, WordNet & Coreference Resolution
+                    </div>
+
+                </div>
+            </div>
+            <div class="topic-section" id="t-semantic-analysis">
+                <h3 onclick="toggleCollapse(this)" class="topic-title collapsible-header">💡 Semantic Analysis</h3>
+                <div class="collapsible-body">
+
+
+
+
+
+
+
+
+
+
+
+                    <div class="def-box">
+                        <strong>Semantic Analysis</strong> studies the meaning of words and sentences. Three types of
+                        analysis help understand sentence meaning.
+                    </div>
+
+                </div>
+            </div>
+            <div class="three-col">
+                <div class="info-box"><strong>Semantic Features</strong><br><br>Breaking words into meaning
+                    components → useful for categorization, restrictions, disambiguation.<br><br>girl → [+Human,
+                    +Young, +Female]<br>dog → [-Human, +Animal]</div>
+                <div class="info-box"><strong>Lexical Relations</strong><br><br>How words relate to each other:
+                    synonymy, antonymy, hypernymy, hyponymy, meronymy, polysemy, homonymy.</div>
+                <div class="info-box"><strong>Semantic/Thematic Roles</strong><br><br>Identifying the roles words
+                    play in the situation described (Agent, Patient, Theme, etc.).</div>
+            </div>
+            <h4>Discourse & World Knowledge</h4>
+            <div class="def-box">
+                <strong>Discourse:</strong> The prior context provides references for pronouns. Temporal sequences
+                require discourse knowledge.<br>
+                "Mary was hired. She untangled it." → understanding the roles requires knowing what "she" and "it"
+                refer to.
+            </div>
+            <div class="def-box">
+                <strong>World Knowledge:</strong> Allows understanding conversations beyond the literal text —
+                knowledge about jobs, office politics, structure of arguments, etc. Without world knowledge, many
+                NLP tasks fail.
+            </div>
+            </div>
+            </div>
+
+
+            </div>
+
+            </div>
+
+            </div>
+            </div>
+            <div class="topic-section" id="t-thematic">
+                <h3 onclick="toggleCollapse(this)" class="topic-title collapsible-header">🎭 Thematic Roles</h3>
+                <div class="collapsible-body">
+
+
+
+
+
+
+
+
+
+
+
+                    <div class="def-box">
+                        <strong>Thematic Roles</strong> (Semantic Roles / Theta Roles) identify the underlying semantic
+                        relationship between a verb and its arguments — who did what to whom, what was affected, how
+                        something was experienced.
+                    </div>
+
+                </div>
+            </div>
+            <div class="table-wrap">
+                <table>
+                    <tr>
+                        <th>Role</th>
+                        <th>Definition</th>
+                        <th>Example</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Agent</strong></td>
+                        <td>Initiator of action, acts with volition</td>
+                        <td><em>Jack</em> ate the beans.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Patient</strong></td>
+                        <td>Entity undergoing effect, often changes state</td>
+                        <td>Sue mowed <em>the lawn</em>.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Theme</strong></td>
+                        <td>Entity moved by action or whose location is described</td>
+                        <td>Fred threw <em>the rock</em>.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Experiencer</strong></td>
+                        <td>Entity aware of action/state but not in control</td>
+                        <td><em>Kim</em> saw the deer.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Beneficiary</strong></td>
+                        <td>Entity for whose benefit action was performed</td>
+                        <td>Mary studied hard for <em>her mother</em>.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Instrument</strong></td>
+                        <td>Means by which action is performed</td>
+                        <td>Fred opened the lock <em>with a paper clip</em>.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Location</strong></td>
+                        <td>Place in which something is situated or takes place</td>
+                        <td>The picture hangs <em>above the fireplace</em>.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Goal</strong></td>
+                        <td>Entity towards which something moves</td>
+                        <td>Lee walked <em>to school</em>.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Source</strong></td>
+                        <td>Entity from which something moves</td>
+                        <td>Sue ran <em>from the policeman</em>.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Recipient</strong></td>
+                        <td>Subtype of Goal involved in changes of possession</td>
+                        <td>Bill sold the car <em>to Mary</em>.</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="tip-box">
+                <span class="tip-title">💡 Theme vs Patient</span>
+                All Patients are Themes, but not all Themes are Patients.<br>
+                Theme = general role (entity involved in situation)<br>
+                Patient = special case of Theme (entity that <em>changes</em> state)
+            </div>
+            </div>
+            </div>
+
+
+            </div>
+
+            </div>
+
+            </div>
+            </div>
+            <div class="topic-section" id="t-wsd">
+                <h3 onclick="toggleCollapse(this)" class="topic-title collapsible-header">🔍 Word Sense Disambiguation
+                    (WSD)</h3>
+                <div class="collapsible-body">
+
+
+
+
+
+
+
+
+
+
+
+                    <div class="def-box">
+                        <strong>WSD</strong> is the task of determining which meaning (sense) of a word is being used in
+                        a
+                        particular context. Critical because many words have multiple meanings (polysemy) or refer to
+                        different concepts (homonymy).
+                    </div>
+
+                </div>
+            </div>
+            <div class="def-box">
+                <strong>Example:</strong> "The bank will not be accepting cash on Saturdays" (financial bank) vs
+                "The river overflowed the bank" (river bank). The word "bass" can mean a musical instrument, a
+                low-frequency sound, or a type of fish.
+            </div>
+            <h4>Approaches to WSD</h4>
+            <div class="two-col">
+                <div class="pro-box"><strong>Knowledge-based WSD</strong><br><br>Uses a lexical knowledge base
+                    (e.g., WordNet).<br><br><strong>Lesk Algorithm:</strong> Compare context words with glosses
+                    (definitions) of each sense. Pick the sense whose gloss has maximum overlap with
+                    context.<br><br>Code: <code>from nltk.wsd import lesk; sense = lesk(sentence, 'bank')</code>
+                </div>
+                <div class="pro-box"><strong>Supervised WSD</strong><br><br>Train a classifier on sense-annotated
+                    corpora.<br><br>Features: surrounding words, POS tags, syntactic relations.<br><br>SemCor is a
+                    commonly used sense-annotated corpus. Requires manually labeled training data for each word.
+                </div>
+            </div>
+            <div class="tip-box">
+                <span class="tip-title">💡 Applications of WSD</span>
+                Information Retrieval (better search), Machine Translation (correct word choice), Text Analysis
+                (accurate sentiment, summarization). WSD is a hard problem — even humans sometimes disagree on
+                senses.
+            </div>
+            </div>
+            </div>
+
+
+            </div>
+
+            </div>
+
+            </div>
+            </div>
+            <div class="topic-section" id="t-wordnet">
+                <h3 onclick="toggleCollapse(this)" class="topic-title collapsible-header">📚 WordNet & Lexical Relations
+                </h3>
+                <div class="collapsible-body">
+
+
+
+
+
+
+
+
+
+
+
+                    <div class="def-box">
+                        <strong>WordNet</strong> is a large lexical database of English. Words are grouped into sets of
+                        synonyms called <strong>synsets</strong>, each representing a distinct concept. Used extensively
+                        in
+                        WSD.
+                    </div>
+
+                </div>
+            </div>
+            <div class="table-wrap">
+                <table>
+                    <tr>
+                        <th>Lexical Relation</th>
+                        <th>Definition</th>
+                        <th>Example</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Homonymy</strong></td>
+                        <td>Same form, completely different meanings (different origins)</td>
+                        <td>Bank (financial) vs Bank (river)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Polysemy</strong></td>
+                        <td>Same word with multiple related meanings</td>
+                        <td>"Head" — body part, leader, foam on beer</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Synonymy</strong></td>
+                        <td>Different words with same/similar meaning</td>
+                        <td>sofa / couch, big / large</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Antonymy</strong></td>
+                        <td>Words with opposite meanings</td>
+                        <td>hot / cold, up / down</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Hypernymy</strong></td>
+                        <td>Broad category word (supertype)</td>
+                        <td>colour is hypernym of red; vehicle is hypernym of car</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Hyponymy</strong></td>
+                        <td>Specific instance word (subtype)</td>
+                        <td>red is hyponym of colour; car is hyponym of vehicle</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Meronymy</strong></td>
+                        <td>Part-whole relationship (part of)</td>
+                        <td>Carburetor is meronym of engine; fingers are meronyms of hand</td>
+                    </tr>
+                </table>
+            </div>
+            </div>
+            </div>
+
+
+            </div>
+
+            </div>
+
+            </div>
+            </div>
+            <div class="topic-section" id="t-coreference">
+                <h3 onclick="toggleCollapse(this)" class="topic-title collapsible-header">🔗 Coreference Resolution</h3>
+                <div class="collapsible-body">
+
+
+
+
+
+
+
+
+
+
+
+                    <div class="def-box">
+                        <strong>Coreference Resolution</strong> is the task of identifying all expressions (mentions) in
+                        a
+                        text that refer to the same entity.<br>
+                        "Victoria Chen works at Megabucks Banking. <em>She</em> was promoted." → "She" refers to
+                        "Victoria
+                        Chen".
+                    </div>
+
+                </div>
+            </div>
+            <h4>Mention Detection</h4>
+            <div class="def-box">
+                A <strong>mention</strong> is any expression that could refer to an entity.<br>
+                Types: Proper noun mentions (John, New York), Pronoun mentions (he, she, it), Noun phrase mentions
+                (the tall man), Nominal mentions (the teacher, a student).<br>
+                Challenge: Over-generating mentions leads to false positives; under-generating misses coreference
+                links.
+            </div>
+            <h4>Mention-Pair Models</h4>
+            <div class="info-box">
+                <strong>Traditional Mention-Pair Architecture:</strong><br>
+                • Treats coreference as <strong>binary classification</strong>: for each pair of mentions (m_i,
+                m_j), predict coreferent / not coreferent<br>
+                • Features: gender/number agreement, syntactic role, semantic compatibility<br>
+                • Training: closest antecedent = positive, all mentions in between = negative<br>
+                • Closest-first clustering: run right-to-left, first antecedent with P > 0.5 is linked<br>
+                • Best-first clustering: all i-1 antecedents evaluated, most probable is chosen
+            </div>
+            <div class="two-col">
+                <div class="pro-box"><strong>Advantage of Mention-Pair</strong><br>Simple to implement and
+                    understand. Binary classification is well-studied.</div>
+                <div class="con-box"><strong>Disadvantages of Mention-Pair</strong><br>• Doesn't directly compare
+                    candidate antecedents<br>• Ignores discourse model (looks only at mention pairs, not
+                    entities)<br>• Makes decisions locally without global consistency<br><br>Example problem: "Jack
+                    met John. He greeted him." → model may assign both "He" and "him" to both Jack and John,
+                    violating global consistency.</div>
+            </div>
+            <div class="tip-box">
+                <span class="tip-title">💡 Modern Approaches</span>
+                Neural end-to-end coreference models (Lee et al. 2017 with BERT) jointly detect mentions and resolve
+                coreference. Much more accurate than mention-pair models.
+            </div>
+            </div>
+        </section>
+
+        <!-- ==================== MODULE 5 ==================== -->
+        <section class="module-section" id="module-5">
+            </div>
+
+
+            </div>
+            </div>
+            <div class="module-header">
+                <div class="mod-badge" style="background:#c9a84c">M5</div>
+                <div class="module-title-group">
+                    <div class="module-title">Language Models</div>
+                    <div class="module-subtitle">N-Grams, Perplexity, Smoothing & TF-IDF
+                    </div>
+
+                </div>
+            </div>
+            <div class="topic-section" id="t-ngram">
+                <h3 onclick="toggleCollapse(this)" class="topic-title collapsible-header">📊 N-Gram Language Models</h3>
+                <div class="collapsible-body">
+
+
+
+
+
+
+
+
+
+
+
+                    <div class="def-box">
+                        A <strong>Language Model (LM)</strong> estimates the probability of a sequence of words: P(w₁,
+                        w₂,
+                        ..., wₙ). Predicts the probability of the next word given the previous words.
+                    </div>
+
+                </div>
+            </div>
+            <div class="teal-box">
+                <strong>N-gram Models:</strong> Approximate the probability of a word given all previous words using
+                only the previous (n-1) words — the <strong>Markov assumption</strong>.<br><br>
+                <strong>Unigram:</strong> P(w₁w₂...wₙ) ≈ ∏ P(wᵢ)<br>
+                <strong>Bigram:</strong> P(wᵢ | w₁...wᵢ₋₁) ≈ P(wᵢ | wᵢ₋₁)<br>
+                <strong>Trigram:</strong> P(wᵢ | w₁...wᵢ₋₁) ≈ P(wᵢ | wᵢ₋₂, wᵢ₋₁)<br><br>
+                <strong>MLE (Maximum Likelihood Estimate) for bigrams:</strong><br>
+                P(wᵢ | wᵢ₋₁) = C(wᵢ₋₁, wᵢ) / C(wᵢ₋₁)
+            </div>
+            <div class="table-wrap">
+                <table>
+                    <tr>
+                        <th>N-gram Type</th>
+                        <th>Context Used</th>
+                        <th>Example</th>
+                    </tr>
+                    <tr>
+                        <td>Unigram (1-gram)</td>
+                        <td>No context</td>
+                        <td>P(cat) = 0.02</td>
+                    </tr>
+                    <tr>
+                        <td>Bigram (2-gram)</td>
+                        <td>Previous 1 word</td>
+                        <td>P(cat|the) = 0.15</td>
+                    </tr>
+                    <tr>
+                        <td>Trigram (3-gram)</td>
+                        <td>Previous 2 words</td>
+                        <td>P(cat|chased, the) = 0.08</td>
+                    </tr>
+                    <tr>
+                        <td>4-gram, 5-gram</td>
+                        <td>Previous 3, 4 words</td>
+                        <td>More context, more data needed</td>
+                    </tr>
+                </table>
+
+                <ul class="kp">
+                    <li>Applications: Autocomplete, Machine Translation, Question Answering, Text Summarization, Text
+                        Generation, Speech Recognition</li>
+                    <li>Limitation: Traditional LMs use only left-to-right context (unidirectional)</li>
+                    <li>Higher n = more context but needs exponentially more data; lower n = less data but less context
+                    </li>
+                </ul>
+            </div>
+            </div>
+
+
+            </div>
+
+            </div>
+
+            </div>
+            </div>
+            <div class="topic-section" id="t-perplexity">
+                <h3 onclick="toggleCollapse(this)" class="topic-title collapsible-header">📐 Perplexity</h3>
+                <div class="collapsible-body">
+
+
+
+
+
+
+
+
+
+
+
+                    <div class="def-box">
+                        <strong>Perplexity (PP)</strong> is an intrinsic evaluation metric for language models. A lower
+                        perplexity = better model (more certain predictions).
+                    </div>
+
+                </div>
+            </div>
+            <div class="teal-box">
+                <strong>Formula:</strong> PP(W) = P(w₁w₂...wₙ)^(-1/N)<br><br>
+                Where N = number of tokens (consider only &lt;/s&gt; for sentence endings in counting)<br><br>
+                <strong>Example Calculation (Bigram):</strong><br>
+                Sentences: &lt;s&gt; Who am I &lt;/s&gt; | &lt;s&gt; I would like to know &lt;/s&gt; | &lt;s&gt; I
+                am not &lt;/s&gt;<br>
+                Query: "I I am not"<br>
+                P = P(I|&lt;s&gt;) × P(I|I) × P(am|I) × P(not|am) × P(&lt;/s&gt;|not)<br>
+                P = ¾ × 1/5 × 2/5 × 1/3 × 1/1 = 0.02<br>
+                PP = (0.02)^(-1/5) = 2.186
+            </div>
+            <div class="two-col">
+                <div class="pro-box"><strong>Intrinsic Evaluation</strong><br>Measure perplexity on held-out test
+                    set. Fast and easy. Good for comparing models during development.</div>
+                <div class="con-box"><strong>Extrinsic Evaluation</strong><br>Plug model into real application
+                    (e.g., speech recognizer) and measure end-to-end performance. Time consuming (days) but the
+                    "true" evaluation. Perplexity is only a proxy.</div>
+            </div>
+            <div class="tip-box">
+                <span class="tip-title">⚠️ Important</span>
+                Perplexity is only useful if test data looks like training data. It's a pilot experiment metric —
+                generally not sufficient to publish. For real evaluation, use extrinsic/in-vivo evaluation.
+            </div>
+            </div>
+            </div>
+
+
+            </div>
+
+            </div>
+
+            </div>
+            </div>
+            <div class="topic-section" id="t-smoothing">
+                <h3 onclick="toggleCollapse(this)" class="topic-title collapsible-header">🌀 Smoothing Techniques</h3>
+                <div class="collapsible-body">
+
+
+
+
+
+
+
+
+
+
+
+                    <div class="def-box">
+                        <strong>Smoothing</strong> is applied to handle the <strong>zero probability problem</strong> —
+                        n-grams not seen in training data get P=0, which breaks language models. Smoothing adjusts
+                        probability estimates to handle unseen events.
+                    </div>
+
+                </div>
+            </div>
+            <div class="info-box">
+                Shakespeare produced 300,000 bigram types out of V² = 844 million possible bigrams —
+                <strong>99.96%</strong> of possible bigrams were never seen! Without smoothing, any sentence with an
+                unseen bigram gets P = 0.
+            </div>
+            <h4>Types of Smoothing</h4>
+            <div class="table-wrap">
+                <table>
+                    <tr>
+                        <th>Method</th>
+                        <th>Idea</th>
+                        <th>Formula</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Add-One (Laplace)</strong></td>
+                        <td>Add 1 to all n-gram counts before normalizing</td>
+                        <td>P(z|xy) = C(xyz)+1 / C(xy)+V</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Add-k (Delta)</strong></td>
+                        <td>Add fraction k (0 < k < 1) instead of 1</td>
+                        <td>P(z|xy) = C(xyz)+k / C(xy)+kV</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Backoff</strong></td>
+                        <td>If trigram unseen, back off to bigram; if bigram unseen, back off to unigram</td>
+                        <td>Use lower-order n-gram with discounting</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Kneser-Ney</strong></td>
+                        <td>Most sophisticated — uses absolute discounting + interpolation based on word diversity
+                        </td>
+                        <td>Best performing in practice</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="tip-box">
+                <span class="tip-title">⚠️ Add-One Smoothing Problem</span>
+                Add-one smoothing makes very large changes to counts. C(want|to) changed from 608 to 238. P(to|want)
+                decreases from 0.66 to 0.26. This shows add-one redistributes too much probability mass to unseen
+                events. Kneser-Ney is preferred in practice.
+            </div>
+            </div>
+            </div>
+
+
+            </div>
+
+            </div>
+
+            </div>
+            </div>
+            <div class="topic-section" id="t-tfidf">
+                <h3 onclick="toggleCollapse(this)" class="topic-title collapsible-header">📈 TF-IDF</h3>
+                <div class="collapsible-body">
+
+
+
+
+
+
+
+
+
+
+
+                    <div class="def-box">
+                        <strong>TF-IDF (Term Frequency–Inverse Document Frequency)</strong> is a numerical statistic
+                        that
+                        reflects how important a word is to a document in a collection (corpus). Used for information
+                        retrieval and text mining.
+                    </div>
+
+                </div>
+            </div>
+            <div class="two-col">
+                <div class="teal-box">
+                    <strong>TF (Term Frequency):</strong><br>
+                    How often a term appears in a document.<br><br>
+                    TF(t, d) = count of t in d / total terms in d<br><br>
+                    High TF = word appears often in this document
+                </div>
+                <div class="teal-box">
+                    <strong>IDF (Inverse Document Frequency):</strong><br>
+                    How rare a term is across all documents.<br><br>
+                    IDF(t) = log(N / df(t))<br>
+                    where N = total docs, df(t) = docs containing t<br><br>
+                    High IDF = rare word (more discriminative)
+                </div>
+            </div>
+            <div class="info-box">
+                <strong>TF-IDF Formula:</strong> TF-IDF(t, d) = TF(t, d) × IDF(t)<br><br>
+                <strong>Example with 3 documents:</strong><br>
+                D1: "cat sat mat" | D2: "dog sat log" | D3: "cat chased dog"<br>
+                Vocabulary: {cat, sat, mat, dog, log, chased}<br>
+                TF(cat, D1) = 1/3 = 0.33 | IDF(cat) = log(3/2) = 0.176<br>
+                TF-IDF(cat, D1) = 0.33 × 0.176 ≈ 0.058<br>
+                Common words like "sat" get lower TF-IDF (appear in multiple docs = lower IDF).
+            </div>
+            <div class="tip-box">
+                <span class="tip-title">💡 TF-IDF in NLP</span>
+                Used in: information retrieval (search engines), text classification, extractive summarization
+                (TF-IDF sentence scoring), keyword extraction. Stop words (the, a, is) get very low IDF since they
+                appear in all documents.
+            </div>
+            </div>
+        </section>
+
+        <!-- ==================== MODULE 6 ==================== -->
+        <section class="module-section" id="module-6">
+            </div>
+
+
+            </div>
+            </div>
+            <div class="module-header">
+                <div class="mod-badge" style="background:#5b8dee">M6</div>
+                <div class="module-title-group">
+                    <div class="module-title">Deep Learning & NLP</div>
+                    <div class="module-subtitle">Transformer Architecture, BERT, Text Classification, Neural MT
+                    </div>
+
+                </div>
+            </div>
+            <div class="topic-section" id="t-transformer">
+                <h3 onclick="toggleCollapse(this)" class="topic-title collapsible-header">⚡ Transformer Architecture
+                </h3>
+                <div class="collapsible-body">
+
+
+
+
+
+
+
+
+
+
+
+                    <div class="def-box">
+                        The <strong>Transformer</strong> is a deep learning architecture based entirely on the
+                        <strong>self-attention mechanism</strong>, proposed by Vaswani et al. in 2017 — "Attention Is
+                        All
+                        You Need" (NeurIPS 2017).
+                    </div>
+
+                </div>
+            </div>
+            <h4>Why Transformers? Limitations of RNNs/LSTMs</h4>
+            <div class="table-wrap">
+                <table>
+                    <tr>
+                        <th>RNN/LSTM Limitation</th>
+                        <th>Transformer Solution</th>
+                    </tr>
+                    <tr>
+                        <td>Sequential processing — cannot parallelize</td>
+                        <td>Processes entire sequence in parallel</td>
+                    </tr>
+                    <tr>
+                        <td>Long-range dependency issues</td>
+                        <td>Self-attention directly connects all word pairs</td>
+                    </tr>
+                    <tr>
+                        <td>Poor GPU utilization</td>
+                        <td>Scales extremely well on GPUs/TPUs</td>
+                    </tr>
+                    <tr>
+                        <td>Vanishing/exploding gradients (BPTT)</td>
+                        <td>Residual connections + layer normalization</td>
+                    </tr>
+                    <tr>
+                        <td>Memory bottleneck (single hidden state)</td>
+                        <td>Rich multi-head attention representations</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="teal-box">
+                <strong>Self-Attention Mechanism:</strong><br>
+                Each word attends to every other word and assigns importance weights.<br><br>
+                Three learned matrices per word:<br>
+                • <strong>Query (Q)</strong>: What am I looking for?<br>
+                • <strong>Key (K)</strong>: What do I contain?<br>
+                • <strong>Value (V)</strong>: What information do I pass?<br><br>
+                Attention(Q,K,V) = softmax(QKᵀ / √dₖ) × V<br><br>
+                Example: "The cat chased the mouse because <em>it</em> was hungry."<br>
+                → Self-attention assigns higher importance to "cat" when processing "it"
+            </div>
+            <h4>Multi-Head Attention</h4>
+            <div class="info-box">
+                <strong>Multi-Head Attention</strong> runs multiple attention operations in parallel, each "head"
+                focuses on different aspects of the sentence (syntax, semantics, long-range dependencies).<br><br>
+                Example: "The bank raised interest rates, and the river bank flooded." Different attention heads
+                help BERT understand the two different meanings of "bank" in context.
+            </div>
+            <h4>Transformer Components</h4>
+            <ul class="kp">
+                <li><strong>Positional Encoding:</strong> Since transformers have no built-in notion of word order
+                    (unlike RNNs), positional encoding is added to input embeddings</li>
+                <li><strong>Layer Normalization:</strong> Ensures layers remain in reasonable range (training
+                    stability)</li>
+                <li><strong>Residual Connections:</strong> Skip connections that prevent vanishing gradients</li>
+                <li><strong>Feed-Forward Networks:</strong> Position-wise FFN after each attention layer</li>
+                <li><strong>Label Smoothing:</strong> Insert some uncertainty in the training process</li>
+                <li><strong>Specialized Training Schedule:</strong> Adjust learning rate of Adam optimizer</li>
+            </ul>
+            <div class="diagram-wrap">
+                <div class="diagram-title">Transformer Block</div>
+                <pre>
+Input Embeddings + Positional Encoding
+          ↓
+    [Multi-Head Attention]
+          ↓ (+ Residual)
+    [Layer Normalization]
+          ↓
+    [Feed-Forward Network]
+          ↓ (+ Residual)
+    [Layer Normalization]
+          ↓
+    Output Representations</pre>
+            </div>
+            </div>
+            </div>
+
+
+            </div>
+
+            </div>
+
+            </div>
+            </div>
+            <div class="topic-section" id="t-bert">
+                <h3 onclick="toggleCollapse(this)" class="topic-title collapsible-header">🤖 BERT — Bidirectional
+                    Encoder Representations from Transformers</h3>
+                <div class="collapsible-body">
+
+
+
+
+
+
+
+
+
+
+
+                    <div class="def-box">
+                        <strong>BERT</strong> is a pre-trained deep learning model developed by Google in 2018. It uses
+                        only
+                        the <strong>Encoder</strong> part of the Transformer (NLU-oriented). BERT currently powers
+                        Google
+                        Search.
+                    </div>
+
+                </div>
+            </div>
+            <div class="two-col">
+                <div class="teal-box">
+                    <strong>BERT Base:</strong><br>
+                    • 12 Transformer layers<br>
+                    • 768 hidden size<br>
+                    • 12 attention heads<br>
+                    • 110M parameters
+                </div>
+                <div class="teal-box">
+                    <strong>BERT Large:</strong><br>
+                    • 24 Transformer layers<br>
+                    • 1024 hidden size<br>
+                    • 16 attention heads<br>
+                    • 340M parameters
+                </div>
+            </div>
+            <h4>Bidirectional Approach</h4>
+            <div class="info-box">
+                Previous models were unidirectional:<br>
+                • GPT: Left-to-right only<br>
+                • ELMo: Two separate LSTMs (shallow bidirectionality)<br><br>
+                <strong>BERT is truly bidirectional</strong> — processes context from BOTH left and right
+                simultaneously.<br><br>
+                Example: "He went to the <em>bank</em> to deposit money" vs "She sat by the <em>bank</em> of the
+                river."<br>
+                BERT understands the correct meaning of "bank" in both sentences by processing words on both sides.
+            </div>
+            <div class="two-col">
+                <div class="pro-box"><strong>BERT is Good At:</strong><br>Sentiment analysis, Question answering,
+                    Named Entity Recognition, Sentence similarity, Text classification</div>
+                <div class="con-box"><strong>BERT is NOT Designed For:</strong><br>Text generation, Machine
+                    translation (without decoder), Autoregressive sequence generation</div>
+            </div>
+            <h4>Static vs Contextual Embeddings</h4>
+            <div class="def-box">
+                <strong>Static (Word2Vec, GloVe, FastText):</strong> Each word has ONE fixed vector regardless of
+                context.<br>
+                <strong>Contextual (BERT):</strong> Same word gets DIFFERENT vectors depending on context — "bank"
+                in financial context vs river context gets different representations.
+            </div>
+            </div>
+            </div>
+
+
+            </div>
+
+            </div>
+
+            </div>
+            </div>
+            <div class="topic-section" id="t-bert-pretraining">
+                <h3 onclick="toggleCollapse(this)" class="topic-title collapsible-header">🎓 BERT Pre-training & Input
+                    Representation</h3>
+                <div class="collapsible-body">
+
+
+
+
+
+
+
+
+
+
+
+                    <div class="def-box">
+                        BERT is pre-trained on large unlabeled text (BooksCorpus + Wikipedia) using two unsupervised
+                        tasks,
+                        then fine-tuned on specific tasks with labeled data.
+                    </div>
+
+                </div>
+            </div>
+            <div class="two-col">
+                <div class="info-box">
+                    <strong>Pre-training Task 1: Masked Language Model (MLM)</strong><br><br>
+                    Randomly mask 15% of tokens in input. Train model to predict masked tokens from context (both
+                    left and right).<br><br>
+                    "The [MASK] sat on the mat." → predict "cat"<br><br>
+                    This forces the model to learn bidirectional context.
+                </div>
+                <div class="info-box">
+                    <strong>Pre-training Task 2: Next Sentence Prediction (NSP)</strong><br><br>
+                    Given two sentences A and B, predict: Is B the actual next sentence after A, or a random
+                    sentence?<br><br>
+                    Helps BERT understand sentence relationships — critical for QA, NLI tasks.
+                </div>
+            </div>
+            <h4>Input Representation</h4>
+            <div class="teal-box">
+                BERT input = Token Embedding + Position Embedding + Segment Embedding<br><br>
+                <strong>Special tokens:</strong><br>
+                • <strong>[CLS]</strong>: Added at start — its final output vector represents the whole sentence
+                (used for classification)<br>
+                • <strong>[SEP]</strong>: Separates two sentences<br><br>
+                <strong>Example:</strong><br>
+                Input: "India wins the world cup!"<br>
+                After tokenization: [CLS] india wins the world cup final in thrilling fashion ! [SEP]<br>
+                Each token gets a 768-dimensional embedding.
+            </div>
+            <h4>Fine-tuning Workflow</h4>
+            <ol class="steps">
+                <li><strong>Pre-training:</strong> BERT learns general language patterns from massive unlabeled
+                    corpora</li>
+                <li><strong>Add task head:</strong> Add a small classification/regression layer on top of [CLS]
+                    token output</li>
+                <li><strong>Fine-tune:</strong> Train on small labeled dataset for the specific downstream task
+                    (sentiment, NER, QA)</li>
+                <li><strong>Inference:</strong> Feed new text through BERT + task head → predicted label</li>
+            </ol>
+            </div>
+            </div>
+
+
+            </div>
+
+            </div>
+
+            </div>
+            </div>
+            <div class="topic-section" id="t-text-classification">
+                <h3 onclick="toggleCollapse(this)" class="topic-title collapsible-header">🏷️ Text Categorization /
+                    Classification</h3>
+                <div class="collapsible-body">
+
+
+
+
+
+
+
+
+
+
+
+                    <div class="def-box">
+                        <strong>Text Categorization</strong> is the process of automatically assigning predefined
+                        categories
+                        or tags to text based on its content. Converts raw text into structured labels that computers
+                        can
+                        act on.
+                    </div>
+
+                    <ul class="kp">
+                        <li>Gmail classifies emails into "Primary", "Promotions", or "Spam"</li>
+                        <li>Netflix tags shows under "Comedy" or "Drama"</li>
+                        <li>News articles classified as "Politics" or "Sports"</li>
+                    </ul>
+                    <div class="info-box">
+                        <strong>BERT for Text Classification:</strong><br>
+                        1. Feed text: [CLS] india wins the world cup ! [SEP]<br>
+                        2. BERT produces 768-dim vector for [CLS] token representing full text meaning<br>
+                        3. Pass [CLS] vector through linear layer → softmax → class probabilities<br>
+                        4. Output: Sports: 3.90, Politics: -0.75 → Sports (highest logit)<br><br>
+                        Self-attention captures relationships between all words. Positional embeddings preserve word
+                        order.
+                        Multiple attention heads capture syntax and semantics.
+                    </div>
+                    <div class="tip-box">
+                        <span class="tip-title">⚠️ Text Processing Before Classification</span>
+                        Raw text → Tokenization → Lowercasing/normalization → Stop word removal → Stemming/lemmatization
+                        →
+                        POS tagging → Vectorization (TF-IDF or BERT embeddings). "Garbage in, garbage out" — poor
+                        preprocessing = poor performance.
+                    </div>
+
+                </div>
+            </div>
+            </div>
+
+
+            </div>
+
+            </div>
+
+            </div>
+            </div>
+            <div class="topic-section" id="t-nmt">
+                <h3 onclick="toggleCollapse(this)" class="topic-title collapsible-header">🌐 Neural Machine Translation
+                    (NMT)</h3>
+                <div class="collapsible-body">
+
+
+
+
+
+
+
+
+
+
+
+                    <div class="def-box">
+                        <strong>Neural Machine Translation (NMT)</strong> uses encoder-decoder neural networks (now
+                        transformers) to translate text from one language to another end-to-end.
+                    </div>
+
+                </div>
+            </div>
+            <div class="two-col">
+                <div class="def-box">
+                    <strong>Encoder-Decoder Architecture:</strong><br>
+                    • <strong>Encoder:</strong> Reads source sentence, creates context representations<br>
+                    • <strong>Decoder:</strong> Generates target sentence word-by-word using encoder context<br>
+                    • Used in Seq2Seq models (earlier RNN/LSTM based)
+                </div>
+                <div class="info-box">
+                    <strong>Attention in NMT:</strong><br>
+                    The decoder attends to different encoder outputs at each generation step.<br>
+                    Allows the model to focus on relevant source words when generating each target word.<br>
+                    "Attention is All You Need" (Vaswani et al., 2017) replaced Seq2Seq with full transformer.
+                </div>
+            </div>
+            <h4>Transformer Attention Tricks in NMT</h4>
+            <ul class="kp">
+                <li><strong>Self-Attention:</strong> Each layer combines words with others in the same sequence</li>
+                <li><strong>Multi-headed Attention:</strong> 8 attention heads function independently</li>
+                <li><strong>Normalized Dot-product Attention:</strong> Remove bias in dot product when using large
+                    networks (divide by √dₖ)</li>
+                <li><strong>Positional Encodings:</strong> Ensures position distinguishability without RNN</li>
+                <li><strong>Masking for Training:</strong> Mask future positions during decoder training for
+                    efficient batch training</li>
+            </ul>
+            <div class="teal-box">
+                <strong>BLEU Score (Bilingual Evaluation Understudy):</strong><br>
+                Standard evaluation metric for machine translation.<br>
+                Measures overlap between generated translation and reference translation.<br>
+                BLEU = Brevity Penalty × exp(Σ wₙ log pₙ)<br>
+                where pₙ = n-gram precision<br>
+                Range: 0 to 1 (higher = better, but not perfect metric)
+            </div>
+            <div class="tip-box">
+                <span class="tip-title">💡 Getting Started with NMT</span>
+                Find training data (e.g., TED talks from IWSLT) → Download toolkit (OpenNMT, fairseq, Sockeye) →
+                Train → Calculate BLEU score → Analyze what's right/wrong.
+            </div>
+            </div>
+        </section>
+
+        <!-- ==================== MODULE 7 ==================== -->
+        <section class="module-section" id="module-7">
+            </div>
+
+
+            </div>
+            </div>
+            <div class="module-header">
+                <div class="mod-badge" style="background:#e0be5a">M7</div>
+                <div class="module-title-group">
+                    <div class="module-title">Text Summarization</div>
+                    <div class="module-subtitle">Extractive, Abstractive Methods & BERTSUM
+                    </div>
+
+                </div>
+            </div>
+            <div class="topic-section" id="t-ts-intro">
+                <h3 onclick="toggleCollapse(this)" class="topic-title collapsible-header">📝 What is Text Summarization?
+                </h3>
+                <div class="collapsible-body">
+
+
+
+
+
+
+
+
+
+
+
+                    <div class="def-box">
+                        <strong>Text Summarization</strong> is the process of automatically distilling a large document
+                        into
+                        a shorter version that retains the most relevant information. By extracting key concepts and
+                        maintaining the original meaning, these systems can revolutionize industries such as banking,
+                        law,
+                        and healthcare.
+                    </div>
+
+                </div>
+            </div>
+            <h4>Why Text Summarization Matters</h4>
+            <ul class="kp">
+                <li><strong>Information Overload Management:</strong> Process growing volumes of text</li>
+                <li><strong>Time Efficiency:</strong> Read summaries instead of full documents</li>
+                <li><strong>Accessibility:</strong> Makes complex or lengthy content more approachable</li>
+                <li><strong>Enhanced Search and Retrieval:</strong> Better indexing with concise summaries</li>
+                <li><strong>Cost Reduction:</strong> Distills text to most essential points</li>
+            </ul>
+            <div class="two-col">
+                <div class="pro-box">
+                    <strong>Extractive Summarization</strong><br><br>
+                    Copies the most important sentences directly from the source text. A subset of the original
+                    document — every word must appear in the source.<br><br>
+                    Methods: Statistical (TF-IDF), Graph-Based (TextRank), ML (sentence scoring), BERT-based
+                    (BERTSUM)
+                </div>
+                <div class="info-box">
+                    <strong>Abstractive Summarization</strong><br><br>
+                    Generates NEW sentences and phrases to express the core ideas. A paraphrase — the summary may
+                    contain vocabulary NOT found in the source.<br><br>
+                    Methods: Seq2Seq architectures, BART, T5 (Transformer-based Deep Learning)
+                </div>
+            </div>
+            </div>
+            </div>
+
+
+            </div>
+
+            </div>
+
+            </div>
+            </div>
+            <div class="topic-section" id="t-extractive">
+                <h3 onclick="toggleCollapse(this)" class="topic-title collapsible-header">📌 Extractive Summarization
+                    Pipeline</h3>
+                <div class="collapsible-body">
+
+
+
+
+
+
+
+
+
+
+
+                    <div class="def-box">
+                        Extractive summarization selects the most important sentences from the original document without
+                        modifying them.
+                    </div>
+
+                </div>
+            </div>
+            <h4>Phase 1: Pre-processing and Representation</h4>
+            <ol class="steps">
+                <li><strong>Text Cleaning & Normalization:</strong> Standard data cleaning — lowercase, remove
+                    noise, handle special characters</li>
+                <li><strong>Sentence Segmentation:</strong> Split document into individual sentences using spaCy or
+                    NLTK</li>
+                <li><strong>Feature Engineering / Vectorization:</strong> Each sentence transformed into a numerical
+                    vector (TF-IDF embedding), linguistic/statistical features extracted</li>
+            </ol>
+            <h4>Phase 2: Scoring and Ranking</h4>
+            <ol class="steps">
+                <li><strong>Sentence Scoring (Feature-Based):</strong> Calculate raw score by aggregating feature
+                    weights — Position (first/last sentences = important), Length, Keyword Density</li>
+                <li><strong>Inter-Sentence Relationship Scoring:</strong> Calculate connectivity using graph theory
+                    or deep contextual similarity</li>
+                <li><strong>Final Score Aggregation & Ranking:</strong> Combine all scores (statistical + positional
+                    + relational), sort sentences</li>
+            </ol>
+            <h4>Phase 3: Selection and Assembly</h4>
+            <ol class="steps">
+                <li><strong>Top-K Selection (Redundancy Check):</strong> Select top K sentences based on final
+                    ranking; eliminate near-duplicates (redundancy check)</li>
+                <li><strong>Final Summary Assembly:</strong> Re-order selected sentences in original document order;
+                    join to form final summary</li>
+            </ol>
+            <h4>Techniques for Extractive Summarization</h4>
+            <div class="table-wrap">
+                <table>
+                    <tr>
+                        <th>Technique</th>
+                        <th>Method</th>
+                        <th>Algorithm</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Statistical</strong></td>
+                        <td>Mathematical models evaluate word/sentence importance</td>
+                        <td>TF-IDF, LSA (Latent Semantic Analysis)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Graph-Based</strong></td>
+                        <td>Sentences as nodes, edges weighted by similarity</td>
+                        <td>TextRank, LexRank</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Machine Learning</strong></td>
+                        <td>Supervised models trained on labeled (sentence, include?) data</td>
+                        <td>SVM, CRF, Neural classifiers</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Transformer-Based</strong></td>
+                        <td>Deep language understanding for sentence selection</td>
+                        <td>BERTSUM</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="teal-box">
+                <strong>TF-IDF Scoring for Extractive Summarization:</strong><br>
+                Each sentence's importance score = sum of TF-IDF values of its words.<br>
+                Higher score = more informative sentence.<br>
+                Rank sentences by score → select top-3 → reorder in original sequence → extractive summary.
+            </div>
+            </div>
+            </div>
+
+
+            </div>
+
+            </div>
+
+            </div>
+            </div>
+            <div class="topic-section" id="t-abstractive">
+                <h3 onclick="toggleCollapse(this)" class="topic-title collapsible-header">✍️ Abstractive Summarization
+                </h3>
+                <div class="collapsible-body">
+
+
+
+
+
+
+
+
+
+
+
+                    <div class="def-box">
+                        <strong>Abstractive Summarization</strong> generates new text that captures the main ideas of
+                        the
+                        source, often using words and phrases not in the original. More human-like but harder to
+                        implement.
+                    </div>
+
+                </div>
+            </div>
+            <div class="two-col">
+                <div class="info-box">
+                    <strong>Seq2Seq Architecture:</strong><br>
+                    Encoder reads source text, decoder generates summary word by word.<br>
+                    Uses attention mechanism to focus on relevant source parts.<br>
+                    Models: BART, T5, Pegasus
+                </div>
+                <div class="info-box">
+                    <strong>BART (Bidirectional & Auto-Regressive Transformer):</strong><br>
+                    Encoder: bidirectional (like BERT)<br>
+                    Decoder: autoregressive (like GPT)<br>
+                    Pre-trained with denoising objectives — excellent for summarization.
+                </div>
+            </div>
+            <div class="table-wrap">
+                <table>
+                    <tr>
+                        <th>Property</th>
+                        <th>Extractive</th>
+                        <th>Abstractive</th>
+                    </tr>
+                    <tr>
+                        <td>Words in summary</td>
+                        <td>Must be from source</td>
+                        <td>Can be new words</td>
+                    </tr>
+                    <tr>
+                        <td>Approach</td>
+                        <td>Selection</td>
+                        <td>Generation</td>
+                    </tr>
+                    <tr>
+                        <td>Complexity</td>
+                        <td>Simpler (ranking problem)</td>
+                        <td>Complex (generation problem)</td>
+                    </tr>
+                    <tr>
+                        <td>Methods</td>
+                        <td>TF-IDF, TextRank, BERTSUM</td>
+                        <td>BART, T5, Pegasus</td>
+                    </tr>
+                    <tr>
+                        <td>Faithfulness</td>
+                        <td>High (direct quotes)</td>
+                        <td>Can hallucinate</td>
+                    </tr>
+                    <tr>
+                        <td>Readability</td>
+                        <td>May be choppy/disconnected</td>
+                        <td>More coherent and natural</td>
+                    </tr>
+                </table>
+            </div>
+            </div>
+            </div>
+
+
+            </div>
+
+            </div>
+
+            </div>
+            </div>
+            <div class="topic-section" id="t-bertsum">
+                <h3 onclick="toggleCollapse(this)" class="topic-title collapsible-header">🧠 BERTSUM — Smart Sentence
+                    Highlighter</h3>
+                <div class="collapsible-body">
+
+
+
+
+
+
+
+
+
+
+
+                    <div class="def-box">
+                        <strong>BERTSUM</strong> is a BERT-based extractive summarization model that dramatically
+                        improves
+                        accuracy of sentence selection by understanding deep semantic context — as opposed to simple
+                        statistical measures (TF-IDF, LexRank).
+                    </div>
+
+                </div>
+            </div>
+            <h4>Why BERTSUM over Traditional Methods?</h4>
+            <div class="con-box">
+                <strong>Traditional Method Weakness:</strong> TF-IDF and LexRank only count word overlap or look at
+                sentence position. They often miss the true meaning and select sentences that are important but
+                redundant (same info twice) or grammatically awkward.
+            </div>
+            <div class="pro-box">
+                <strong>BERTSUM Advantage:</strong> Reads the document and creates a deep semantic vector for each
+                sentence, understanding its meaning in relation to the ENTIRE document. Treats sentence selection as
+                binary classification.
+            </div>
+            <h4>BERTSUM Architecture</h4>
+            <div class="teal-box">
+                <strong>Architecture:</strong> Encoder-Only (uses pre-trained BERT)<br>
+                <strong>Goal:</strong> Binary Classification — should sentence i be in the summary? (Yes/No)<br><br>
+                <strong>Step 1 — Sentence Tagging:</strong><br>
+                Insert special [CLS] token at the beginning of EVERY sentence. The [CLS] token acts as the
+                "representative" for its entire sentence.<br><br>
+                <strong>Step 2 — Contextual Encoding:</strong><br>
+                BERT encoder processes the entire document at once. Output vector for each [CLS] token = contextual
+                representation of that sentence.
+            </div>
+            <h4>Three Embedding Layers (Input Adaptation)</h4>
+            <div class="table-wrap">
+                <table>
+                    <tr>
+                        <th>Embedding Type</th>
+                        <th>Purpose</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Token Embeddings</strong></td>
+                        <td>Vector representation of actual words/tokens</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Interval Segment Embeddings</strong></td>
+                        <td>Key difference from original BERT — alternating embeddings to distinguish sentences and
+                            learn inter-sentence relationships</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Position Embeddings</strong></td>
+                        <td>Absolute position of each token in the entire input sequence</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="info-box">
+                <strong>Output:</strong><br>
+                • Tᵢ vectors (from [CLS] tokens) = contextual representations of sentences<br>
+                • Tᵢ → Summarization Layer (classifier) → Yᵢ (probability ∈ [0,1])<br>
+                • Yᵢ = probability that sentence i should be included in the extractive summary<br>
+                • This is the binary classification step — sentences with Yᵢ > threshold are selected
+            </div>
+            <h4>Applications of BERTSUM</h4>
+            <div class="two-col">
+                <div class="pro-box"><strong>Legal & Regulatory Compliance</strong><br>Summarize long contracts,
+                    court transcripts, SEC 10-K reports. Lawyers get core clauses immediately. Summary sentences are
+                    direct quotes — legally defensible and traceable to source.</div>
+                <div class="pro-box"><strong>Scientific Literature Review</strong><br>Create quick summaries of
+                    research papers, clinical trials, technical patents. Researchers rapidly distill hypothesis,
+                    methodology, and conclusion without reading dozens of pages.</div>
+            </div>
+            </div>
+            </div>
+
+
+            </div>
+
+            </div>
+
+            </div>
+            </div>
+            <div class="topic-section" id="t-rouge">
+                <h3 onclick="toggleCollapse(this)" class="topic-title collapsible-header">📊 ROUGE — Evaluation for
+                    Summarization</h3>
+                <div class="collapsible-body">
+
+
+
+
+
+
+
+
+
+
+
+                    <div class="def-box">
+                        <strong>ROUGE (Recall-Oriented Understudy for Gisting Evaluation)</strong> is the standard
+                        evaluation metric for text summarization. It compares model-generated summaries with reference
+                        (human) summaries.
+                    </div>
+
+                </div>
+            </div>
+            <div class="table-wrap">
+                <table>
+                    <tr>
+                        <th>Metric</th>
+                        <th>What it Measures</th>
+                        <th>Formula</th>
+                    </tr>
+                    <tr>
+                        <td><strong>ROUGE-1</strong></td>
+                        <td>Unigram (word) overlap between generated and reference summary — content accuracy</td>
+                        <td>|overlap of unigrams| / |reference unigrams|</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ROUGE-2</strong></td>
+                        <td>Bigram overlap — captures phrase-level accuracy</td>
+                        <td>|overlap of bigrams| / |reference bigrams|</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ROUGE-L</strong></td>
+                        <td>Longest Common Subsequence (LCS) — reflects sentence structure and meaning preservation
+                        </td>
+                        <td>LCS / |reference|</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="teal-box">
+                <strong>How ROUGE is used:</strong><br>
+                Run multiple summarization models (TF-IDF, TextRank, BERTSUM) on the same document.<br>
+                Calculate ROUGE-1 and ROUGE-L for each model against a reference (human-written) summary.<br>
+                Rank models by score — higher ROUGE = summary closer to the reference.
+            </div>
+            <div class="tip-box">
+                <span class="tip-title">⚠️ ROUGE Limitation</span>
+                ROUGE only measures surface overlap — doesn't capture semantic equivalence. A paraphrase with the
+                same meaning but different words gets a low ROUGE score. For abstractive summarization, ROUGE is
+                less reliable than for extractive.
+            </div>
+            </div>
+        </section>
+
+        <!-- ==================== MODULE 8: QUICK REVISION ==================== -->
+        <section class="module-section" id="module-8">
+            </div>
+
+
+            </div>
+            </div>
+            <div class="module-header">
+                <div class="mod-badge" style="background:#ff3366">🚀</div>
+                <div class="module-title-group">
+                    <div class="module-title">1-Hour Quick Revision</div>
+                    <div class="module-subtitle">The Ultimate Last-Minute Cheat Sheet
+                    </div>
+
+                </div>
+            </div>
+            <div class="topic-section" id="t-cheat-sheet">
+                <h3 onclick="toggleCollapse(this)" class="topic-title collapsible-header">⚡ High-Yield Concepts &
+                    Formulas</h3>
+                <div class="collapsible-body">
+
+
+
+
+
+
+
+
+
+
+
+
+                    <div class="two-col">
+                        <div class="def-box">
+                            <strong>1. NLP Processing Pipeline</strong><br>
+                            • <strong>Tokenization:</strong> Splitting text into words/sentences. Fast, but ambiguous
+                            for un-segmented languages (Chinese).<br>
+                            • <strong>Normalization:</strong> Stemming (fast, heuristic-based, removes suffixes) vs
+                            Lemmatization (slower, dictionary-based, finds root lemma).<br>
+                            • <strong>Morphology:</strong> Inflectional (does not change POS, e.g. <i>run→runs</i>) vs
+                            Derivational (changes POS/meaning, e.g. <i>happy→happiness</i>).
+                        </div>
+                    </div>
+                    <div class="pro-box">
+                        <strong>2. Finite State Automata (FSA) & FSTs</strong><br>
+                        • <strong>FSA:</strong> Recognizes/generates strings. Defined by states, start state, final
+                        states, transitions, alphabet.<br>
+                        • <strong>FST:</strong> Maps between 2 tapes (Lexical/Deep ↔ Surface). Used for morphological
+                        parsing.<br>
+                        • <strong>Composition:</strong> FSTs can be chained (e.g. Lexicon FST → Morphographemic FST).
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="two-col">
+                <div class="info-box">
+                    <strong>3. Part-of-Speech (POS) Tagging</strong><br>
+                    • <strong>HMM (Generative):</strong> Models joint probability P(W, T).<br>
+                    &nbsp;&nbsp;<code>P(w|t) = Emission Prob.</code> (Tag → Word)<br>
+                    &nbsp;&nbsp;<code>P(t|t-1) = Transition Prob.</code> (Tag → Tag)<br>
+                    • <strong>CRF (Discriminative):</strong> Models conditional probability P(T|W) using global sequence
+                    context. Fixes HMM independence assumption flaws.
+                </div>
+                <div class="teal-box">
+                    <strong>4. Language Models (N-Grams)</strong><br>
+                    • <strong>Markov Assumption:</strong> Next word depends only on previous (N-1) words.<br>
+                    &nbsp;&nbsp;<code>P(w_n | w_1...w_{n-1}) ≈ P(w_n | w_{n-N+1}...w_{n-1})</code><br>
+                    • <strong>Perplexity (PP):</strong> Inverse probability of test set normalized by words. <i>Lower PP
+                        = Better model.</i><br>
+                    • <strong>Laplace Smoothing:</strong> Add-1 to prevent zero probabilities.<br>
+                    &nbsp;&nbsp;<code>P(w) = (Count(w) + 1) / (Total Words + V)</code> (V = Vocab Size).
+                </div>
+            </div>
+
+            <div class="two-col">
+                <div class="tip-box">
+                    <span class="tip-title">5. Term Frequency - Inverse Document Frequency (TF-IDF)</span>
+                    • <strong>TF:</strong> How often a word occurs in a document.<br>
+                    &nbsp;&nbsp;<code>TF(t,d) = Count of t in d / Total words in d</code><br>
+                    • <strong>IDF:</strong> How rare a word is across ALL documents.<br>
+                    &nbsp;&nbsp;<code>IDF(t,D) = log( Total Docs / Docs containing t )</code><br>
+                    • <strong>TF-IDF = TF × IDF</strong> (High for locally frequent but globally rare words).
+                </div>
+                <div class="def-box">
+                    <strong>6. Syntax & Parsing</strong><br>
+                    • <strong>Context-Free Grammar (CFG):</strong> Defines sentence structure. Rules like <i>S → NP
+                        VP</i>. Can cause structural ambiguity.<br>
+                    • <strong>Constituency Parsing:</strong> Groups words into nested phrases (trees).<br>
+                    • <strong>Dependency Parsing:</strong> Links words via grammatical relations (arrows from head to
+                    dependent).
+                </div>
+            </div>
+
+            <div class="two-col">
+                <div class="pro-box">
+                    <strong>7. Transformers & Advanced Models</strong><br>
+                    • <strong>Self-Attention:</strong> Weighs importance of all words in a sentence relative to each
+                    word. Allows parallelization.<br>
+                    • <strong>BERT:</strong> Encoder-only, Bidirectional. Pre-trained on MLM (predict missing word) &
+                    NSP (Next Sentence Prediction).<br>
+                    • <strong>BART/T5:</strong> Encoder-Decoder models. Ideal for text generation / abstractive
+                    summarization.
+                </div>
+                <div class="info-box">
+                    <strong>8. Text Summarization & Evaluation</strong><br>
+                    • <strong>Extractive:</strong> Copies important sentences (TF-IDF scoring, Graph/TextRank,
+                    BERTSUM).<br>
+                    • <strong>Abstractive:</strong> Generates novel paraphrased text (Seq2Seq, BART).<br>
+                    • <strong>ROUGE Metric:</strong> Evaluates summaries by overlap with human reference.<br>
+                    &nbsp;&nbsp;<code>ROUGE-N = Overlap N-grams / Reference N-grams</code><br>
+                    &nbsp;&nbsp;<code>ROUGE-L = Longest Common Subsequence / Reference Length</code>
+                </div>
+            </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // ---- SIDEBAR TOGGLE ----
+        document.getElementById('hamburger').addEventListener('click', function () {
+            document.getElementById('sidebar').classList.toggle('collapsed');
+            document.getElementById('main').classList.toggle('sidebar-collapsed');
+        });
+
+        // ---- PROGRESS BAR ----
+        window.addEventListener('scroll', function () {
+            const docHeight = document.documentElement.scrollHeight;
+            const viewportHeight = window.innerHeight;
+            const pct = window.scrollY / (docHeight - viewportHeight) * 100;
+            document.getElementById('progress-fill').style.width = pct + '%';
+        });
+
+        // ---- THEME TOGGLE ----
+        document.getElementById('theme-toggle').addEventListener('click', function () {
+            const html = document.documentElement;
+            const isDark = html.getAttribute('data-theme') === 'dark';
+            html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+            this.textContent = isDark ? '☀️ Light' : '🌙 Dark';
+        });
+
+        // ---- SIDEBAR HELPERS ----
+        function openSub(sub) {
+            if (!sub) return;
+            sub.classList.add('open');
+            sub.style.maxHeight = sub.scrollHeight + 'px';
+            const btn = sub.previousElementSibling;
+            if (btn) btn.querySelector('.arrow').style.transform = 'rotate(90deg)';
+        }
+        function closeSub(sub) {
+            if (!sub) return;
+            sub.classList.remove('open');
+            sub.style.maxHeight = '0px';
+            const btn = sub.previousElementSibling;
+            if (btn) btn.querySelector('.arrow').style.transform = 'rotate(0deg)';
+        }
+
+        // ---- SIDEBAR MODULE ACCORDION ----
+        function toggleModule(btn) {
+            const sub = btn.nextElementSibling;
+            const isOpen = sub.classList.contains('open');
+
+            // Close all modules
+            document.querySelectorAll('.sidebar-sub').forEach(s => closeSub(s));
+
+            // If it wasn't open, open it
+            if (!isOpen) openSub(sub);
+        }
+
+        // Open first module on page load
+        (function () {
+            // Need a slight delay to ensure fonts/layout are calculated so scrollHeight is accurate
+            setTimeout(() => {
+                const firstSub = document.querySelector('.sidebar-sub.open') || document.querySelector('.sidebar-sub');
+                if (firstSub) {
+                    firstSub.classList.add('open');
+                    firstSub.style.maxHeight = firstSub.scrollHeight + 'px';
+                    const btn = firstSub.previousElementSibling;
+                    if (btn) btn.querySelector('.arrow').style.transform = 'rotate(90deg)';
+                }
+            }, 50);
+        })();
+
+        // ---- ACTIVE SIDEBAR LINK on SCROLL ----
+        const topicSections = document.querySelectorAll('.topic-section');
+        const sidebarLinks = document.querySelectorAll('.sidebar-link');
+        let ticking = false;
+        let lastOpenSub = null;
+        window.addEventListener('scroll', function () {
+            if (!ticking) {
+                requestAnimationFrame(function () {
+                    const topbarH = document.getElementById('topbar').offsetHeight;
+                    const offset = topbarH + 3 + 40;
+                    let current = '';
+
+                    if (window.scrollY < 100) {
+                        current = topicSections[0].id;
+                        // At the top, ensure first module is open
+                        const firstSub = document.querySelector('.sidebar-sub');
+                        if (firstSub && !firstSub.classList.contains('open')) {
+                            document.querySelectorAll('.sidebar-sub').forEach(s => closeSub(s));
+                            openSub(firstSub);
+                            lastOpenSub = firstSub;
+                        }
+                    } else {
+                        // Use each section's own scroll-margin-top as the trigger line.
+                        // A section becomes "active" once its top has scrolled up to (or past) that line.
+                        // Among all such sections we pick the one whose top is closest to the trigger line
+                        // (i.e. the last one that crossed it) — that is the section currently in view.
+                        let closestDist = Infinity;
+                        topicSections.forEach(sec => {
+                            const scrollMargin = parseFloat(getComputedStyle(sec).scrollMarginTop) || (topbarH + 90);
+                            const rect = sec.getBoundingClientRect();
+                            if (rect.top <= scrollMargin + 10) {
+                                const dist = scrollMargin - rect.top;
+                                if (dist < closestDist) {
+                                    closestDist = dist;
+                                    current = sec.id;
+                                }
+                            }
+                        });
+                        if (!current && topicSections.length) current = topicSections[0].id;
+                    }
+
+                    let found = false;
+                    sidebarLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (!found && link.getAttribute('href') === '#' + current) {
+                            link.classList.add('active');
+                            found = true;
+                            const sub = link.closest('.sidebar-sub');
+                            if (sub && sub !== lastOpenSub) {
+                                document.querySelectorAll('.sidebar-sub').forEach(s => {
+                                    if (s !== sub) closeSub(s);
+                                });
+                                openSub(sub);
+                                lastOpenSub = sub;
+                            }
+                        }
+                    });
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+
+        // ---- SEARCH (debounced 300ms) ----
+        let searchTimer;
+        let originalTextNodes = [];
+        function clearHighlights() {
+            const marks = document.querySelectorAll('#main span.highlight');
+            marks.forEach(m => {
+                const parent = m.parentNode;
+                parent.replaceChild(document.createTextNode(m.textContent), m);
+                parent.normalize();
+            });
+        }
+        function walkAndHighlight(node, regex, count) {
+            if (node.nodeType === 3) {
+                const text = node.textContent;
+                let match;
+                let lastIndex = 0;
+                const frag = document.createDocumentFragment();
+                let found = false;
+                regex.lastIndex = 0;
+                while ((match = regex.exec(text)) !== null) {
+                    frag.appendChild(document.createTextNode(text.slice(lastIndex, match.index)));
+                    const span = document.createElement('span');
+                    span.className = 'highlight';
+                    span.textContent = match[0];
+                    frag.appendChild(span);
+                    lastIndex = match.index + match[0].length;
+                    count[0]++;
+                    found = true;
+                }
+                if (found) {
+                    frag.appendChild(document.createTextNode(text.slice(lastIndex)));
+                    node.parentNode.replaceChild(frag, node);
+                }
+            } else if (node.nodeType === 1 && !['SCRIPT', 'STYLE', 'INPUT'].includes(node.tagName)) {
+                Array.from(node.childNodes).forEach(child => walkAndHighlight(child, regex, count));
+            }
+        }
+        document.getElementById('search-input').addEventListener('input', function () {
+            clearTimeout(searchTimer);
+            const q = this.value.trim();
+            clearHighlights();
+            if (q.length < 2) {
+                document.getElementById('search-count').textContent = '';
+                return;
+            }
+            searchTimer = setTimeout(function () {
+                const regex = new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
+                const count = [0];
+                walkAndHighlight(document.getElementById('main'), regex, count);
+                const countEl = document.getElementById('search-count');
+                countEl.textContent = count[0] > 0 ? count[0] + ' match' + (count[0] > 1 ? 'es' : '') : 'No matches';
+                const first = document.querySelector('#main span.highlight');
+                if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 300);
+        });
+
+
+        // ---- COLLAPSIBLE SECTIONS (smooth + reliable) ----
+        function getLeakWrapper(topicSection) {
+            // Some topics have content that escaped outside the .collapsible-body and sits
+            // as siblings of the .topic-section in the parent container.
+            // On first call we wrap those orphaned siblings in a <div class="leak-wrapper">
+            // so we can animate them together with the collapsible-body.
+            let wrapper = topicSection.nextElementSibling;
+            if (wrapper && wrapper.classList.contains('leak-wrapper')) return wrapper;
+
+            // Collect all following siblings until the next .topic-section (or end)
+            const orphans = [];
+            let sib = topicSection.nextElementSibling;
+            while (sib && !sib.classList.contains('topic-section') && !sib.classList.contains('module-section')) {
+                orphans.push(sib);
+                sib = sib.nextElementSibling;
+            }
+            if (!orphans.length) return null;
+
+            wrapper = document.createElement('div');
+            wrapper.className = 'leak-wrapper';
+            wrapper.style.overflow = 'hidden';
+            wrapper.style.transition = 'max-height 0.42s cubic-bezier(0.4,0,0.2,1), opacity 0.35s cubic-bezier(0.4,0,0.2,1), transform 0.35s cubic-bezier(0.4,0,0.2,1)';
+            wrapper.style.opacity = '1';
+            wrapper.style.transform = 'translateY(0)';
+            wrapper.style.maxHeight = 'none';
+            topicSection.after(wrapper);
+            orphans.forEach(o => wrapper.appendChild(o));
+            return wrapper;
+        }
+
+        function toggleCollapse(h) {
+            const b = h.nextElementSibling;
+            if (!b || !b.classList.contains('collapsible-body')) return;
+
+            const topicSection = h.closest('.topic-section');
+            const leak = topicSection ? getLeakWrapper(topicSection) : null;
+
+            const isOpen = b.classList.contains('is-open');
+            if (isOpen) {
+                // Collapse collapsible-body
+                b.style.maxHeight = b.scrollHeight + 'px';
+                b.offsetHeight;
+                requestAnimationFrame(() => {
+                    b.style.maxHeight = '0px';
+                    b.style.overflow = 'hidden';
+                    b.classList.remove('is-open');
+                    h.classList.remove('is-active');
+                });
+                // Collapse leak wrapper
+                if (leak) {
+                    leak.style.maxHeight = leak.scrollHeight + 'px';
+                    leak.offsetHeight;
+                    requestAnimationFrame(() => {
+                        leak.style.maxHeight = '0px';
+                        leak.style.opacity = '0';
+                        leak.style.transform = 'translateY(-6px)';
+                        leak.style.overflow = 'hidden';
+                    });
+                }
+            } else {
+                // Expand collapsible-body
+                b.style.overflow = 'hidden';
+                b.style.maxHeight = b.scrollHeight + 'px';
+                b.classList.add('is-open');
+                h.classList.add('is-active');
+                b.addEventListener('transitionend', function done(e) {
+                    if (e.propertyName !== 'max-height') return;
+                    if (b.classList.contains('is-open')) {
+                        b.style.maxHeight = 'none';
+                        b.style.overflow = 'visible';
+                    }
+                    b.removeEventListener('transitionend', done);
+                });
+                // Expand leak wrapper
+                if (leak) {
+                    leak.style.overflow = 'hidden';
+                    leak.style.maxHeight = leak.scrollHeight + 'px';
+                    leak.style.opacity = '1';
+                    leak.style.transform = 'translateY(0)';
+                    leak.addEventListener('transitionend', function done(e) {
+                        if (e.propertyName !== 'max-height') return;
+                        leak.style.maxHeight = 'none';
+                        leak.style.overflow = 'visible';
+                        leak.removeEventListener('transitionend', done);
+                    });
+                }
+            }
+        }
+
+        // Init: open all on load
+        window.addEventListener('load', () => {
+            // First, build all leak wrappers so orphaned content is grouped
+            document.querySelectorAll('.topic-section').forEach(sec => {
+                getLeakWrapper(sec); // creates wrapper if orphans exist
+            });
+            // Then mark all bodies and wrappers as open
+            document.querySelectorAll('.collapsible-body').forEach(b => {
+                b.classList.add('is-open');
+                b.style.maxHeight = 'none';
+                b.style.overflow = 'visible';
+                const h = b.previousElementSibling;
+                if (h) h.classList.add('is-active');
+            });
+            document.querySelectorAll('.leak-wrapper').forEach(w => {
+                w.style.maxHeight = 'none';
+                w.style.overflow = 'visible';
+                w.style.opacity = '1';
+                w.style.transform = 'translateY(0)';
+            });
+        });
+
+
+
+        /* ═══ DYNAMIC SCROLL OFFSET ═══ */
+        function updateScrollMargins() {
+            const topbar = document.getElementById('topbar');
+            const topbarH = topbar ? topbar.offsetHeight : 56;
+            document.querySelectorAll('.module-section').forEach(mod => {
+                const header = mod.querySelector('.module-header');
+                if (header) {
+                    // Include topbar (56) + progress bar (3) + header height + 8px buffer
+                    mod.style.setProperty('--local-scroll-margin', (topbarH + 3 + header.offsetHeight + 8) + 'px');
+                }
+            });
+        }
+        window.addEventListener('resize', updateScrollMargins);
+        window.addEventListener('DOMContentLoaded', updateScrollMargins);
+        window.addEventListener('load', updateScrollMargins);
+        setTimeout(updateScrollMargins, 500);
+        setTimeout(updateScrollMargins, 1500);
+
+        /* ═══ CLAMP SIDEBAR LINK SCROLL ═══ */
+        document.addEventListener('click', function (e) {
+            const link = e.target.closest('a[href^="#"]');
+            if (!link) return;
+            const id = link.getAttribute('href').slice(1);
+            const target = document.getElementById(id);
+            if (!target) return;
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth' });
+        });
+
+
+    </script>
+</body>
+
+</html>

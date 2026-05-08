@@ -1,0 +1,2596 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Embedded Systems — FAT Study Guide</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Syne:wght@400;600;700;800&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap"
+        rel="stylesheet" />
+    <style>
+        :root {
+            --bg: #0d0f14;
+            --surface: #141720;
+            --card: #1a1e2e;
+            --border: #2a2f45;
+            --accent: #7c6af7;
+            --accent2: #f7c26a;
+            --accent3: #5de8c1;
+            --accent4: #f76a8a;
+            --accent5: #6ab8f7;
+            --text: #e8eaf2;
+            --muted: #8890b0;
+            --formula-bg: #0e1420;
+            --m1: #7c6af7;
+            --m2: #f76a8a;
+            --m3: #5de8c1;
+            --m4: #f7c26a;
+            --m5: #6ab8f7;
+            --m6: #c46af7;
+            --m7: #6af7a0;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Crimson Pro', Georgia, serif;
+            background: var(--bg);
+            color: var(--text);
+            display: flex;
+            min-height: 100vh;
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+        /* ── SIDEBAR ── */
+        #sidebar {
+            width: 280px;
+            min-width: 280px;
+            background: var(--surface);
+            border-right: 1px solid var(--border);
+            height: 100vh;
+            position: sticky;
+            top: 0;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s;
+            z-index: 100;
+        }
+
+        #sidebar::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        #sidebar::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 2px;
+        }
+
+        .sidebar-header {
+            padding: 20px 18px 14px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .sidebar-header h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--accent);
+        }
+
+        .sidebar-header p {
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 2px;
+        }
+
+        .mod-group {
+            padding: 6px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .mod-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 18px;
+            font-family: 'Syne', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            cursor: pointer;
+            user-select: none;
+            color: var(--muted);
+            transition: color 0.2s;
+        }
+
+        .mod-label:hover {
+            color: var(--text);
+        }
+
+        .mod-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .mod-label .chevron {
+            margin-left: auto;
+            font-size: 10px;
+            transition: transform 0.2s;
+        }
+
+        .mod-label.open .chevron {
+            transform: rotate(90deg);
+        }
+
+        .mod-links {
+            display: none;
+            flex-direction: column;
+        }
+
+        .mod-links.open {
+            display: flex;
+        }
+
+        .mod-links a {
+            padding: 5px 18px 5px 34px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10.5px;
+            color: var(--muted);
+            text-decoration: none;
+            transition: color 0.15s, background 0.15s;
+            border-left: 2px solid transparent;
+            margin-left: 10px;
+        }
+
+        .mod-links a:hover {
+            color: var(--text);
+        }
+
+        .mod-links a.active {
+            color: var(--text);
+        }
+
+        /* ── MAIN ── */
+        #main {
+            flex: 1;
+            padding: 40px 50px;
+            max-width: 960px;
+        }
+
+        /* top bar */
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 36px;
+        }
+
+        .topbar h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        .topbar h1 span {
+            color: var(--accent);
+        }
+
+        #darkToggle {
+            background: var(--card);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        #darkToggle:hover {
+            background: var(--border);
+        }
+
+        /* module section */
+        .module {
+            margin-bottom: 60px;
+            scroll-margin-top: 30px;
+        }
+
+        .module-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .module-num {
+            font-family: 'Syne', sans-serif;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 6px;
+            white-space: nowrap;
+            margin-top: 4px;
+        }
+
+        .module-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .module-hours {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 4px;
+        }
+
+        /* cards */
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 20px 24px;
+            margin-bottom: 16px;
+        }
+
+        .card-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-title::before {
+            content: '';
+            width: 3px;
+            height: 14px;
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+
+        .points-list {
+            list-style: none;
+        }
+
+        .points-list li {
+            padding: 5px 0 5px 16px;
+            position: relative;
+            font-size: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .points-list li:last-child {
+            border-bottom: none;
+        }
+
+        .points-list li::before {
+            content: '›';
+            position: absolute;
+            left: 0;
+            color: var(--muted);
+            font-weight: 700;
+        }
+
+        .points-list li strong {
+            font-weight: 600;
+            color: var(--accent2);
+        }
+
+        /* formula box */
+        .formula-box {
+            background: var(--formula-bg);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--accent3);
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin: 14px 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            color: var(--accent3);
+            overflow-x: auto;
+        }
+
+        .formula-box .fname {
+            font-family: 'Syne', sans-serif;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 6px;
+        }
+
+        .formula-box .fexpr {
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .formula-box .fexpr sub {
+            font-size: 10px;
+        }
+
+        .formula-box .fexpr sup {
+            font-size: 10px;
+        }
+
+        /* numerical */
+        .numerical {
+            background: #111520;
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--accent2);
+            border-radius: 8px;
+            padding: 18px 22px;
+            margin: 14px 0;
+        }
+
+        .numerical .num-label {
+            font-family: 'Syne', sans-serif;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--accent2);
+            margin-bottom: 8px;
+        }
+
+        .numerical .num-q {
+            font-size: 15px;
+            color: var(--text);
+            margin-bottom: 12px;
+            font-style: italic;
+        }
+
+        .numerical .num-sol {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12.5px;
+            color: #c8d0e8;
+            line-height: 2;
+            white-space: pre-wrap;
+        }
+
+        .num-ans {
+            color: var(--accent3);
+            font-weight: 700;
+        }
+
+        /* possible questions */
+        .pq-box {
+            background: #130e1f;
+            border: 1px solid #2a1f45;
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin: 14px 0;
+        }
+
+        .pq-box .pq-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+
+        .pq-box ol {
+            padding-left: 18px;
+        }
+
+        .pq-box ol li {
+            font-size: 14px;
+            color: var(--muted);
+            margin-bottom: 6px;
+            line-height: 1.5;
+        }
+
+        .pq-box ol li:hover {
+            color: var(--text);
+        }
+
+        /* tags */
+        .tag {
+            display: inline-block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin: 2px 3px 2px 0;
+        }
+
+        /* table */
+        .styled-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            margin: 12px 0;
+        }
+
+        .styled-table th {
+            background: var(--formula-bg);
+            padding: 8px 12px;
+            text-align: left;
+            font-family: 'Syne', sans-serif;
+            font-size: 11px;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--muted);
+            border: 1px solid var(--border);
+        }
+
+        .styled-table td {
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            font-size: 13.5px;
+            vertical-align: top;
+        }
+
+        .styled-table tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        /* module color themes */
+        .m1 {
+            --mc: var(--m1);
+        }
+
+        .m2 {
+            --mc: var(--m2);
+        }
+
+        .m3 {
+            --mc: var(--m3);
+        }
+
+        .m4 {
+            --mc: var(--m4);
+        }
+
+        .m5 {
+            --mc: var(--m5);
+        }
+
+        .m6 {
+            --mc: var(--m6);
+        }
+
+        .m7 {
+            --mc: var(--m7);
+        }
+
+        .module .module-num {
+            background: color-mix(in srgb, var(--mc) 20%, transparent);
+            color: var(--mc);
+        }
+
+        .module .card-title {
+            color: var(--mc);
+        }
+
+        .module .card-title::before {
+            background: var(--mc);
+        }
+
+        .module .module-header {
+            border-color: color-mix(in srgb, var(--mc) 30%, var(--border));
+        }
+
+        /* collapsible */
+        .collapsible-trigger {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 0;
+            user-select: none;
+        }
+
+        .collapsible-trigger:hover {
+            color: var(--accent2);
+        }
+
+        .collapsible-trigger .ctitle {
+            font-family: 'Syne', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .collapsible-trigger .carr {
+            font-size: 12px;
+            transition: transform 0.2s;
+        }
+
+        .collapsible-trigger.open .carr {
+            transform: rotate(90deg);
+        }
+
+        .collapsible-body {
+            display: none;
+            padding-top: 14px;
+        }
+
+        .collapsible-body.open {
+            display: block;
+        }
+
+        /* progress bar */
+        .progress-bar {
+            height: 3px;
+            background: var(--border);
+            border-radius: 2px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent), var(--accent3));
+            border-radius: 2px;
+            transition: width 0.3s;
+        }
+
+        /* light mode */
+        body.light {
+            --bg: #f5f4f0;
+            --surface: #ececea;
+            --card: #ffffff;
+            --border: #d8d6d0;
+            --text: #1a1a2e;
+            --muted: #666680;
+            --formula-bg: #f0eff0;
+        }
+
+        /* mobile toggle */
+        #menuBtn {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 200;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 800px) {
+            #sidebar {
+                position: fixed;
+                left: 0;
+                top: 0;
+                transform: translateX(-100%);
+            }
+
+            #sidebar.open {
+                transform: translateX(0);
+            }
+
+            #menuBtn {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            #main {
+                padding: 24px 18px;
+            }
+        }
+
+        .highlight {
+            color: var(--accent2);
+            font-weight: 600;
+        }
+
+        .mono {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+        }
+
+        /* search */
+        #searchBox {
+            width: 100%;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text);
+            padding: 8px 12px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            margin: 10px 0 4px;
+            outline: none;
+        }
+
+        #searchBox:focus {
+            border-color: var(--accent);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+    <nav id="sidebar">
+        <div class="sidebar-header">
+            <h2>📟 Embedded Systems</h2>
+            <p>FAT Exam Study Guide · 7 Modules</p>
+            <input id="searchBox" type="text" placeholder="Search topics..." oninput="searchTopics(this.value)" />
+        </div>
+        <div id="navGroups">
+            <!-- M1 -->
+            <div class="mod-group">
+                <div class="mod-label" onclick="toggleMod(this)" style="color:var(--m1)">
+                    <span class="mod-dot" style="background:var(--m1)"></span> M1: Introduction
+                    <span class="chevron">›</span>
+                </div>
+                <div class="mod-links">
+                    <a href="#m1-overview">Overview & Challenges</a>
+                    <a href="#m1-proc">Processor Technology</a>
+                    <a href="#m1-arch">8051 / PIC / ARM</a>
+                </div>
+            </div>
+            <!-- M2 -->
+            <div class="mod-group">
+                <div class="mod-label" onclick="toggleMod(this)" style="color:var(--m2)">
+                    <span class="mod-dot" style="background:var(--m2)"></span> M2: I/O Interfacing
+                    <span class="chevron">›</span>
+                </div>
+                <div class="mod-links">
+                    <a href="#m2-mem">Memory Interfacing</a>
+                    <a href="#m2-adc">ADC / DAC Formulas</a>
+                    <a href="#m2-timer">Timers & Counters</a>
+                    <a href="#m2-uart">UART & Baud Rate</a>
+                    <a href="#m2-sensors">Sensors & Actuators</a>
+                </div>
+            </div>
+            <!-- M3 -->
+            <div class="mod-group">
+                <div class="mod-label" onclick="toggleMod(this)" style="color:var(--m3)">
+                    <span class="mod-dot" style="background:var(--m3)"></span> M3: Special Purpose
+                    <span class="chevron">›</span>
+                </div>
+                <div class="mod-links">
+                    <a href="#m3-atm">ATM Architecture</a>
+                    <a href="#m3-handheld">Handheld Devices</a>
+                    <a href="#m3-compress">Data Compressor</a>
+                    <a href="#m3-image">Image Capturing</a>
+                </div>
+            </div>
+            <!-- M4 -->
+            <div class="mod-group">
+                <div class="mod-label" onclick="toggleMod(this)" style="color:var(--m4)">
+                    <span class="mod-dot" style="background:var(--m4)"></span> M4: Programming Tools
+                    <span class="chevron">›</span>
+                </div>
+                <div class="mod-links">
+                    <a href="#m4-evo">Evolution & Modelling</a>
+                    <a href="#m4-opt">Code Optimization</a>
+                    <a href="#m4-tools">Analyzers & Env</a>
+                </div>
+            </div>
+            <!-- M5 -->
+            <div class="mod-group">
+                <div class="mod-label" onclick="toggleMod(this)" style="color:var(--m5)">
+                    <span class="mod-dot" style="background:var(--m5)"></span> M5: RTOS
+                    <span class="chevron">›</span>
+                </div>
+                <div class="mod-links">
+                    <a href="#m5-class">Classification & Issues</a>
+                    <a href="#m5-rms">RMS Scheduling</a>
+                    <a href="#m5-edf">EDF Scheduling</a>
+                    <a href="#m5-numericals">Numericals</a>
+                    <a href="#m5-ecos">eCOS & POSIX</a>
+                </div>
+            </div>
+            <!-- M6 -->
+            <div class="mod-group">
+                <div class="mod-label" onclick="toggleMod(this)" style="color:var(--m6)">
+                    <span class="mod-dot" style="background:var(--m6)"></span> M6: Networking
+                    <span class="chevron">›</span>
+                </div>
+                <div class="mod-links">
+                    <a href="#m6-i2c">I2C Protocol</a>
+                    <a href="#m6-can">CAN Bus</a>
+                    <a href="#m6-serial">RS232 & UART</a>
+                    <a href="#m6-wireless">Bluetooth, Zigbee, WiFi</a>
+                </div>
+            </div>
+            <!-- M7 -->
+            <div class="mod-group">
+                <div class="mod-label" onclick="toggleMod(this)" style="color:var(--m7)">
+                    <span class="mod-dot" style="background:var(--m7)"></span> M7: Applications
+                    <span class="chevron">›</span>
+                </div>
+                <div class="mod-links">
+                    <a href="#m7-apps">Case Studies</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main id="main">
+        <div class="topbar">
+            <h1>Embedded Systems <span>FAT Guide</span></h1>
+            <button id="darkToggle" onclick="toggleDark()">☀ Light Mode</button>
+        </div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="prog"></div>
+        </div>
+
+        <!-- ══════════════════════════════════════════ -->
+        <!-- MODULE 1 -->
+        <!-- ══════════════════════════════════════════ -->
+        <section class="module m1" id="module1">
+            <div class="module-header">
+                <div>
+                    <div class="module-num">Module 1 · 5 Hours</div>
+                    <div class="module-title">Introduction to Embedded Systems</div>
+                    <div class="module-hours">Overview · Design Challenges · Processor Technology · 8051 / PIC / ARM
+                    </div>
+                </div>
+            </div>
+
+            <div id="m1-overview" class="card" style="scroll-margin-top:30px">
+                <div class="card-title">📌 Overview & Design Challenges</div>
+                <ul class="points-list">
+                    <li><strong>Embedded System:</strong> A dedicated computing system designed to perform specific
+                        tasks, integrated into a larger mechanical/electrical system. Examples: washing machine, ECU,
+                        ATM.</li>
+                    <li><strong>Key characteristics:</strong> Real-time operation, low power, limited memory,
+                        reliability, specific I/O interfaces.</li>
+                    <li><strong>Design challenges:</strong> Power constraints, real-time deadlines, memory limitations,
+                        thermal management, hardware-software co-design, cost, time-to-market.</li>
+                    <li><strong>Embedded vs. General-purpose:</strong> Embedded = task-specific, predictable,
+                        resource-constrained. GP = flexible, resource-rich, OS-heavy.</li>
+                    <li><strong>Harvard Architecture:</strong> Separate instruction and data memory buses → faster
+                        execution. Used in most microcontrollers (8051, PIC, AVR).</li>
+                    <li><strong>Von Neumann Architecture:</strong> Single shared bus → simpler design. Used in ARM
+                        Cortex-M (some variants).</li>
+                    <li><strong>Design metrics:</strong> NRE cost, unit cost, performance, power, flexibility, time to
+                        prototype, testability.</li>
+                </ul>
+            </div>
+
+            <div id="m1-proc" class="card" style="scroll-margin-top:30px">
+                <div class="card-title">⚙️ Embedded Processor Technology</div>
+                <ul class="points-list">
+                    <li><strong>Microprocessor (MPU):</strong> CPU only on chip — needs external RAM, ROM, I/O.
+                        General-purpose. e.g., Intel 8086.</li>
+                    <li><strong>Microcontroller (MCU):</strong> CPU + RAM + ROM + I/O + Timers on single chip. e.g.,
+                        8051, PIC16F877A.</li>
+                    <li><strong>DSP (Digital Signal Processor):</strong> Optimized for multiply-accumulate (MAC)
+                        operations. Used in audio, communication.</li>
+                    <li><strong>FPGA:</strong> Reconfigurable logic fabric. Highest performance, highest power,
+                        programmable hardware.</li>
+                    <li><strong>ASIC:</strong> Application Specific IC — best performance and power but high NRE cost,
+                        no reconfigurability.</li>
+                    <li><strong>SoC (System-on-Chip):</strong> CPU + DSP + memory + peripherals on single die. e.g.,
+                        Raspberry Pi BCM2837, Qualcomm Snapdragon.</li>
+                    <li><strong>RISC vs CISC:</strong> RISC (ARM, PIC) — fewer instructions, fixed-length, fast; CISC
+                        (x86) — complex instructions, variable-length.</li>
+                </ul>
+                <table class="styled-table">
+                    <tr>
+                        <th>Parameter</th>
+                        <th>MPU</th>
+                        <th>MCU</th>
+                        <th>DSP</th>
+                        <th>FPGA</th>
+                    </tr>
+                    <tr>
+                        <td>Integration</td>
+                        <td>Low</td>
+                        <td>High</td>
+                        <td>Medium</td>
+                        <td>High</td>
+                    </tr>
+                    <tr>
+                        <td>Power</td>
+                        <td>High</td>
+                        <td>Low</td>
+                        <td>Medium</td>
+                        <td>Variable</td>
+                    </tr>
+                    <tr>
+                        <td>Flexibility</td>
+                        <td>High</td>
+                        <td>Medium</td>
+                        <td>Low</td>
+                        <td>Very High</td>
+                    </tr>
+                    <tr>
+                        <td>Cost (unit)</td>
+                        <td>High</td>
+                        <td>Low</td>
+                        <td>Medium</td>
+                        <td>High</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div id="m1-arch" class="card" style="scroll-margin-top:30px">
+                <div class="card-title">🏗️ Microcontroller Architecture: 8051, PIC, ARM</div>
+                <div class="collapsible-trigger" onclick="toggleCollapse(this)">
+                    <span class="ctitle">8051 Architecture</span><span class="carr">›</span>
+                </div>
+                <div class="collapsible-body">
+                    <ul class="points-list">
+                        <li><strong>CPU:</strong> 8-bit Harvard architecture, 8-bit data bus, 16-bit address bus.</li>
+                        <li><strong>Memory:</strong> 4KB internal ROM, 128 bytes internal RAM, expandable to 64KB
+                            external ROM/RAM.</li>
+                        <li><strong>I/O:</strong> Four 8-bit bidirectional ports: P0, P1, P2, P3. P0 also acts as
+                            multiplexed address/data bus.</li>
+                        <li><strong>Timers:</strong> Two 16-bit timers (Timer 0 and Timer 1). Can operate in 4 modes
+                            (0–3).</li>
+                        <li><strong>UART:</strong> Full-duplex serial communication. Baud rate set by Timer 1.</li>
+                        <li><strong>Interrupts:</strong> 5 interrupt sources — INT0, INT1, Timer0, Timer1, Serial Port.
+                        </li>
+                        <li><strong>Clock:</strong> Typical 11.0592 MHz (chosen for accurate baud rates). Machine cycle
+                            = 12 clock cycles.</li>
+                        <li><strong>Special Function Registers (SFRs):</strong> ACC (Accumulator), B-register, PSW, SP,
+                            DPTR, TCON, TMOD, SCON, SBUF.</li>
+                        <li><strong>PSW flags:</strong> CY (Carry), AC (Auxiliary Carry), OV (Overflow), P (Parity), F0,
+                            RS0, RS1 (register bank select).</li>
+                        <li><strong>Register banks:</strong> 4 banks × 8 registers (R0–R7) in RAM addresses 00H–1FH.
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="collapsible-trigger" onclick="toggleCollapse(this)">
+                    <span class="ctitle">PIC Architecture</span><span class="carr">›</span>
+                </div>
+                <div class="collapsible-body">
+                    <ul class="points-list">
+                        <li><strong>PIC:</strong> Peripheral Interface Controller by Microchip Technology. RISC-based
+                            Harvard architecture.</li>
+                        <li><strong>PIC16F877A:</strong> 8-bit MCU, 20 MHz max, 256 bytes EEPROM, 368 bytes RAM, 8KB
+                            Flash.</li>
+                        <li><strong>Instruction set:</strong> Only 35 instructions (RISC). All instructions execute in
+                            1–2 cycles.</li>
+                        <li><strong>Pipeline:</strong> 2-stage pipeline — fetch and execute (overlap). Single-cycle
+                            throughput.</li>
+                        <li><strong>I/O Ports:</strong> PORTA (RA0–RA5), PORTB (RB0–RB7), PORTC, PORTD, PORTE.</li>
+                        <li><strong>ADC:</strong> 10-bit A/D converter built-in. PIC16F877A has 8 channels.</li>
+                        <li><strong>Timers:</strong> TMR0 (8-bit), TMR1 (16-bit), TMR2 (8-bit with PR2 period register).
+                        </li>
+                        <li><strong>Watchdog Timer (WDT):</strong> RC oscillator based, ~18 ms period. Prescaler extends
+                            to 2.3 seconds.</li>
+                        <li><strong>TRIS register:</strong> Data direction register — 1 = input, 0 = output.</li>
+                        <li><strong>Banking:</strong> 4 register banks — bank select bits RP0, RP1 in STATUS register.
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="collapsible-trigger" onclick="toggleCollapse(this)">
+                    <span class="ctitle">ARM Architecture</span><span class="carr">›</span>
+                </div>
+                <div class="collapsible-body">
+                    <ul class="points-list">
+                        <li><strong>ARM:</strong> Advanced RISC Machine. Load-store architecture — operations only on
+                            registers.</li>
+                        <li><strong>Registers:</strong> 16 general-purpose registers (R0–R15). R13 = SP, R14 = LR (Link
+                            Register), R15 = PC.</li>
+                        <li><strong>Data widths:</strong> ARM = 32-bit; Thumb = 16-bit compressed instructions; Thumb-2
+                            = mixed 16/32-bit.</li>
+                        <li><strong>Cortex families:</strong> A-series (Application — phones), R-series (Real-time —
+                            automotive), M-series (Microcontroller — embedded).</li>
+                        <li><strong>Pipeline:</strong> ARM7 = 3-stage (Fetch, Decode, Execute); Cortex-M3 = 3-stage;
+                            Cortex-A9 = 8-stage superscalar.</li>
+                        <li><strong>Exception levels:</strong> EL0 (User), EL1 (OS), EL2 (Hypervisor), EL3 (Secure
+                            Monitor) in ARMv8 AArch64.</li>
+                        <li><strong>AMBA bus:</strong> AHB (Advanced High-performance Bus), APB (Advanced Peripheral
+                            Bus) for SoC interconnect.</li>
+                        <li><strong>Condition codes:</strong> All ARM instructions can be conditionally executed using
+                            4-bit condition field — reduces branch overhead.</li>
+                    </ul>
+                </div>
+
+                <table class="styled-table" style="margin-top:14px">
+                    <tr>
+                        <th>Feature</th>
+                        <th>8051</th>
+                        <th>PIC16F877A</th>
+                        <th>ARM Cortex-M3</th>
+                    </tr>
+                    <tr>
+                        <td>Architecture</td>
+                        <td>CISC, Harvard</td>
+                        <td>RISC, Harvard</td>
+                        <td>RISC, Harvard/Von-Neumann</td>
+                    </tr>
+                    <tr>
+                        <td>Data bus</td>
+                        <td>8-bit</td>
+                        <td>8-bit</td>
+                        <td>32-bit</td>
+                    </tr>
+                    <tr>
+                        <td>Clock speed</td>
+                        <td>12 MHz</td>
+                        <td>20 MHz</td>
+                        <td>72 MHz+</td>
+                    </tr>
+                    <tr>
+                        <td>RAM</td>
+                        <td>128 bytes</td>
+                        <td>368 bytes</td>
+                        <td>8–256 KB</td>
+                    </tr>
+                    <tr>
+                        <td>Instructions</td>
+                        <td>111</td>
+                        <td>35</td>
+                        <td>~150 (Thumb-2)</td>
+                    </tr>
+                    <tr>
+                        <td>Interrupts</td>
+                        <td>5 sources</td>
+                        <td>14 sources</td>
+                        <td>256 (NVIC)</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="pq-box">
+                <div class="pq-title">🎯 Module 1 — Possible Exam Questions</div>
+                <ol>
+                    <li>Compare and contrast microprocessor, microcontroller, DSP, and FPGA. Justify the choice of MCU
+                        for an automotive airbag controller.</li>
+                    <li>Explain the internal architecture of 8051 with a neat diagram. Describe the function of PSW,
+                        ACC, DPTR, and TCON registers.</li>
+                    <li>What are the four register banks in 8051? How are they selected using RS0 and RS1 bits of PSW?
+                    </li>
+                    <li>Compare Harvard and Von Neumann architectures with respect to bus structure, speed, and
+                        application in embedded systems.</li>
+                    <li>Explain the ARM Cortex A/R/M classification. Why is Cortex-M preferred for bare-metal embedded
+                        applications?</li>
+                    <li>What is pipelining in ARM? Explain 3-stage pipeline (ARM7) vs 5-stage (ARM9). How does
+                        pipelining affect real-time behavior?</li>
+                    <li>Differentiate between RISC and CISC instruction set architectures with examples. How does RISC
+                        simplify embedded compiler design?</li>
+                    <li>Describe the SFR map of 8051. What is the address of ACC, B, SP, TCON, SCON?</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- ══════════════════════════════════════════ -->
+        <!-- MODULE 2 -->
+        <!-- ══════════════════════════════════════════ -->
+        <section class="module m2" id="module2">
+            <div class="module-header">
+                <div>
+                    <div class="module-num">Module 2 · 8 Hours</div>
+                    <div class="module-title">I/O Interfacing Techniques</div>
+                    <div class="module-hours">Memory · ADC · DAC · Timers · UART · Sensors</div>
+                </div>
+            </div>
+
+            <div id="m2-mem" class="card" style="scroll-margin-top:30px">
+                <div class="card-title">💾 Memory Interfacing</div>
+                <ul class="points-list">
+                    <li><strong>Memory types:</strong> ROM (Mask ROM, EPROM, EEPROM, Flash) for program; RAM (SRAM,
+                        DRAM) for data.</li>
+                    <li><strong>Address decoding:</strong> Full decoding (no aliasing, complex), Partial decoding
+                        (aliasing, simpler), Block decoding.</li>
+                    <li><strong>CS generation:</strong> Using AND/NAND gates, 74LS138 (3-to-8 decoder) for chip select
+                        generation.</li>
+                    <li><strong>8051 external memory:</strong> ALE pin latches low byte of address. PSEN# for program
+                        memory, RD#/WR# for data memory.</li>
+                    <li><strong>Memory map:</strong> 8051: 0000H–FFFFH (64KB program ROM), 0000H–FFFFH (64KB external
+                        RAM).</li>
+                    <li><strong>Wait states:</strong> Added when slow memory used with fast CPU. Wait = (t_mem –
+                        t_cycle) / t_clk cycles.</li>
+                </ul>
+                <div class="formula-box">
+                    <div class="fname">Memory Address Range</div>
+                    <div class="fexpr">
+                        Start address = Base<br />
+                        End address = Base + (2<sup>address_lines</sup> – 1)<br />
+                        Memory size = 2<sup>number_of_address_lines</sup> bytes<br />
+                        Number of chips needed = Total memory size / Chip size
+                    </div>
+                </div>
+                <div class="numerical">
+                    <div class="num-label">🔢 Numerical — Memory Interfacing</div>
+                    <div class="num-q">A 32KB external SRAM chip (2732) with 15 address lines is to be interfaced with
+                        8051 at addresses 8000H to FFFFH. The 8051 runs at 11.0592 MHz. The SRAM has an access time of
+                        150 ns. Determine: (a) Number of chips needed, (b) Chip select logic, (c) Required wait states.
+                    </div>
+                    <div class="num-sol">Given:
+                        Total range = 8000H to FFFFH
+                        Size = FFFFH − 8000H + 1 = 0x8000 = 32768 bytes = 32KB
+                        Chip size = 32KB (15 address lines → 2¹⁵ = 32768 bytes)
+
+                        (a) Number of chips needed:
+                        N = Total memory needed / Chip size
+                        N = 32KB / 32KB = <span class="num-ans">1 chip</span>
+
+                        (b) Chip Select Logic:
+                        Address 8000H = 1000 0000 0000 0000 B
+                        A15 = 1, A14–A0 connect to chip address pins
+                        CS# = A15_BAR (Inverted A15)
+                        When A15 = 1: CS# = 0 → chip enabled for 8000H–FFFFH ✓
+
+                        (c) Wait States:
+                        Clock frequency = 11.0592 MHz
+                        Clock period = 1/11.0592 × 10⁶ ≈ 90.5 ns
+                        Machine cycle = 12 × 90.5 = 1086 ns
+                        8051 data read timing ≈ 2 machine cycles = 2172 ns (plenty)
+                        SRAM access time = 150 ns &lt; 1086 ns (1 machine cycle)
+                        ∴ <span class="num-ans">Wait states = 0 (no wait state required)</span>
+                        The 8051 at 11.0592 MHz is slow enough for 150 ns SRAM.</div>
+                </div>
+            </div>
+
+            <div id="m2-adc" class="card" style="scroll-margin-top:30px">
+                <div class="card-title">🔁 ADC / DAC Formulas & Numericals</div>
+                <div class="formula-box">
+                    <div class="fname">ADC — Analog to Digital Converter</div>
+                    <div class="fexpr">
+                        Resolution (step size) = V<sub>ref</sub> / (2<sup>n</sup> – 1) [Voltage per LSB]<br />
+                        Digital Output = round( V<sub>in</sub> / V<sub>ref</sub> × 2<sup>n</sup> )<br />
+                        % Resolution = (1 / 2<sup>n</sup>) × 100<br />
+                        Quantization Error = ±½ LSB = ± V<sub>ref</sub> / (2 × 2<sup>n</sup>)<br />
+                        SNR (ADC) ≈ 6.02n + 1.76 dB [n = bits]<br />
+                        Conversion time (Successive Approx) = n × T<sub>clk</sub><br />
+                        Nyquist: f<sub>sample</sub> ≥ 2 × f<sub>max_signal</sub>
+                    </div>
+                </div>
+                <div class="formula-box">
+                    <div class="fname">DAC — Digital to Analog Converter</div>
+                    <div class="fexpr">
+                        V<sub>out</sub> = (D / 2<sup>n</sup>) × V<sub>ref</sub><br />
+                        V<sub>out</sub> = V<sub>ref</sub> × (b<sub>n-1</sub>/2 + b<sub>n-2</sub>/4 + ... +
+                        b<sub>0</sub>/2<sup>n</sup>)<br />
+                        LSB weight = V<sub>ref</sub> / 2<sup>n</sup><br />
+                        Full-scale output = V<sub>ref</sub> × (1 – 2<sup>-n</sup>)<br />
+                        Settling time: time for output to reach final value within ½ LSB
+                    </div>
+                </div>
+
+                <div class="numerical">
+                    <div class="num-label">🔢 Numerical — ADC Multi-part Problem</div>
+                    <div class="num-q">A 12-bit ADC with V_ref = 5.0 V is used to measure a sensor voltage. The sensor
+                        outputs 3.67 V. Find: (a) Resolution in mV/LSB, (b) Digital output code in decimal and hex, (c)
+                        Quantization error, (d) SNR in dB, (e) Minimum sampling rate if signal bandwidth is 4 kHz, (f)
+                        Conversion time for a 200 kHz SAR clock.</div>
+                    <div class="num-sol">n = 12 bits, V_ref = 5.0 V, V_in = 3.67 V
+
+                        (a) Resolution:
+                        Step = V_ref / (2ⁿ – 1) = 5.0 / (4096 – 1) = 5.0 / 4095
+                        <span class="num-ans">Step ≈ 1.221 mV/LSB</span>
+
+                        (b) Digital Output:
+                        D = round(V_in / V_ref × 2ⁿ)
+                        D = round(3.67 / 5.0 × 4096)
+                        D = round(0.734 × 4096)
+                        D = round(3006.46) = <span class="num-ans">3006 decimal = 0xBBE (hex)</span>
+                        Verify: 3006 × 1.221 mV = 3.669 V ≈ 3.67 V ✓
+
+                        (c) Quantization Error:
+                        Q_error = ± ½ LSB = ± 1.221/2 = <span class="num-ans">± 0.610 mV</span>
+                        As % of full scale = ±0.610 / 5000 × 100 = ±0.0122%
+
+                        (d) SNR:
+                        SNR = 6.02 × n + 1.76 = 6.02 × 12 + 1.76
+                        SNR = 72.24 + 1.76 = <span class="num-ans">74.0 dB</span>
+
+                        (e) Nyquist sampling rate:
+                        f_sample ≥ 2 × f_max = 2 × 4000 = <span class="num-ans">8000 Hz (minimum)</span>
+                        In practice, use 2.5–4× → 10–16 kHz recommended
+
+                        (f) Conversion time (SAR — Successive Approximation):
+                        T_clk = 1 / 200,000 Hz = 5 µs per clock
+                        t_conv = n × T_clk = 12 × 5 µs = <span class="num-ans">60 µs</span>
+                        Max throughput = 1/60µs ≈ 16,667 conversions/second
+                    </div>
+                </div>
+
+                <div class="numerical">
+                    <div class="num-label">🔢 Numerical — DAC Output Calculation</div>
+                    <div class="num-q">An 8-bit R-2R ladder DAC has V_ref = 10 V. Find the output voltage for: (a) input
+                        code = 10110100, (b) input code = 11111111 (full scale), (c) input code = 10000000 (midscale).
+                        Also find the LSB weight and percentage resolution.</div>
+                    <div class="num-sol">n = 8, V_ref = 10 V
+                        LSB weight = V_ref / 2ⁿ = 10 / 256 = <span class="num-ans">39.06 mV/LSB</span>
+                        % Resolution = (1/256) × 100 = <span class="num-ans">0.390%</span>
+
+                        (a) Input = 10110100₂ = 180 decimal
+                        V_out = (D/2ⁿ) × V_ref = (180/256) × 10
+                        V_out = 0.703125 × 10 = <span class="num-ans">7.031 V</span>
+
+                        (b) Input = 11111111₂ = 255 decimal (full scale)
+                        V_out = (255/256) × 10 = 0.99609 × 10 = <span class="num-ans">9.961 V</span>
+                        (NOT 10 V — full scale = V_ref × (1 – 2⁻ⁿ))
+
+                        (c) Input = 10000000₂ = 128 decimal (midscale)
+                        V_out = (128/256) × 10 = 0.5 × 10 = <span class="num-ans">5.000 V</span>
+                        This is exactly half of V_ref — confirms linearity ✓</div>
+                </div>
+            </div>
+
+            <div id="m2-timer" class="card" style="scroll-margin-top:30px">
+                <div class="card-title">⏱️ Timers, Watchdog Timer & Counters</div>
+                <ul class="points-list">
+                    <li><strong>8051 Timer modes:</strong> Mode 0 (13-bit), Mode 1 (16-bit), Mode 2 (8-bit auto-reload),
+                        Mode 3 (split timer).</li>
+                    <li><strong>Timer clock source:</strong> Internal: f_osc/12. External: T0 (P3.4), T1 (P3.5) pins.
+                    </li>
+                    <li><strong>TMOD register:</strong> Upper nibble = Timer1 config, Lower nibble = Timer0 config.
+                        GATE, C/T#, M1, M0 bits.</li>
+                    <li><strong>TCON register:</strong> TR0, TR1 (run bits), TF0, TF1 (overflow flags), IE0, IE1, IT0,
+                        IT1.</li>
+                    <li><strong>Watchdog Timer:</strong> Resets MCU if not refreshed (kicked) within timeout. Prevents
+                        software hang. Must write specific sequence to reset it.</li>
+                    <li><strong>PIC WDT:</strong> Uses internal RC oscillator (≈1.8 ms base). Prescaler ratio 1:1 to
+                        1:128 extends timeout up to 2.3 s.</li>
+                    <li><strong>Counter mode:</strong> C/T# bit = 1. Counts external pulses on T0/T1 pins (falling
+                        edge).</li>
+                </ul>
+                <div class="formula-box">
+                    <div class="fname">8051 Timer Formulas</div>
+                    <div class="fexpr">
+                        Timer count per second = f<sub>osc</sub> / 12<br />
+                        Time per count = 12 / f<sub>osc</sub> [Machine cycle time]<br />
+                        <br />
+                        Mode 1 (16-bit): TH|TL initial = 65536 – (t_delay × f<sub>osc</sub> / 12)<br />
+                        Mode 2 (8-bit auto-reload): TH = TL = 256 – (t_delay × f<sub>osc</sub> / 12)<br />
+                        <br />
+                        Baud Rate (UART, Timer 1 Mode 2, SMOD=0):<br />
+                        Baud = f<sub>osc</sub> / (384 × (256 – TH1))<br />
+                        TH1 = 256 – f<sub>osc</sub> / (384 × baud_rate)<br />
+                        <br />
+                        If SMOD=1 (double baud rate):<br />
+                        Baud = f<sub>osc</sub> / (192 × (256 – TH1))
+                    </div>
+                </div>
+
+                <div class="numerical">
+                    <div class="num-label">🔢 Numerical — Timer & Baud Rate (8051)</div>
+                    <div class="num-q">An 8051 runs at f_osc = 11.0592 MHz. (a) Find TH1 and TL1 value for Timer 1 in
+                        Mode 2 to generate 9600 baud UART, SMOD=0. (b) Find the Timer 0 initial count (TH0:TL0) in Mode
+                        1 to generate a 50 ms delay. (c) How many Timer 0 overflows are needed to generate a 1-second
+                        delay using the 50 ms sub-delay? (d) What is the maximum delay achievable with Timer 0 in Mode 1
+                        at this clock?</div>
+                    <div class="num-sol">f_osc = 11.0592 MHz, Machine cycle = 12/11.0592 MHz = 1.085 µs
+
+                        (a) TH1 for 9600 baud (SMOD=0):
+                        TH1 = 256 – f_osc / (384 × baud)
+                        TH1 = 256 – 11,059,200 / (384 × 9600)
+                        TH1 = 256 – 11,059,200 / 3,686,400
+                        TH1 = 256 – 3 = 253 = <span class="num-ans">0xFD</span>
+                        (TL1 = TH1 = 0xFD for Mode 2 auto-reload)
+
+                        (b) Timer 0, Mode 1, delay = 50 ms:
+                        Counts needed = t_delay / (12/f_osc)
+                        Counts = 50 × 10⁻³ / (12 / 11,059,200)
+                        Counts = 0.050 / 1.0851 × 10⁻⁶
+                        Counts = 46,080 counts
+                        Initial value = 65536 – 46080 = 19456 = <span class="num-ans">0x4C00</span>
+                        ∴ TH0 = 0x4C = 76, TL0 = 0x00 = 0
+
+                        (c) Overflows for 1-second delay:
+                        Each overflow = 50 ms
+                        Overflows needed = 1000 ms / 50 ms = <span class="num-ans">20 overflows</span>
+                        Use a software counter variable; decrement from 20 in ISR.
+
+                        (d) Maximum Mode 1 delay (TH0=TL0=00H, counts 65536):
+                        t_max = 65536 × (12 / 11,059,200)
+                        t_max = 65536 × 1.0851 µs
+                        t_max ≈ 71,110 µs = <span class="num-ans">≈ 71.11 ms</span></div>
+                </div>
+            </div>
+
+            <div id="m2-uart" class="card" style="scroll-margin-top:30px">
+                <div class="card-title">📡 UART Communication</div>
+                <ul class="points-list">
+                    <li><strong>UART frame:</strong> Start bit (1, LOW) + Data bits (5–9) + Parity bit (optional) + Stop
+                        bit(s) (HIGH). LSB sent first.</li>
+                    <li><strong>Baud rate:</strong> Bits per second (bps). Bit time = 1/baud_rate seconds.</li>
+                    <li><strong>SCON (8051):</strong> SM0, SM1 (mode), SM2 (multiprocessor), REN (receive enable), TB8,
+                        RB8, TI, RI.</li>
+                    <li><strong>Modes:</strong> Mode 0 (shift register, 8-bit), Mode 1 (UART, 8-bit + start/stop), Mode
+                        2 (9-bit, fixed baud), Mode 3 (9-bit, variable baud).</li>
+                    <li><strong>Parity:</strong> Even parity: number of 1s (including parity bit) is even. Odd parity:
+                        number of 1s is odd.</li>
+                    <li><strong>RS-232 levels:</strong> Logic 1 = –3 to –15V, Logic 0 = +3 to +15V. MAX232 chip converts
+                        TTL ↔ RS-232.</li>
+                    <li><strong>Oversampling:</strong> UART receiver samples at 16× baud rate for noise immunity.
+                        Majority vote of bits 7, 8, 9.</li>
+                </ul>
+                <div class="formula-box">
+                    <div class="fname">UART Data Transfer Time</div>
+                    <div class="fexpr">
+                        Bit time = 1 / Baud_rate seconds<br />
+                        Frame size = 1 (start) + data_bits + parity + stop_bits<br />
+                        Frame time = Frame_size / Baud_rate seconds<br />
+                        Time to transmit N bytes = N × frame_time<br />
+                        <br />
+                        Effective throughput = data_bits / frame_size × baud_rate bps
+                    </div>
+                </div>
+                <div class="numerical">
+                    <div class="num-label">🔢 Numerical — UART Timing</div>
+                    <div class="num-q">A UART is configured at 115200 baud with 8 data bits, even parity, 1 stop bit
+                        (8E1 format). Find: (a) Bit time, (b) Frame duration, (c) Time to transmit 512 bytes of data,
+                        (d) Effective data throughput in bps, (e) Number of frames that can be transmitted per second.
+                    </div>
+                    <div class="num-sol">Baud = 115200, Frame = 1 start + 8 data + 1 parity + 1 stop = 11 bits
+
+                        (a) Bit time:
+                        t_bit = 1 / 115200 = <span class="num-ans">8.68 µs</span>
+
+                        (b) Frame duration:
+                        t_frame = 11 / 115200 = <span class="num-ans">95.49 µs</span>
+
+                        (c) Time for 512 bytes:
+                        t_total = 512 × 95.49 µs = 48,890 µs = <span class="num-ans">≈ 48.89 ms</span>
+
+                        (d) Effective data throughput:
+                        Throughput = (data_bits / frame_size) × baud
+                        Throughput = (8/11) × 115200 = 0.7273 × 115200
+                        <span class="num-ans">Throughput ≈ 83,782 bps ≈ 83.8 kbps</span>
+
+                        (e) Frames per second:
+                        FPS = 115200 / 11 = <span class="num-ans">10,472 frames/sec</span>
+                        i.e., 10,472 bytes/sec ≈ 10.2 KB/s
+                    </div>
+                </div>
+            </div>
+
+            <div id="m2-sensors" class="card" style="scroll-margin-top:30px">
+                <div class="card-title">🌡️ Sensors & Actuators</div>
+                <ul class="points-list">
+                    <li><strong>Sensor types:</strong> Temperature (LM35, DS18B20, RTD, Thermocouple), Pressure
+                        (piezoelectric), Humidity (capacitive), Proximity (IR, ultrasonic), Light (LDR, photodiode).
+                    </li>
+                    <li><strong>LM35:</strong> 10 mV/°C linear output, 0°C = 0V. Range –55°C to +150°C. No calibration
+                        needed.</li>
+                    <li><strong>RTD (PT100):</strong> Resistance = 100Ω at 0°C. α = 0.00385 Ω/Ω/°C. R(T) = 100(1 + αT).
+                    </li>
+                    <li><strong>Thermocouple:</strong> Seebeck effect — voltage proportional to temperature difference.
+                        Needs cold junction compensation.</li>
+                    <li><strong>Actuator types:</strong> DC motor, Servo motor, Stepper motor, Relay, Solenoid, LED,
+                        Buzzer.</li>
+                    <li><strong>H-bridge:</strong> Controls DC motor direction and speed. Four switches; PWM on enable
+                        controls speed.</li>
+                    <li><strong>PWM for servo:</strong> Period = 20 ms (50 Hz). Pulse width: 1 ms = 0°, 1.5 ms = 90°, 2
+                        ms = 180°.</li>
+                    <li><strong>Stepper motor:</strong> Steps per revolution (typical 200 steps = 1.8°/step). Full step,
+                        half step, microstepping.</li>
+                    <li><strong>Encoder:</strong> Rotary encoder — quadrature signals (A, B). Direction determined by
+                        phase relationship. Pulses count gives position.</li>
+                </ul>
+                <div class="formula-box">
+                    <div class="fname">RTD & Sensor Formulas</div>
+                    <div class="fexpr">
+                        RTD: R(T) = R₀ × (1 + α × T) [T in °C, R₀ = 100Ω for PT100]<br />
+                        LM35 output: V<sub>out</sub> = 10 mV/°C × T<br />
+                        Temperature from ADC: T = (ADC_code × V_ref) / (2ⁿ × 10 mV)<br />
+                        <br />
+                        Stepper speed (RPM): RPM = (Steps/sec × 60) / Steps_per_rev<br />
+                        Stepper step delay (ms) = 60,000 / (RPM × steps_per_rev)<br />
+                        <br />
+                        PWM Duty cycle = t_on / T_period × 100%<br />
+                        PWM frequency = 1 / T_period
+                    </div>
+                </div>
+                <div class="numerical">
+                    <div class="num-label">🔢 Numerical — Sensor + ADC System Design</div>
+                    <div class="num-q">An LM35 temperature sensor feeds into the 10-bit ADC of a PIC16F877A (V_ref = 5V,
+                        f_osc = 20 MHz). The sensor reads 87.5°C. (a) Find V_out of LM35, (b) ADC digital code, (c)
+                        Resolution in °C/bit, (d) Time for ADC conversion if TAD = 1.6 µs (acquisition time = 20 µs),
+                        (e) Maximum measurable temperature, (f) Stepper motor connected runs at 120 RPM (1.8°/step).
+                        Find step delay in ms.</div>
+                    <div class="num-sol">n = 10 bits, V_ref = 5V, T = 87.5°C
+
+                        (a) LM35 output voltage:
+                        V_out = 10 mV/°C × 87.5 = 875 mV = <span class="num-ans">0.875 V</span>
+
+                        (b) ADC digital code:
+                        D = round(V_out / V_ref × 2ⁿ)
+                        D = round(0.875 / 5 × 1024)
+                        D = round(179.2) = <span class="num-ans">179 decimal = 0x0B3</span>
+
+                        (c) Resolution in °C/bit:
+                        1 LSB = V_ref / 2ⁿ = 5 / 1024 = 4.883 mV
+                        In temperature: 4.883 mV / 10 mV per °C = <span class="num-ans">0.488 °C/bit</span>
+
+                        (d) ADC conversion time (PIC SAR):
+                        12 TAD cycles needed for 10-bit conversion
+                        t_conv = acquisition + (12 × TAD)
+                        t_conv = 20 µs + (12 × 1.6 µs) = 20 + 19.2 = <span class="num-ans">39.2 µs</span>
+
+                        (e) Maximum measurable temperature:
+                        V_in_max = V_ref = 5V
+                        T_max = V_in_max / 10 mV = 5000 mV / 10 mV = <span class="num-ans">500°C</span>
+                        (LM35 itself limited to 150°C — ADC range exceeds sensor range)
+
+                        (f) Stepper motor step delay:
+                        Steps/rev = 360 / 1.8 = 200 steps/revolution
+                        Step delay = 60,000 / (RPM × steps_per_rev)
+                        Step delay = 60,000 / (120 × 200) = 60,000 / 24,000 = <span class="num-ans">2.5 ms</span></div>
+                </div>
+            </div>
+
+            <div class="pq-box">
+                <div class="pq-title">🎯 Module 2 — Possible Exam Questions</div>
+                <ol>
+                    <li>A 10-bit ADC with V_ref = 3.3V receives an input of 2.1 V. Find the digital output code (hex),
+                        resolution, quantization error, and SNR.</li>
+                    <li>Design an 8051-based system to generate a 1 kHz square wave using Timer 0 in Mode 1. Find TH0
+                        and TL0 for f_osc = 12 MHz.</li>
+                    <li>Explain successive approximation ADC with block diagram. Why is it preferred in embedded systems
+                        over flash ADC?</li>
+                    <li>A UART operates at 57600 baud, 8N1. Calculate: frame time, throughput, time to send 1 KB of
+                        data.</li>
+                    <li>Explain memory address decoding using a 3-to-8 decoder (74LS138) for 8051. What addresses does
+                        each output select if A15–A13 are connected to C, B, A inputs?</li>
+                    <li>Compare Flash ADC, Dual-slope ADC, and SAR ADC in terms of speed, accuracy, and application.
+                    </li>
+                    <li>A PT100 RTD reads 142.31 Ω. Find the temperature. (α = 0.00385/°C)</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- ══════════════════════════════════════════ -->
+        <!-- MODULE 3 -->
+        <!-- ══════════════════════════════════════════ -->
+        <section class="module m3" id="module3">
+            <div class="module-header">
+                <div>
+                    <div class="module-num">Module 3 · 6 Hours</div>
+                    <div class="module-title">Architecture of Special Purpose Computing Systems</div>
+                    <div class="module-hours">ATM · Handheld Devices · Data Compressor · Image Capturing</div>
+                </div>
+            </div>
+
+            <div id="m3-atm" class="card" style="scroll-margin-top:30px">
+                <div class="card-title">🏧 ATM Architecture</div>
+                <ul class="points-list">
+                    <li><strong>ATM Components:</strong> Card reader, PIN pad, Display (LCD/CRT), Receipt printer, Cash
+                        dispenser, Network module, Host processor, UPS, Camera.</li>
+                    <li><strong>ATM processor:</strong> Typically Intel Atom/ARM-based embedded PC with OS (Windows XP
+                        Embedded or Linux).</li>
+                    <li><strong>Software layers:</strong> Application layer → XFS (eXtensions for Financial Services) →
+                        Device drivers → Hardware.</li>
+                    <li><strong>Communication:</strong> TCP/IP over dedicated leased line or VPN to bank host. Uses ISO
+                        8583 message format for transactions.</li>
+                    <li><strong>Security:</strong> HSM (Hardware Security Module) for PIN encryption (Triple DES/AES).
+                        SSL/TLS for network. EMV chip card.</li>
+                    <li><strong>Cash dispenser:</strong> Cassettes holding 2000–2500 notes each. Mechanical
+                        pick/transport/detect mechanisms. Shutter for security.</li>
+                    <li><strong>Transaction flow:</strong> Card insertion → Magnetic stripe/chip read → PIN entry
+                        (encrypted) → Host verification → Cash dispense → Eject card → Print receipt.</li>
+                    <li><strong>Uptime requirement:</strong> 99.9% availability = max 8.76 hours downtime/year.</li>
+                    <li><strong>Challenges:</strong> Physical security, network reliability, power backup, vandalism,
+                        skimming attacks.</li>
+                </ul>
+            </div>
+
+            <div id="m3-handheld" class="card" style="scroll-margin-top:30px">
+                <div class="card-title">📱 Handheld Devices & Data Compressor</div>
+                <ul class="points-list">
+                    <li><strong>Handheld constraints:</strong> Small form factor, battery powered (mAh matters), limited
+                        thermal dissipation, touch/key I/O, wireless connectivity.</li>
+                    <li><strong>Mobile SoC:</strong> CPU cluster + GPU + DSP + NPU + modem + PMIC on one die. e.g., ARM
+                        big.LITTLE architecture.</li>
+                    <li><strong>big.LITTLE:</strong> Big cores (Cortex-A78) for performance + Little cores (Cortex-A55)
+                        for efficiency. OS scheduler assigns tasks dynamically.</li>
+                    <li><strong>Power states:</strong> Active, Idle, Sleep, Deep Sleep, Hibernate. Power gating and
+                        clock gating used to save power.</li>
+                    <li><strong>Memory hierarchy in handhelds:</strong> Registers → L1/L2/L3 cache → LPDDR4/5 RAM →
+                        eMMC/UFS Flash.</li>
+                </ul>
+                <div id="m3-compress">
+                    <ul class="points-list">
+                        <li><strong>Data Compressor architecture:</strong> Input buffer → Compression engine (LZW,
+                            Huffman, Deflate) → Output buffer → Storage/Transmit.</li>
+                        <li><strong>Lossless compression:</strong> Huffman coding, LZW (Lempel-Ziv-Welch), RLE (Run
+                            Length Encoding). Used for text, executables.</li>
+                        <li><strong>Lossy compression:</strong> DCT (Discrete Cosine Transform) for JPEG, MPEG, MP3.
+                            Quantization introduces loss.</li>
+                        <li><strong>Compression ratio:</strong> CR = Original size / Compressed size. Higher CR = more
+                            compression.</li>
+                        <li><strong>Huffman coding:</strong> Variable-length codes. Frequent symbols get shorter codes.
+                            Prefix-free binary tree.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="m3-image" class="card" style="scroll-margin-top:30px">
+                <div class="card-title">📷 Image Capturing Devices — Architecture</div>
+                <ul class="points-list">
+                    <li><strong>Image sensor types:</strong> CCD (Charge-Coupled Device) — low noise, high quality; CMOS
+                        — lower power, faster, cheap, now dominant.</li>
+                    <li><strong>Bayer pattern:</strong> RGGB arrangement on CMOS sensor. 50% green (human eye most
+                        sensitive to green). Demosaicing to reconstruct full RGB.</li>
+                    <li><strong>ISP (Image Signal Processor):</strong> Dedicated processor for demosaicing, noise
+                        reduction, auto-white balance, auto-exposure, HDR processing.</li>
+                    <li><strong>MIPI CSI-2:</strong> Camera Serial Interface — standard interface between image sensor
+                        and application processor. Differential signaling, 1–4 lanes.</li>
+                    <li><strong>Image pipeline:</strong> Sensor → ADC → ISP → Compression (JPEG/HEIF) → Memory →
+                        Display.</li>
+                    <li><strong>Resolution:</strong> Megapixels = (horizontal pixels × vertical pixels) / 1,000,000.
+                    </li>
+                    <li><strong>Frame rate:</strong> fps = 1 / frame_time. 4K@60fps = massive data bandwidth needed.
+                    </li>
+                    <li><strong>Challenges:</strong> Power dissipation from high-res sensors, heat in compact body, ISP
+                        computational load, storage bandwidth.</li>
+                </ul>
+                <div class="formula-box">
+                    <div class="fname">Image Data Bandwidth</div>
+                    <div class="fexpr">
+                        Raw data rate = width × height × fps × bits_per_pixel bits/sec<br />
+                        For 4K (3840×2160) @ 60fps, 12-bit RAW:<br />
+                        = 3840 × 2160 × 60 × 12 = 5,992,243,200 bits/s ≈ 5.99 Gbps<br />
+                        After JPEG compression (10:1 ratio) ≈ 599 Mbps<br />
+                        <br />
+                        Storage per image (uncompressed) = W × H × 3 bytes (RGB)<br />
+                        JPEG size ≈ (W × H × 3) / Compression_ratio
+                    </div>
+                </div>
+            </div>
+
+            <div class="pq-box">
+                <div class="pq-title">🎯 Module 3 — Possible Exam Questions</div>
+                <ol>
+                    <li>Explain the complete architecture of an ATM system with a block diagram. Describe the role of
+                        HSM in security.</li>
+                    <li>What are the design constraints of handheld embedded systems? How does ARM big.LITTLE
+                        architecture address battery life vs performance trade-off?</li>
+                    <li>Explain the image signal processing pipeline from sensor to display. What is the role of ISP?
+                    </li>
+                    <li>Calculate raw data bandwidth for a 20 MP camera shooting at 4K 30fps with 10-bit depth. What
+                        compression ratio is needed to achieve 100 Mbps output?</li>
+                    <li>Compare CCD and CMOS image sensors. Why has CMOS displaced CCD in modern embedded cameras?</li>
+                    <li>Explain Huffman coding with an example. Encode the string "EMBEDDED" using Huffman codes.</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- ══════════════════════════════════════════ -->
+        <!-- MODULE 4 -->
+        <!-- ══════════════════════════════════════════ -->
+        <section class="module m4" id="module4">
+            <div class="module-header">
+                <div>
+                    <div class="module-num">Module 4 · 7 Hours</div>
+                    <div class="module-title">Programming Tools</div>
+                    <div class="module-hours">Evolution · Modelling · Code Optimization · Logic Analyzers · IDE</div>
+                </div>
+            </div>
+
+            <div id="m4-evo" class="card" style="scroll-margin-top:30px">
+                <div class="card-title">📜 Evolution & Modelling of Embedded Programs</div>
+                <ul class="points-list">
+                    <li><strong>Evolution:</strong> Machine code → Assembly → Embedded C → C++ → RTOS-based →
+                        Model-based (Simulink, LabVIEW).</li>
+                    <li><strong>Assembly advantages:</strong> Full hardware control, deterministic timing, smallest code
+                        size.</li>
+                    <li><strong>Embedded C:</strong> Standard C + hardware-specific extensions (volatile, bit fields,
+                        inline assembly, fixed-size types from <code>stdint.h</code>).</li>
+                    <li><strong>volatile keyword:</strong> Tells compiler not to cache the variable — read from hardware
+                        register every time. Essential for hardware registers and ISR-shared variables.</li>
+                    <li><strong>Cross-compiler:</strong> Compiler runs on host PC but generates code for target MCU
+                        (e.g., arm-gcc on Linux compiling for Cortex-M).</li>
+                    <li><strong>Build process:</strong> Source (.c) → Preprocessor → Compiler → Assembler (.o) → Linker
+                        (ld) → Locator → Binary/HEX.</li>
+                    <li><strong>Linker script:</strong> Defines memory regions (FLASH, RAM), section placement (.text,
+                        .data, .bss, .stack).</li>
+                    <li><strong>Program models:</strong> Round-robin (polling loop), Round-robin with interrupts,
+                        Function queue scheduling, RTOS-based.</li>
+                    <li><strong>Modelling tools:</strong> UML (Unified Modelling Language), State machine diagrams, Data
+                        flow diagrams, Simulink (MBD).</li>
+                    <li><strong>FSM (Finite State Machine):</strong> States + transitions + actions. Essential for
+                        embedded control — e.g., vending machine, traffic light controller.</li>
+                </ul>
+            </div>
+
+            <div id="m4-opt" class="card" style="scroll-margin-top:30px">
+                <div class="card-title">⚡ Code Optimization Techniques</div>
+                <ul class="points-list">
+                    <li><strong>Loop unrolling:</strong> Reduce loop overhead by manually replicating loop body.
+                        Increases code size but reduces branch penalty.</li>
+                    <li><strong>Strength reduction:</strong> Replace expensive operations with cheaper ones. Division by
+                        2 → right shift. Multiplication by constant → add+shift.</li>
+                    <li><strong>Inline functions:</strong> <code>inline</code> keyword eliminates function call overhead
+                        (push/pop registers). Trade: code bloat.</li>
+                    <li><strong>Register variables:</strong> <code>register int x</code> hints to compiler to keep in
+                        CPU register (modern compilers may ignore this).</li>
+                    <li><strong>Avoid float in MCU:</strong> Integer arithmetic is 10–100× faster than software
+                        floating-point on MCUs without FPU. Use fixed-point (Q notation).</li>
+                    <li><strong>Bit manipulation:</strong> Use bitwise operations (|, &, ^, ~, <<,>>) for hardware
+                            register access — faster and more precise than read-modify-write using arithmetic.</li>
+                    <li><strong>Compiler optimization levels:</strong> -O0 (no opt), -O1 (basic), -O2 (moderate,
+                        default), -O3 (aggressive), -Os (size), -Ofast (unsafe).</li>
+                    <li><strong>Memory optimization:</strong> Pack structs with __attribute__((packed)), use bit-fields
+                        for flags, avoid global variables (hard to optimize), use const for ROM storage.</li>
+                    <li><strong>Cache optimization:</strong> Spatial locality (access sequential memory), Temporal
+                        locality (reuse recent data). Pad structs to cache line boundaries.</li>
+                    <li><strong>Dead code elimination:</strong> Compiler removes unreachable code. Ensure no
+                        side-effects suppressed by volatile.</li>
+                </ul>
+            </div>
+
+            <div id="m4-tools" class="card" style="scroll-margin-top:30px">
+                <div class="card-title">🔬 Logic Analyzers & Programming Environment</div>
+                <ul class="points-list">
+                    <li><strong>Logic Analyzer:</strong> Captures and displays multiple digital signal transitions
+                        simultaneously. Shows bus transactions, protocol decoding (UART, SPI, I2C), timing diagrams.
+                    </li>
+                    <li><strong>Oscilloscope vs Logic Analyzer:</strong> Oscilloscope — analog waveform details; Logic
+                        Analyzer — multi-channel digital, protocol decode, more channels (16–256).</li>
+                    <li><strong>ICE (In-Circuit Emulator):</strong> Replaces target MCU. Full hardware control,
+                        non-intrusive debugging. Expensive but powerful.</li>
+                    <li><strong>JTAG (Joint Test Action Group):</strong> 5-pin interface (TCK, TMS, TDI, TDO, TRST) for
+                        boundary scan, program download, and debugging. IEEE 1149.1.</li>
+                    <li><strong>SWD (Serial Wire Debug):</strong> ARM-specific 2-pin debug interface (SWDIO, SWDCLK).
+                        Replaces JTAG on Cortex-M. Saves I/O pins.</li>
+                    <li><strong>GDB + OpenOCD:</strong> Open-source debugger pair for ARM. GDB = user interface; OpenOCD
+                        = hardware interface via JTAG/SWD adapter.</li>
+                    <li><strong>IDE examples:</strong> Keil MDK (ARM), MPLAB X (PIC), IAR Embedded Workbench,
+                        STM32CubeIDE, Arduino IDE, PlatformIO.</li>
+                    <li><strong>Emulator vs Simulator:</strong> Simulator = software model only. Emulator =
+                        hardware-accurate, faster, may miss real hardware timing bugs.</li>
+                    <li><strong>Profiling:</strong> Measures execution time per function. Tools: gprof, Percepio
+                        Tracealyzer (RTOS), ARM ETM (Embedded Trace Macrocell) hardware.</li>
+                </ul>
+            </div>
+
+            <div class="pq-box">
+                <div class="pq-title">🎯 Module 4 — Possible Exam Questions</div>
+                <ol>
+                    <li>Explain the complete embedded software build process from C source to flashable binary. What is
+                        the role of linker script?</li>
+                    <li>Why is the <code>volatile</code> keyword critical in embedded C? Give two concrete examples
+                        where omitting it causes bugs.</li>
+                    <li>Compare logic analyzer and oscilloscope. When would you use each during embedded debugging?</li>
+                    <li>Explain five code optimization techniques specific to resource-constrained embedded systems with
+                        code examples.</li>
+                    <li>What is JTAG? Describe its 5-pin interface and how it enables boundary scan testing and
+                        in-system debugging.</li>
+                    <li>Explain finite state machine (FSM) modelling for a traffic light controller with 3 states. Draw
+                        state transition diagram.</li>
+                    <li>Compare GCC -O0, -O2, and -Os optimization flags. Give an example of what each changes in
+                        generated assembly.</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- ══════════════════════════════════════════ -->
+        <!-- MODULE 5 — MOST FORMULAS -->
+        <!-- ══════════════════════════════════════════ -->
+        <section class="module m5" id="module5">
+            <div class="module-header">
+                <div>
+                    <div class="module-num">Module 5 · 8 Hours</div>
+                    <div class="module-title">Real Time Operating System (RTOS)</div>
+                    <div class="module-hours">Classification · EDF · RMS · Hybrid · eCOS · POSIX · Protothreads</div>
+                </div>
+            </div>
+
+            <div id="m5-class" class="card" style="scroll-margin-top:30px">
+                <div class="card-title">📊 Classification & Issues in Real-Time Systems</div>
+                <ul class="points-list">
+                    <li><strong>Hard Real-Time:</strong> Missing deadline = system failure. Examples: airbag controller,
+                        nuclear plant control, pacemaker.</li>
+                    <li><strong>Soft Real-Time:</strong> Missing deadline = degraded performance (not catastrophic).
+                        Examples: video streaming, online gaming, ATM display.</li>
+                    <li><strong>Firm Real-Time:</strong> Results after deadline are useless but not catastrophic.
+                        Example: stock trading system.</li>
+                    <li><strong>Periodic task:</strong> Arrives at fixed interval T (period). Deadline D often = T.
+                        Execution time = C (WCET).</li>
+                    <li><strong>Aperiodic task:</strong> Arrives at random intervals. Soft deadline or no deadline.
+                        Background tasks.</li>
+                    <li><strong>Sporadic task:</strong> Arrives at random intervals but with hard deadline. Minimum
+                        inter-arrival time guaranteed.</li>
+                    <li><strong>WCET (Worst Case Execution Time):</strong> Upper bound on task execution time. Must be
+                        known for schedulability analysis.</li>
+                    <li><strong>Key issues in RTS:</strong> Priority inversion, deadlock, unbounded priority inversion,
+                        jitter, latency, synchronization, shared resource access.</li>
+                    <li><strong>Priority Inversion:</strong> Low-priority task holds resource needed by high-priority
+                        task — medium-priority task preempts → high-priority blocked.</li>
+                    <li><strong>Priority Inheritance Protocol (PIP):</strong> Temporarily boost low-priority task's
+                        priority to that of highest waiting task.</li>
+                    <li><strong>Priority Ceiling Protocol (PCP):</strong> Each resource has ceiling = max priority of
+                        tasks using it. Task can lock resource only if priority > all locked resource ceilings.</li>
+                    <li><strong>Preemptive vs. Non-preemptive:</strong> Preemptive RTOS allows higher-priority task to
+                        interrupt running task. Non-preemptive = cooperative (task must yield).</li>
+                </ul>
+            </div>
+
+            <div id="m5-rms" class="card" style="scroll-margin-top:30px">
+                <div class="card-title">📐 RMS — Rate Monotonic Scheduling</div>
+                <ul class="points-list">
+                    <li><strong>RMS:</strong> Priority assigned based on period — shorter period = higher priority.
+                        Fixed (static) priority. Preemptive.</li>
+                    <li><strong>Optimal:</strong> RMS is optimal among all fixed-priority algorithms — if any
+                        fixed-priority algorithm can schedule a task set, RMS can too.</li>
+                    <li><strong>Assumptions:</strong> Tasks periodic, independent, known WCET, relative deadline =
+                        period, no shared resources, context switch time negligible.</li>
+                    <li><strong>Utilization bound:</strong> Liu & Layland (1973) — n tasks are schedulable if U ≤
+                        n(2^(1/n) – 1). As n→∞, bound → ln(2) ≈ 0.693 (69.3%).</li>
+                    <li><strong>Sufficient condition:</strong> If U ≤ n(2^(1/n)–1), the task set is guaranteed
+                        schedulable under RMS.</li>
+                    <li><strong>Necessary condition:</strong> U ≤ 1.0 always required. Tasks might still be schedulable
+                        even if U &gt; bound — need response time analysis.</li>
+                    <li><strong>Response Time Analysis (RTA):</strong> Exact schedulability test. Compute worst-case
+                        response time R_i iteratively.</li>
+                </ul>
+                <div class="formula-box">
+                    <div class="fname">RMS Key Formulas</div>
+                    <div class="fexpr">
+                        CPU Utilization: U = Σᵢ (Cᵢ / Tᵢ) [Cᵢ=WCET, Tᵢ=Period]<br />
+                        <br />
+                        Liu-Layland Bound: U ≤ n × (2^(1/n) – 1)<br />
+                        n=1 → 1.000, n=2 → 0.828, n=3 → 0.780, n→∞ → 0.693<br />
+                        <br />
+                        Response Time Analysis (iterative):<br />
+                        Rᵢ⁽⁰⁾ = Cᵢ<br />
+                        Rᵢ⁽ᵏ⁺¹⁾ = Cᵢ + Σⱼ∈hp(i) ⌈ Rᵢ⁽ᵏ⁾ / Tⱼ ⌉ × Cⱼ<br />
+                        [hp(i) = set of tasks with higher priority than i]<br />
+                        Iterate until Rᵢ⁽ᵏ⁺¹⁾ = Rᵢ⁽ᵏ⁾ → converged, or Rᵢ &gt; Dᵢ → infeasible<br />
+                        <br />
+                        Hyperperiod = LCM(T₁, T₂, ..., Tₙ)<br />
+                        Number of instances of task i in hyperperiod = LCM / Tᵢ
+                    </div>
+                </div>
+            </div>
+
+            <div id="m5-edf" class="card" style="scroll-margin-top:30px">
+                <div class="card-title">📐 EDF — Earliest Deadline First Scheduling</div>
+                <ul class="points-list">
+                    <li><strong>EDF:</strong> Dynamic priority algorithm. Task with earliest absolute deadline gets
+                        highest priority. Priority changes at each scheduling point.</li>
+                    <li><strong>Optimal:</strong> EDF is optimal among all scheduling algorithms (preemptive,
+                        uniprocessor). Can achieve 100% utilization.</li>
+                    <li><strong>Schedulability condition:</strong> U = Σ(C_i/T_i) ≤ 1.0 for preemptive EDF (sufficient
+                        AND necessary for periodic tasks with D=T).</li>
+                    <li><strong>EDF vs RMS:</strong> EDF better utilization (100% vs 69.3%), but dynamic priority =
+                        higher runtime overhead. RMS = simpler, predictable, analysis friendly.</li>
+                    <li><strong>Overload behavior:</strong> EDF degrades gracefully under overload (may miss some
+                        deadlines). RMS prioritizes high-freq tasks (lower-priority tasks always miss).</li>
+                    <li><strong>Absolute deadline:</strong> d_i = r_i + D_i where r_i = release time (arrival), D_i =
+                        relative deadline.</li>
+                    <li><strong>Laxity (Slack):</strong> L = d_i – t – C_remaining. LLF (Least Laxity First) — alternate
+                        to EDF. Same complexity, more context switches.</li>
+                </ul>
+                <div class="formula-box">
+                    <div class="fname">EDF & General Scheduling Formulas</div>
+                    <div class="fexpr">
+                        EDF schedulable: U = Σ (Cᵢ/Tᵢ) ≤ 1.0<br />
+                        Absolute deadline: dᵢ = release_time + relative_deadline<br />
+                        Laxity: L(t) = dᵢ – t – C_remaining<br />
+                        <br />
+                        Processor demand (DBF — Demand Bound Function):<br />
+                        dbf(t) = Σᵢ ⌊(t + Tᵢ – Dᵢ)/Tᵢ⌋ × Cᵢ ≤ t for all t &gt; 0<br />
+                        <br />
+                        Response time (for EDF, simplified):<br />
+                        Rᵢ = Cᵢ + I_i (interference from higher-priority tasks)<br />
+                        <br />
+                        Context switch overhead consideration:<br />
+                        Effective utilization = Σ(Cᵢ/Tᵢ) + n × (2 × t_cs)/T_min<br />
+                        [t_cs = context switch time, T_min = smallest period]
+                    </div>
+                </div>
+            </div>
+
+            <div id="m5-numericals" class="card" style="scroll-margin-top:30px">
+                <div class="card-title">🔢 RTOS Scheduling Numericals</div>
+
+                <div class="numerical">
+                    <div class="num-label">🔢 Numerical 1 — RMS Schedulability + Response Time Analysis</div>
+                    <div class="num-q">Four periodic tasks with the following parameters are to be scheduled using RMS.
+                        T₁(C=3,T=10), T₂(C=2,T=14), T₃(C=4,T=20), T₄(C=2,T=40). (a) Calculate CPU utilization U, (b)
+                        Find Liu-Layland bound for n=4, (c) Determine schedulability using bound test, (d) Find WCRT
+                        (Worst Case Response Time) for each task using Response Time Analysis, (e) Compute the
+                        hyperperiod and number of instances of each task, (f) Determine if any task misses its deadline.
+                    </div>
+                    <div class="num-sol">Task set: T₁(3,10), T₂(2,14), T₃(4,20), T₄(2,40)
+                        RMS priority order: T₁ (highest) &gt; T₂ &gt; T₃ &gt; T₄ (lowest)
+
+                        (a) CPU Utilization:
+                        U = C₁/T₁ + C₂/T₂ + C₃/T₃ + C₄/T₄
+                        U = 3/10 + 2/14 + 4/20 + 2/40
+                        U = 0.300 + 0.143 + 0.200 + 0.050
+                        <span class="num-ans">U = 0.693 = 69.3%</span>
+
+                        (b) Liu-Layland bound (n=4):
+                        U_bound = 4 × (2^(1/4) – 1)
+                        2^0.25 = 1.18921
+                        U_bound = 4 × 0.18921 = <span class="num-ans">0.7568 = 75.68%</span>
+
+                        (c) Schedulability test:
+                        U = 0.693 ≤ 0.7568 ✓
+                        <span class="num-ans">Task set IS schedulable by RMS</span>
+
+                        (d) Response Time Analysis:
+                        [T₁ has highest priority, no interference from others]
+                        R₁ = C₁ = <span class="num-ans">3 ms ≤ D₁=10 ✓</span>
+
+                        [T₂ — interfered by T₁]
+                        R₂⁽⁰⁾ = 2
+                        R₂⁽¹⁾ = 2 + ⌈2/10⌉×3 = 2 + 1×3 = 5
+                        R₂⁽²⁾ = 2 + ⌈5/10⌉×3 = 2 + 1×3 = 5 (converged)
+                        <span class="num-ans">R₂ = 5 ms ≤ D₂=14 ✓</span>
+
+                        [T₃ — interfered by T₁, T₂]
+                        R₃⁽⁰⁾ = 4
+                        R₃⁽¹⁾ = 4 + ⌈4/10⌉×3 + ⌈4/14⌉×2 = 4 + 1×3 + 1×2 = 9
+                        R₃⁽²⁾ = 4 + ⌈9/10⌉×3 + ⌈9/14⌉×2 = 4 + 1×3 + 1×2 = 9 (converged)
+                        <span class="num-ans">R₃ = 9 ms ≤ D₃=20 ✓</span>
+
+                        [T₄ — interfered by T₁, T₂, T₃]
+                        R₄⁽⁰⁾ = 2
+                        R₄⁽¹⁾ = 2 + ⌈2/10⌉×3 + ⌈2/14⌉×2 + ⌈2/20⌉×4 = 2+3+2+4 = 11
+                        R₄⁽²⁾ = 2 + ⌈11/10⌉×3 + ⌈11/14⌉×2 + ⌈11/20⌉×4 = 2+2×3+1×2+1×4 = 2+6+2+4 = 14
+                        R₄⁽³⁾ = 2 + ⌈14/10⌉×3 + ⌈14/14⌉×2 + ⌈14/20⌉×4 = 2+2×3+1×2+1×4 = 14 (converged)
+                        <span class="num-ans">R₄ = 14 ms ≤ D₄=40 ✓</span>
+
+                        (e) Hyperperiod:
+                        LCM(10, 14, 20, 40) = LCM(10,14)=70, LCM(70,20)=140, LCM(140,40)=280
+                        <span class="num-ans">Hyperperiod = 280 ms</span>
+                        T₁ instances = 280/10 = 28
+                        T₂ instances = 280/14 = 20
+                        T₃ instances = 280/20 = 14
+                        T₄ instances = 280/40 = 7
+
+                        (f) All tasks meet deadline ✓ — No deadline misses under RMS.
+                    </div>
+                </div>
+
+                <div class="numerical">
+                    <div class="num-label">🔢 Numerical 2 — EDF vs RMS Comparison</div>
+                    <div class="num-q">Three periodic tasks: T₁(C=5, T=10, D=10), T₂(C=4, T=12, D=12), T₃(C=3, T=15,
+                        D=15). (a) Find CPU utilization. (b) Is the task set schedulable under RMS? Find RMS bound. (c)
+                        Perform EDF schedulability test. (d) Draw a scheduling timeline for t=0 to t=30 for both EDF and
+                        RMS. (e) If T₃ execution time increases to C₃=5, what happens under EDF and RMS?</div>
+                    <div class="num-sol">T₁(5,10), T₂(4,12), T₃(3,15)
+
+                        (a) CPU Utilization:
+                        U = 5/10 + 4/12 + 3/15
+                        U = 0.500 + 0.333 + 0.200
+                        <span class="num-ans">U = 1.033 = 103.3%</span>
+
+                        (b) RMS schedulability:
+                        n=3 bound = 3 × (2^(1/3)–1) = 3 × (1.2599–1) = 3 × 0.2599 = 0.7798
+                        U = 1.033 &gt; 0.7798
+                        <span class="num-ans">RMS BOUND VIOLATED — likely infeasible under RMS</span>
+                        (Need RTA to confirm exact failure task)
+
+                        RTA for T₃ (lowest priority):
+                        R₃⁽⁰⁾ = 3
+                        R₃⁽¹⁾ = 3 + ⌈3/10⌉×5 + ⌈3/12⌉×4 = 3+5+4 = 12
+                        R₃⁽²⁾ = 3 + ⌈12/10⌉×5 + ⌈12/12⌉×4 = 3+10+4 = 17
+                        R₃⁽³⁾ = 3 + ⌈17/10⌉×5 + ⌈17/12⌉×4 = 3+10+8 = 21
+                        R₃⁽⁴⁾ = 3 + ⌈21/10⌉×5 + ⌈21/12⌉×4 = 3+15+8 = 26
+                        R₃⁽⁵⁾ = 3 + ⌈26/10⌉×5 + ⌈26/12⌉×4 = 3+15+12 = 30
+                        R₃⁽⁶⁾ = 3 + ⌈30/10⌉×5 + ⌈30/12⌉×4 = 3+15+12 = 30 (converged)
+                        <span class="num-ans">R₃ = 30 &gt; D₃ = 15 → DEADLINE MISSED under RMS</span>
+
+                        (c) EDF schedulability:
+                        U = 1.033 &gt; 1.0
+                        <span class="num-ans">EDF INFEASIBLE — U &gt; 1.0 means system overloaded</span>
+                        No scheduler can guarantee all deadlines when U &gt; 100%.
+
+                        (d) Timeline overview (t=0 to 30):
+                        Arrivals and deadlines:
+                        t=0: T₁ arrives (D=10), T₂ arrives (D=12), T₃ arrives (D=15)
+
+                        EDF order at t=0: T₁(D=10) &gt; T₂(D=12) &gt; T₃(D=15)
+                        t=0–5: T₁ runs [finishes at t=5]
+                        t=5–9: T₂ runs
+                        t=9: T₁ arrives again (D=20). T₂ has D=12 &lt; 20 → T₂ continues
+                        t=9–12: T₂ finishes at t=12 (just meets D=12) [Actually at t=9 remaining=0, T₂ done at 9]
+                        ... [EDF barely meets some deadlines but system is overloaded; eventually misses]
+
+                        RMS: T₁ always preempts. T₃ gets starved → misses at t=15.
+
+                        (e) If C₃ increases to 5:
+                        New U = 5/10 + 4/12 + 5/15 = 0.5 + 0.333 + 0.333 = 1.167
+                        <span class="num-ans">Both EDF and RMS fail — U = 116.7% &gt; 100% — inherently
+                            unschedulable.</span>
+                        Solution: Increase T₃'s period, reduce execution time, or add a second CPU.
+                    </div>
+                </div>
+
+                <div class="numerical">
+                    <div class="num-label">🔢 Numerical 3 — Priority Inversion & Hybrid Scheduling</div>
+                    <div class="num-q">Tasks T₁(high priority, period=20), T₂(medium priority, period=40), T₃(low
+                        priority, period=80) share resource R. T₃ locks R at t=0 for 15 ms. T₂ arrives at t=2 (no
+                        resource need). T₁ arrives at t=5 (needs R). (a) Explain the priority inversion scenario with
+                        timeline. (b) Calculate unbounded blocking time. (c) How does Priority Inheritance Protocol
+                        (PIP) resolve this? (d) What is the maximum blocking time under PIP?</div>
+                    <div class="num-sol">(a) Priority Inversion Scenario:
+                        t=0: T₃ starts, locks resource R (runs at low priority)
+                        t=2: T₂ arrives → preempts T₃ (T₂ has higher priority)
+                        t=5: T₁ arrives → preempts T₂ (T₁ has highest priority)
+                        t=5: T₁ needs R → blocked (R held by T₃)
+                        Now: T₁ (highest) blocked. T₂ runs (medium priority).
+                        T₂ runs until completion. T₃ only runs after T₂ finishes.
+                        T₁ must wait for T₂ + remaining T₃ critical section!
+
+                        <span class="num-ans">T₁ blocked by lower-priority task T₃ but ALSO by medium-priority T₂
+                            → Classic Priority Inversion. T₁ faces unbounded blocking.</span>
+
+                        (b) Unbounded blocking time:
+                        If many medium-priority tasks (T₂, T₂', T₂''...) arrive continuously,
+                        T₁ can be blocked indefinitely while T₃ never gets to release R.
+                        In this case: T₁ blocked = t_T₂ + remaining t_T₃_critical
+                        Blocking = (T₂ completion – t5) + (T₃ critical remaining)
+                        = up to: entire T₂ duration + 15 ms T₃ section
+
+                        (c) Priority Inheritance Protocol (PIP):
+                        t=5: T₁ blocked on R (held by T₃)
+                        PIP: T₃'s priority TEMPORARILY raised to T₁'s priority
+                        Now T₃ (running at T₁'s priority) preempts T₂!
+                        T₃ completes critical section quickly → releases R
+                        T₁ acquires R → runs to completion
+                        T₃ returns to original priority → T₂ resumes
+
+                        (d) Maximum blocking time under PIP:
+                        B_max = maximum duration of ONE critical section of any
+                        lower-priority task that uses a resource needed by Tᵢ
+                        B_i = max { C_s : s ∈ lower-priority tasks sharing resource with i }
+
+                        In this example:
+                        <span class="num-ans">B_T₁ = T₃ critical section = 15 ms (one critical section, bounded!)</span>
+                        Under PIP, a task is blocked by at most ONE lower-priority
+                        critical section per resource — blocking is bounded.
+                    </div>
+                </div>
+            </div>
+
+            <div id="m5-ecos" class="card" style="scroll-margin-top:30px">
+                <div class="card-title">🖥️ eCOS, POSIX & Protothreads</div>
+                <ul class="points-list">
+                    <li><strong>eCOS (Embedded Configurable OS):</strong> Open-source RTOS. Highly configurable — only
+                        include needed components. RedBoot bootloader companion. Used in networking, consumer
+                        electronics.</li>
+                    <li><strong>eCOS scheduler:</strong> Multi-level queue (MLQ) scheduler with bitmap priority. 32 or
+                        64 priority levels. O(1) scheduling.</li>
+                    <li><strong>POSIX (Portable Operating System Interface):</strong> IEEE standard defining OS
+                        interface for portability. POSIX.1b includes real-time extensions: POSIX timers, signals,
+                        scheduling (SCHED_FIFO, SCHED_RR).</li>
+                    <li><strong>POSIX thread (pthread):</strong> pthread_create, pthread_join,
+                        pthread_mutex_lock/unlock, pthread_cond_wait/signal. Used in Linux embedded systems.</li>
+                    <li><strong>SCHED_FIFO:</strong> Real-time fixed-priority FIFO. No time slicing within same
+                        priority. Runs until blocks or yields.</li>
+                    <li><strong>SCHED_RR:</strong> Real-time round-robin. Time slice (quantum) among same-priority
+                        tasks. Can preempt by higher priority.</li>
+                    <li><strong>Protothreads:</strong> Extremely lightweight, stackless threads by Adam Dunkels. Uses C
+                        macros (PT_BEGIN, PT_WAIT_UNTIL, PT_END). No context switch overhead. Used in TinyOS, Contiki
+                        for sensor nodes.</li>
+                    <li><strong>Protothreads vs RTOS threads:</strong> Protothreads = cooperative, no stack per thread,
+                        minimal RAM. RTOS threads = preemptive, each has own stack (200B–4KB typical).</li>
+                </ul>
+            </div>
+
+            <div class="pq-box">
+                <div class="pq-title">🎯 Module 5 — Possible Exam Questions</div>
+                <ol>
+                    <li>Three tasks: T₁(C=2, T=5), T₂(C=3, T=10), T₃(C=3, T=20). Apply RMS. Find U, Liu-Layland bound,
+                        perform RTA for all tasks. Draw a Gantt chart for one hyperperiod.</li>
+                    <li>Explain EDF scheduling. Prove that EDF is optimal for uniprocessor preemptive scheduling. Under
+                        what condition does EDF guarantee schedulability?</li>
+                    <li>Define priority inversion. Explain Priority Inheritance Protocol and Priority Ceiling Protocol
+                        with examples. Compare the two protocols.</li>
+                    <li>What is the Liu-Layland utilization bound? Derive why the bound approaches ln(2) as n→∞.
+                        Tabulate the bound for n = 1 to 6.</li>
+                    <li>Two tasks T₁(C=4, T=10, D=8) and T₂(C=5, T=15, D=15). Deadlines are not equal to periods.
+                        Perform schedulability test under EDF using Demand Bound Function.</li>
+                    <li>Compare eCOS, FreeRTOS, and POSIX real-time extensions in terms of scheduling, memory footprint,
+                        and application domain.</li>
+                    <li>What are Protothreads? Explain PT_BEGIN, PT_WAIT_UNTIL, and PT_END macros with a code example.
+                        Why are they used in sensor networks?</li>
+                    <li>Four tasks with U = 0.85 total. Will RMS definitely schedule them? Will EDF? Explain with
+                        schedulability conditions.</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- ══════════════════════════════════════════ -->
+        <!-- MODULE 6 -->
+        <!-- ══════════════════════════════════════════ -->
+        <section class="module m6" id="module6">
+            <div class="module-header">
+                <div>
+                    <div class="module-num">Module 6 · 5 Hours</div>
+                    <div class="module-title">Embedded Networking Protocols</div>
+                    <div class="module-hours">I2C · CAN · Ethernet · RS232 · Bluetooth · Zigbee · WiFi</div>
+                </div>
+            </div>
+
+            <div id="m6-i2c" class="card" style="scroll-margin-top:30px">
+                <div class="card-title">🔗 I2C — Inter-Integrated Circuit</div>
+                <ul class="points-list">
+                    <li><strong>I2C:</strong> 2-wire synchronous serial bus: SDA (data) and SCL (clock). Half-duplex.
+                        Multi-master, multi-slave.</li>
+                    <li><strong>Addressing:</strong> 7-bit address (128 devices) + 1 R/W bit. 10-bit addressing
+                        extension allows 1024 devices.</li>
+                    <li><strong>Speed modes:</strong> Standard (100 kbps), Fast (400 kbps), Fast+ (1 Mbps), High-speed
+                        (3.4 Mbps), Ultra-fast (5 Mbps).</li>
+                    <li><strong>Transaction:</strong> START → Address+R/W → ACK → Data byte(s) → ACK → ... → STOP.</li>
+                    <li><strong>START condition:</strong> SDA goes LOW while SCL is HIGH. STOP: SDA goes HIGH while SCL
+                        is HIGH.</li>
+                    <li><strong>Arbitration:</strong> Multi-master: loses arbitration when SDA is HIGH but detects LOW
+                        on bus. Wired-AND pull-up mechanism.</li>
+                    <li><strong>Clock stretching:</strong> Slave holds SCL LOW to pause transfer until ready to process.
+                    </li>
+                    <li><strong>Pull-up resistors:</strong> Typically 4.7 kΩ for standard mode, 1.5 kΩ for fast mode.
+                        Critical for signal integrity.</li>
+                </ul>
+                <div class="formula-box">
+                    <div class="fname">I2C Timing</div>
+                    <div class="fexpr">
+                        Data bits per frame = 9 (8 data + 1 ACK)<br />
+                        START + address frame = 9 bits<br />
+                        Each data byte frame = 9 bits (8 data + ACK/NAK)<br />
+                        <br />
+                        Transfer time for N data bytes:<br />
+                        t = (1 + 1 + N) × 9 bits / bit_rate<br />
+                        [1 START frame + 1 address frame + N data frames]<br />
+                        <br />
+                        Pull-up resistor: R_min = (V_cc – V_OL) / I_sink<br />
+                        R_max = t_rise / (0.8473 × C_bus) [t_rise = 1 µs for SM]
+                    </div>
+                </div>
+                <div class="numerical">
+                    <div class="num-label">🔢 Numerical — I2C Timing & Transfer</div>
+                    <div class="num-q">An I2C master reads 16 bytes from a sensor at 400 kbps (Fast mode). The
+                        transaction includes: START condition, 7-bit address + R/W, 16 data bytes each followed by ACK,
+                        then NACK and STOP. Find: (a) Total bits transferred, (b) Theoretical minimum transfer time, (c)
+                        Overhead percentage (non-data bits), (d) Maximum number of such reads per second.</div>
+                    <div class="num-sol">Speed = 400 kbps = 400,000 bits/sec
+
+                        (a) Total bits:
+                        START signal: 1 condition (negligible bits but counts as 1 SCL)
+                        Address frame: 7 (addr) + 1 (R/W) + 1 (ACK) = 9 bits
+                        Data frames: 16 × (8 data + 1 ACK) = 16 × 9 = 144 bits
+                        STOP: 1 condition
+                        <span class="num-ans">Total = 9 + 144 = 153 bits + START/STOP</span>
+                        Approximately 153 bits of clocked data
+
+                        (b) Transfer time:
+                        t = 153 / 400,000 = 382.5 µs
+                        <span class="num-ans">≈ 382.5 µs minimum</span>
+                        (Plus START/STOP setup times ~0.6 µs each in fast mode → ≈384 µs total)
+
+                        (c) Overhead percentage:
+                        Useful data bits = 16 × 8 = 128 bits
+                        Overhead bits = 153 – 128 = 25 bits
+                        <span class="num-ans">Overhead = 25/153 × 100 = 16.3%</span>
+                        Efficiency = 128/153 × 100 = 83.7%
+
+                        (d) Max reads per second:
+                        f = 1 / 384 µs = 1 / 384×10⁻⁶ = <span class="num-ans">2,604 reads/second</span>
+                        Data throughput = 2604 × 16 bytes = 41,667 bytes/sec ≈ 41.7 KB/s
+                    </div>
+                </div>
+            </div>
+
+            <div id="m6-can" class="card" style="scroll-margin-top:30px">
+                <div class="card-title">🚗 CAN — Controller Area Network</div>
+                <ul class="points-list">
+                    <li><strong>CAN:</strong> Developed by Bosch (1986). Two-wire differential bus (CAN-H, CAN-L). ISO
+                        11898. Used in automotive, industrial.</li>
+                    <li><strong>Dominant/Recessive:</strong> Dominant bit (0) wins over Recessive bit (1) — wired-AND
+                        arbitration, non-destructive.</li>
+                    <li><strong>Data frame:</strong> SOF (1) + Arbitration (11/29 bits) + Control (6) + Data (0–64
+                        bytes) + CRC (15) + ACK (2) + EOF (7) = ~47–127+ bits.</li>
+                    <li><strong>Standard (CAN 2.0A):</strong> 11-bit identifier (2048 IDs). Extended (CAN 2.0B): 29-bit
+                        identifier (536 million IDs).</li>
+                    <li><strong>CAN FD (Flexible Data):</strong> Up to 8 Mbps data phase, up to 64 bytes payload.
+                        Backward compatible base.</li>
+                    <li><strong>Error handling:</strong> 5 error types: Bit error, Stuff error, CRC error, Form error,
+                        Acknowledgment error. Node enters Error-Active, Error-Passive, or Bus-Off state.</li>
+                    <li><strong>Bit stuffing:</strong> After 5 consecutive same bits, a complementary bit is stuffed
+                        (de-stuffed at receiver). Ensures transitions for sync.</li>
+                    <li><strong>Max bus speed vs length:</strong> 1 Mbps at 40m; 125 kbps at 500m; 10 kbps at 5km.
+                        Propagation delay limits speed × distance product.</li>
+                </ul>
+                <div class="formula-box">
+                    <div class="fname">CAN Bit Timing Formula</div>
+                    <div class="fexpr">
+                        Nominal Bit Rate = 1 / T_bit<br />
+                        T_bit = T_sync_seg + T_prop_seg + T_phase_seg1 + T_phase_seg2<br />
+                        Each segment in Time Quanta (TQ): TQ = 1 / (f_osc / prescaler)<br />
+                        <br />
+                        Sample point (%) = (T_sync + T_prop + T_phase1) / T_bit × 100<br />
+                        Recommended sample point: 75–80%<br />
+                        <br />
+                        CAN frame efficiency:<br />
+                        Efficiency = (Data bits) / (Total frame bits) × 100
+                    </div>
+                </div>
+                <div class="numerical">
+                    <div class="num-label">🔢 Numerical — CAN Bit Timing</div>
+                    <div class="num-q">A CAN controller uses f_osc = 16 MHz with a prescaler of 4. The bit is configured
+                        as: Sync_seg=1 TQ, Prop_seg=4 TQ, Phase_seg1=7 TQ, Phase_seg2=4 TQ. (a) Find TQ value, (b) Bit
+                        time, (c) Bit rate, (d) Sample point percentage, (e) Max bus length at this speed (propagation
+                        speed = 200 m/µs). (f) A standard data frame carries 8 bytes of data. Calculate frame
+                        efficiency.</div>
+                    <div class="num-sol">f_osc = 16 MHz, prescaler = 4
+
+                        (a) TQ value:
+                        TQ = prescaler / f_osc = 4 / 16,000,000 = <span class="num-ans">250 ns</span>
+
+                        (b) Total TQ in bit = 1 + 4 + 7 + 4 = 16 TQ
+                        T_bit = 16 × 250 ns = <span class="num-ans">4000 ns = 4 µs</span>
+
+                        (c) Bit Rate:
+                        BR = 1 / T_bit = 1 / 4 µs = <span class="num-ans">250 kbps</span>
+
+                        (d) Sample point:
+                        Sample at end of Phase_seg1:
+                        Sample_TQ = 1 + 4 + 7 = 12 TQ
+                        Sample point = 12/16 × 100 = <span class="num-ans">75%</span> ✓ (within recommended range)
+
+                        (e) Max bus length:
+                        Max propagation delay = T_bit × 0.25 (before sample point boundary)
+                        Actually: t_prop_max ≈ (Prop_seg × TQ) / 2 (round trip)
+                        t_prop_oneway = (Prop_seg × TQ)/2 = (4 × 250)/2 = 500 ns
+                        L_max = v_prop × t_prop_oneway = 200 m/µs × 500 ns
+                        L_max = 200 × 0.5 = <span class="num-ans">100 metres</span>
+
+                        (f) Frame efficiency (Standard CAN, 8-byte data):
+                        Data bits = 8 × 8 = 64 bits
+                        Frame bits = SOF(1) + ID(11) + RTR(1) + IDE(1) + DLC(4) + Data(64)
+                        + CRC(15) + CRC_delim(1) + ACK(2) + EOF(7) + IFS(3)
+                        = 1+11+1+1+4+64+15+1+2+7+3 = 110 bits
+                        (Plus stuffing bits ≈ 10–15 extra in worst case; assume 125 bits with stuffing)
+                        Efficiency = 64/110 × 100 = <span class="num-ans">58.2% (no stuffing) / ~51% (with
+                            stuffing)</span></div>
+                </div>
+            </div>
+
+            <div id="m6-serial" class="card" style="scroll-margin-top:30px">
+                <div class="card-title">🔌 RS-232 vs RS-485 vs RS-422</div>
+                <table class="styled-table">
+                    <tr>
+                        <th>Parameter</th>
+                        <th>RS-232</th>
+                        <th>RS-485</th>
+                        <th>RS-422</th>
+                    </tr>
+                    <tr>
+                        <td>Topology</td>
+                        <td>Point-to-point</td>
+                        <td>Multi-drop (32 units)</td>
+                        <td>Point-to-multipoint</td>
+                    </tr>
+                    <tr>
+                        <td>Max distance</td>
+                        <td>15 m</td>
+                        <td>1200 m</td>
+                        <td>1200 m</td>
+                    </tr>
+                    <tr>
+                        <td>Max speed</td>
+                        <td>20 kbps</td>
+                        <td>10 Mbps</td>
+                        <td>10 Mbps</td>
+                    </tr>
+                    <tr>
+                        <td>Logic levels</td>
+                        <td>±3V to ±15V</td>
+                        <td>Differential ±200mV</td>
+                        <td>Differential ±2V to ±6V</td>
+                    </tr>
+                    <tr>
+                        <td>Noise immunity</td>
+                        <td>Low</td>
+                        <td>High</td>
+                        <td>Very High</td>
+                    </tr>
+                    <tr>
+                        <td>Direction</td>
+                        <td>Full duplex</td>
+                        <td>Half duplex</td>
+                        <td>Full duplex</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div id="m6-wireless" class="card" style="scroll-margin-top:30px">
+                <div class="card-title">📶 Bluetooth, Zigbee & WiFi Comparison</div>
+                <table class="styled-table">
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Bluetooth 5.0</th>
+                        <th>Zigbee (802.15.4)</th>
+                        <th>WiFi (802.11n)</th>
+                    </tr>
+                    <tr>
+                        <td>Frequency</td>
+                        <td>2.4 GHz</td>
+                        <td>2.4 GHz / 868/915 MHz</td>
+                        <td>2.4 / 5 GHz</td>
+                    </tr>
+                    <tr>
+                        <td>Data rate</td>
+                        <td>2 Mbps (LE: 1 Mbps)</td>
+                        <td>250 kbps</td>
+                        <td>300+ Mbps</td>
+                    </tr>
+                    <tr>
+                        <td>Range</td>
+                        <td>10–400 m</td>
+                        <td>10–100 m</td>
+                        <td>30–100 m</td>
+                    </tr>
+                    <tr>
+                        <td>Power</td>
+                        <td>Low</td>
+                        <td>Ultra-low</td>
+                        <td>High</td>
+                    </tr>
+                    <tr>
+                        <td>Topology</td>
+                        <td>Star/Mesh</td>
+                        <td>Star/Mesh/Tree</td>
+                        <td>Infrastructure/Ad-hoc</td>
+                    </tr>
+                    <tr>
+                        <td>Network size</td>
+                        <td>7 (piconet)</td>
+                        <td>65,000 nodes</td>
+                        <td>255 (typical)</td>
+                    </tr>
+                    <tr>
+                        <td>Latency</td>
+                        <td>6 ms (BLE)</td>
+                        <td>30–100 ms</td>
+                        <td>5–15 ms</td>
+                    </tr>
+                    <tr>
+                        <td>Application</td>
+                        <td>Audio, HID, Health</td>
+                        <td>Smart home, IoT sensors</td>
+                        <td>High-data IoT, Video</td>
+                    </tr>
+                    <tr>
+                        <td>Security</td>
+                        <td>AES-128</td>
+                        <td>AES-128</td>
+                        <td>WPA2/WPA3 (AES)</td>
+                    </tr>
+                </table>
+                <div class="formula-box">
+                    <div class="fname">Link Budget & Range Estimation (Friis Equation)</div>
+                    <div class="fexpr">
+                        Path loss (free space): PL = 20log(d) + 20log(f) + 20log(4π/c) dB<br />
+                        PL(dB) ≈ 20log₁₀(d) + 20log₁₀(f_MHz) – 27.55 [d in metres, f in MHz]<br />
+                        <br />
+                        Received power: P_rx = P_tx + G_tx + G_rx – PL [dBm]<br />
+                        Link margin = P_rx – Receiver_sensitivity<br />
+                        Max range: d_max when P_rx = Sensitivity (link margin = 0)
+                    </div>
+                </div>
+            </div>
+
+            <div class="pq-box">
+                <div class="pq-title">🎯 Module 6 — Possible Exam Questions</div>
+                <ol>
+                    <li>Explain I2C bus arbitration in a multi-master scenario with timing diagrams. What is clock
+                        stretching?</li>
+                    <li>An I2C sensor at 100 kbps sends 4 bytes. Calculate total transfer time including address phase.
+                        Find maximum sensor reads per second.</li>
+                    <li>Explain CAN bus frame structure (standard frame) bit by bit. What is the significance of
+                        arbitration ID?</li>
+                    <li>A CAN network runs at 500 kbps. If bus length is 100 m and propagation speed is 200 m/µs, verify
+                        it meets propagation delay requirements.</li>
+                    <li>Compare Bluetooth, Zigbee, and WiFi for a smart agriculture sensor network. Justify your choice
+                        of protocol with technical parameters.</li>
+                    <li>Explain bit stuffing in CAN. Why is it necessary? What is the worst-case increase in frame
+                        length due to stuffing?</li>
+                    <li>Draw and explain the RS-232 null modem connection. Why is MAX232 needed? What is the DB-9 pin
+                        assignment?</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- ══════════════════════════════════════════ -->
+        <!-- MODULE 7 -->
+        <!-- ══════════════════════════════════════════ -->
+        <section class="module m7" id="module7">
+            <div class="module-header">
+                <div>
+                    <div class="module-num">Module 7 · 4 Hours</div>
+                    <div class="module-title">Applications of Embedded Systems</div>
+                    <div class="module-hours">Agriculture · Automotive · Consumer Electronics · Industrial · Medical
+                    </div>
+                </div>
+            </div>
+
+            <div id="m7-apps" class="card" style="scroll-margin-top:30px">
+                <div class="card-title">🌾 Application Case Studies</div>
+
+                <div class="collapsible-trigger" onclick="toggleCollapse(this)">
+                    <span class="ctitle">Agriculture Sector</span><span class="carr">›</span>
+                </div>
+                <div class="collapsible-body">
+                    <ul class="points-list">
+                        <li><strong>Precision agriculture:</strong> IoT sensors (soil moisture, temperature, humidity,
+                            pH, NPK), drones for crop monitoring.</li>
+                        <li><strong>Key sensors:</strong> Capacitive soil moisture sensor, DHT22 (temp + humidity),
+                            SHT31, NDVI sensor (plant health via IR), flow meters.</li>
+                        <li><strong>Automated irrigation:</strong> MCU reads soil moisture → controls relay → drives
+                            solenoid valve → drip/sprinkler system.</li>
+                        <li><strong>Communication:</strong> LoRaWAN for long-range low-power field coverage (1–15 km).
+                            Zigbee for greenhouse mesh. GSM/4G for cloud upload.</li>
+                        <li><strong>Challenges:</strong> Outdoor harsh environment, power availability (solar+battery),
+                            weather-proofing (IP67+), wireless range, interference.</li>
+                        <li><strong>Smart greenhouse:</strong> Closed-loop control of temperature, humidity, CO2,
+                            lighting using PID controller on ARM MCU.</li>
+                    </ul>
+                </div>
+
+                <div class="collapsible-trigger" onclick="toggleCollapse(this)">
+                    <span class="ctitle">Automotive Electronics</span><span class="carr">›</span>
+                </div>
+                <div class="collapsible-body">
+                    <ul class="points-list">
+                        <li><strong>ECU (Engine Control Unit):</strong> Main embedded computer. Controls fuel injection
+                            timing, ignition timing, air-fuel ratio. Uses crank/cam position sensors, O2 sensor, MAP
+                            sensor.</li>
+                        <li><strong>AUTOSAR:</strong> Automotive Open System Architecture. Standardized software
+                            architecture layering: BSW (Basic Software) + RTE + Application.</li>
+                        <li><strong>CAN bus in car:</strong> Multiple ECUs (ABS, Airbag, Engine, Transmission, Body,
+                            Infotainment) connected on CAN. MOST bus for multimedia, FlexRay for safety-critical
+                            (X-by-wire).</li>
+                        <li><strong>ADAS (Advanced Driver Assistance Systems):</strong> Radar (77 GHz), LiDAR, camera
+                            fusion for adaptive cruise control, lane keeping, automatic emergency braking.</li>
+                        <li><strong>OBD-II (On-Board Diagnostics):</strong> Standardized diagnostic port (16-pin). Uses
+                            CAN (ISO 15765-4). PIDs (Parameter IDs) to read engine data.</li>
+                        <li><strong>Functional Safety:</strong> ISO 26262 standard. ASIL levels (A to D) — ASIL-D = most
+                            safety-critical (airbag, braking). Requires redundancy, monitoring, fail-safe behavior.</li>
+                        <li><strong>Real-time requirement:</strong> Airbag deployment: 15–30 ms from crash detection to
+                            full inflation. Hard real-time.</li>
+                    </ul>
+                </div>
+
+                <div class="collapsible-trigger" onclick="toggleCollapse(this)">
+                    <span class="ctitle">Consumer Electronics</span><span class="carr">›</span>
+                </div>
+                <div class="collapsible-body">
+                    <ul class="points-list">
+                        <li><strong>Smart TV:</strong> ARM SoC, DRAM, eMMC Flash, WiFi/Ethernet, HDMI, audio DSP, IR
+                            remote decoder.</li>
+                        <li><strong>Washing machine:</strong> 8-bit MCU (8051/PIC derivative), keypad input, motor
+                            driver (TRIAC for AC motor), water level sensor, thermistor.</li>
+                        <li><strong>Smart speaker:</strong> Wake word detection (edge ML on DSP), far-field mic array
+                            (beamforming), cloud NLP, codec for audio output.</li>
+                        <li><strong>Wearables:</strong> Ultra-low power ARM (nRF52 series), MEMS sensors (accelerometer,
+                            gyro, PPG), BLE, flexible OLED display, coin cell battery.</li>
+                    </ul>
+                </div>
+
+                <div class="collapsible-trigger" onclick="toggleCollapse(this)">
+                    <span class="ctitle">Industrial Controls</span><span class="carr">›</span>
+                </div>
+                <div class="collapsible-body">
+                    <ul class="points-list">
+                        <li><strong>PLC (Programmable Logic Controller):</strong> Industrial MCU designed for
+                            manufacturing. Scan cycle: Read inputs → Execute ladder logic → Write outputs.
+                            Deterministic, reliable.</li>
+                        <li><strong>SCADA:</strong> Supervisory Control and Data Acquisition. Monitors and controls
+                            plant-wide processes. HMI → SCADA server → PLCs → Field devices.</li>
+                        <li><strong>DCS (Distributed Control System):</strong> Used in chemical plants, refineries.
+                            Distributed controllers + centralized supervision. Higher integration than PLC+SCADA.</li>
+                        <li><strong>Industrial protocols:</strong> PROFIBUS (RS-485 based, 12 Mbps), Modbus RTU/TCP
+                            (simple, widely used), EtherCAT (ultra-fast Ethernet, sub-µs sync).</li>
+                        <li><strong>Hazardous environments:</strong> Intrinsic safety (limit energy to prevent
+                            ignition), explosion-proof enclosures (IP68+), wide operating temperature (-40°C to +85°C).
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="collapsible-trigger" onclick="toggleCollapse(this)">
+                    <span class="ctitle">Medical Electronics</span><span class="carr">›</span>
+                </div>
+                <div class="collapsible-body">
+                    <ul class="points-list">
+                        <li><strong>Pacemaker:</strong> Ultra-low power ARM MCU. Senses cardiac activity → delivers ~2–5
+                            V, 0.5–2 ms pulses if heart rate too low. Titanium casing, 10+ year battery life.</li>
+                        <li><strong>ECG machine:</strong> Differential amplifier (INA118) → bandpass filter (0.05–150
+                            Hz) → ADC (16-bit, 500–1000 SPS) → DSP → Display/Store.</li>
+                        <li><strong>Pulse oximeter:</strong> Red (660 nm) and IR (940 nm) LEDs. Beer-Lambert law: SpO2
+                            from ratio of AC/DC components of red and IR signals.</li>
+                        <li><strong>Insulin pump:</strong> Infusion pump driven by embedded controller. Calculates basal
+                            rate + bolus doses. Communicates via BLE with CGM (Continuous Glucose Monitor).</li>
+                        <li><strong>Regulatory:</strong> FDA Class II/III, IEC 62304 (software lifecycle), IEC 60601
+                            (electrical safety), ISO 14971 (risk management).</li>
+                        <li><strong>Critical requirements:</strong> Zero tolerance for failure, redundant watchdog
+                            timers, power-fail-safe design, 10+ year operational life, biocompatibility of materials.
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="formula-box" style="margin-top:16px">
+                    <div class="fname">SpO2 Calculation (Pulse Oximeter)</div>
+                    <div class="fexpr">
+                        R = (AC_red / DC_red) / (AC_ir / DC_ir)<br />
+                        SpO2 ≈ 110 – 25 × R [Empirical approximation]<br />
+                        <br />
+                        Heart rate = (Number of peaks in signal) / time_window × 60 bpm<br />
+                        Normal SpO2: 95–100%. Below 90% = hypoxemia.
+                    </div>
+                </div>
+            </div>
+
+            <div class="pq-box">
+                <div class="pq-title">🎯 Module 7 — Possible Exam Questions</div>
+                <ol>
+                    <li>Explain the role of embedded systems in automotive electronics. Describe the complete CAN bus
+                        architecture of a modern car with at least 5 ECUs.</li>
+                    <li>Design an embedded system for smart irrigation in agriculture. Specify: MCU, sensors, actuators,
+                        communication protocol, and power source. Draw block diagram.</li>
+                    <li>Explain the architecture and working principle of an ECG machine as an embedded system. What is
+                        the significance of bandpass filtering?</li>
+                    <li>What is AUTOSAR? How does it standardize automotive embedded software development? Explain BSW,
+                        RTE, and Application layers.</li>
+                    <li>Describe the embedded system design for a pulse oximeter. Explain how SpO2 is calculated from
+                        PPG signals.</li>
+                    <li>Compare PLC, DCS, and SCADA systems used in industrial embedded applications. When would you
+                        choose DCS over a PLC-based system?</li>
+                    <li>What safety standards govern medical embedded systems? Explain ISO 14971 risk management process
+                        for a pacemaker design.</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- Formula Quick Reference -->
+        <section class="module" id="formula-ref" style="--mc: var(--accent2)">
+            <div class="module-header">
+                <div>
+                    <div class="module-num" style="background:rgba(247,194,106,0.15);color:var(--accent2)">Quick
+                        Reference</div>
+                    <div class="module-title">All Formulas at a Glance</div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-title" style="color:var(--accent2)">📋 Master Formula Sheet</div>
+                <table class="styled-table">
+                    <tr>
+                        <th>Topic</th>
+                        <th>Formula</th>
+                        <th>Units</th>
+                    </tr>
+                    <tr>
+                        <td>ADC Resolution</td>
+                        <td>V_ref / (2ⁿ – 1)</td>
+                        <td>V/LSB</td>
+                    </tr>
+                    <tr>
+                        <td>ADC Output</td>
+                        <td>round(V_in/V_ref × 2ⁿ)</td>
+                        <td>counts</td>
+                    </tr>
+                    <tr>
+                        <td>ADC SNR</td>
+                        <td>6.02n + 1.76</td>
+                        <td>dB</td>
+                    </tr>
+                    <tr>
+                        <td>ADC Quant. Error</td>
+                        <td>± V_ref / (2×2ⁿ)</td>
+                        <td>V</td>
+                    </tr>
+                    <tr>
+                        <td>DAC Output</td>
+                        <td>(D / 2ⁿ) × V_ref</td>
+                        <td>V</td>
+                    </tr>
+                    <tr>
+                        <td>Nyquist Rate</td>
+                        <td>f_s ≥ 2 × f_max</td>
+                        <td>Hz</td>
+                    </tr>
+                    <tr>
+                        <td>8051 Baud Rate</td>
+                        <td>f_osc / (384 × (256 – TH1))</td>
+                        <td>bps</td>
+                    </tr>
+                    <tr>
+                        <td>8051 Timer Delay</td>
+                        <td>Initial = 65536 – (t×f_osc/12)</td>
+                        <td>counts</td>
+                    </tr>
+                    <tr>
+                        <td>UART Frame Time</td>
+                        <td>(1+data+parity+stop)/baud</td>
+                        <td>s</td>
+                    </tr>
+                    <tr>
+                        <td>RMS Utilization</td>
+                        <td>U = Σ(Cᵢ/Tᵢ)</td>
+                        <td>—</td>
+                    </tr>
+                    <tr>
+                        <td>RMS LL Bound</td>
+                        <td>n × (2^(1/n) – 1)</td>
+                        <td>—</td>
+                    </tr>
+                    <tr>
+                        <td>EDF Bound</td>
+                        <td>U ≤ 1.0</td>
+                        <td>—</td>
+                    </tr>
+                    <tr>
+                        <td>Laxity</td>
+                        <td>d – t – C_remaining</td>
+                        <td>ms</td>
+                    </tr>
+                    <tr>
+                        <td>Hyperperiod</td>
+                        <td>LCM(T₁, T₂, ..., Tₙ)</td>
+                        <td>ms</td>
+                    </tr>
+                    <tr>
+                        <td>LM35 Voltage</td>
+                        <td>10 mV/°C × T</td>
+                        <td>mV</td>
+                    </tr>
+                    <tr>
+                        <td>RTD Resistance</td>
+                        <td>R₀(1 + αT)</td>
+                        <td>Ω</td>
+                    </tr>
+                    <tr>
+                        <td>Stepper Delay</td>
+                        <td>60000/(RPM × steps/rev)</td>
+                        <td>ms</td>
+                    </tr>
+                    <tr>
+                        <td>I2C Frame Time</td>
+                        <td>(1+1+N)×9 / bit_rate</td>
+                        <td>s</td>
+                    </tr>
+                    <tr>
+                        <td>CAN TQ</td>
+                        <td>prescaler / f_osc</td>
+                        <td>s</td>
+                    </tr>
+                    <tr>
+                        <td>CAN Bit Rate</td>
+                        <td>1 / (total_TQ × TQ_time)</td>
+                        <td>bps</td>
+                    </tr>
+                    <tr>
+                        <td>SpO2</td>
+                        <td>110 – 25 × R (R = AC_R/DC_R ÷ AC_IR/DC_IR)</td>
+                        <td>%</td>
+                    </tr>
+                    <tr>
+                        <td>PWM Duty Cycle</td>
+                        <td>t_on / T_period × 100</td>
+                        <td>%</td>
+                    </tr>
+                    <tr>
+                        <td>Memory Size</td>
+                        <td>2^(address lines)</td>
+                        <td>bytes</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <button id="menuBtn" onclick="toggleSidebar()">☰</button>
+
+    <script>
+        // Dark/Light toggle
+        function toggleDark() {
+            document.body.classList.toggle('light');
+            document.getElementById('darkToggle').textContent =
+                document.body.classList.contains('light') ? '🌙 Dark Mode' : '☀ Light Mode';
+        }
+
+        // Sidebar collapse for module groups
+        function toggleMod(el) {
+            el.classList.toggle('open');
+            const links = el.nextElementSibling;
+            links.classList.toggle('open');
+        }
+
+        // Collapsible sections
+        function toggleCollapse(trigger) {
+            trigger.classList.toggle('open');
+            const body = trigger.nextElementSibling;
+            body.classList.toggle('open');
+        }
+
+        // Mobile sidebar
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        // Scroll-spy & progress
+        const sections = document.querySelectorAll('[id^="m"]');
+        const navLinks = document.querySelectorAll('.mod-links a');
+
+        function onScroll() {
+            const scrollPct = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            document.getElementById('prog').style.width = Math.min(scrollPct, 100) + '%';
+
+            let current = '';
+            sections.forEach(s => {
+                if (window.scrollY >= s.offsetTop - 80) current = s.id;
+            });
+            navLinks.forEach(a => {
+                a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+            });
+        }
+        window.addEventListener('scroll', onScroll, { passive: true });
+
+        // Open first module by default
+        document.querySelector('.mod-label').click();
+
+        // Search
+        function searchTopics(query) {
+            query = query.toLowerCase().trim();
+            const groups = document.querySelectorAll('.mod-group');
+            if (!query) {
+                groups.forEach(g => g.style.display = '');
+                return;
+            }
+            groups.forEach(g => {
+                const links = g.querySelectorAll('.mod-links a');
+                let found = false;
+                links.forEach(l => {
+                    const match = l.textContent.toLowerCase().includes(query);
+                    l.style.display = match ? '' : 'none';
+                    if (match) found = true;
+                });
+                const label = g.querySelector('.mod-label');
+                if (found && label.textContent.toLowerCase().includes(query) === false) {
+                    g.querySelector('.mod-links').classList.add('open');
+                    label.classList.add('open');
+                }
+                g.style.display = found || label.textContent.toLowerCase().includes(query) ? '' : 'none';
+            });
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,1897 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BCSE318L — Data Privacy & Anonymization | Complete Exam Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:#141414;--bg2:#1c1c1c;--bg3:#242424;--bg4:#2c2c2c;
+      --card:#1e1e1e;--card2:#262626;--border:#363636;
+      --accent:#5b8dee;--accent2:#7aa3f7;
+      --gold:#c9a84c;--gold2:#e0be5a;
+      --text:#e4e4e0;--text2:#a0a09c;--text3:#686864;
+      --green:#162416;--green-border:#3dba6f;--green-text:#8cf5b4;
+      --red:#281616;--red-border:#e05555;--red-text:#ffaaaa;
+      --yellow:#201e00;--yellow-border:#c8a820;--yellow-text:#ffd870;
+      --purple:#1e1628;--purple-border:#9b6dda;--purple-text:#d4aaff;
+      --teal:#0c2020;--teal-border:#25b5a0;--teal-text:#80ffe8;
+      --sidebar-w:280px;--topbar-h:56px;--radius:10px;
+      --shadow:0 4px 28px rgba(0,0,0,.7);
+      --transition:0.25s cubic-bezier(.4,0,.2,1);
+      --m1:#e05555;--m2:#e08828;--m3:#3dba6f;--m4:#5b8dee;
+      --m5:#9b6dda;--m6:#25b5a0;--m7:#d4aa20
+    }
+    [data-theme="light"] {
+      --bg:#f5f0e8;--bg2:#ede8df;--bg3:#e4dfd5;--bg4:#dbd5ca;
+      --card:#f0ebe2;--card2:#ede8e2;--border:#ccc7bc;
+      --accent:#3b6fd4;--accent2:#4a7de0;--gold:#a07820;--gold2:#b08a2a;
+      --text:#1e1e1c;--text2:#504e48;--text3:#888680;
+      --green:#d0eed0;--green-border:#2a9a50;--green-text:#1a5a2a;
+      --red:#f5d8d8;--red-border:#c04040;--red-text:#6a1a1a;
+      --yellow:#fdf3c0;--yellow-border:#a08010;--yellow-text:#5a4400;
+      --purple:#ede0f5;--purple-border:#7040b0;--purple-text:#3a1060;
+      --teal:#d0f0ee;--teal-border:#1a8a78;--teal-text:#0a4a40;
+      --shadow:0 4px 28px rgba(0,0,0,.15);
+      --m1:#c04040;--m2:#c07020;--m3:#2a8a50;--m4:#3a60a0;
+      --m5:#7040a0;--m6:#1a8070;--m7:#b09020
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth;font-size:15px;overscroll-behavior-y:none}
+    body{font-family:"Space Grotesk",sans-serif;background:var(--bg);color:var(--text);line-height:1.7;transition:background var(--transition),color var(--transition);overscroll-behavior-y:none}
+    h1,h2,h3,h4,h5{font-family:"Syne",sans-serif;line-height:1.3}
+    a{color:var(--accent2);text-decoration:none}
+    code,.mono{font-family:"JetBrains Mono",monospace;font-size:.88em}
+    ::-webkit-scrollbar{width:6px;height:6px}
+    ::-webkit-scrollbar-track{background:var(--bg2)}
+    ::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+
+    /* TOPBAR */
+    #topbar{position:fixed;top:0;left:0;right:0;height:var(--topbar-h);background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;padding:0 16px;z-index:1000;box-shadow:0 2px 16px rgba(0,0,0,.3)}
+    #hamburger{display:flex;align-items:center;background:none;border:none;color:var(--text);font-size:1.4rem;cursor:pointer;padding:4px 8px;border-radius:6px;transition:background var(--transition)}
+    #hamburger:hover{background:var(--bg3)}
+    .topbar-title{font-family:"Syne",sans-serif;font-weight:800;font-size:1.05rem;background:linear-gradient(135deg,var(--accent2),var(--gold));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;white-space:nowrap}
+    .topbar-subtitle{font-size:.78rem;color:var(--text3);white-space:nowrap}
+    #search-bar{flex:1;max-width:340px;margin-left:auto;background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:7px 14px;border-radius:20px;font-size:.88rem;outline:none;transition:border var(--transition)}
+    #search-bar:focus{border-color:var(--accent2)}
+    #search-bar::placeholder{color:var(--text3)}
+    .search-count{font-size:.78rem;color:var(--text3);white-space:nowrap;min-width:60px}
+    #theme-toggle{background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:6px 12px;border-radius:20px;cursor:pointer;font-size:.88rem;white-space:nowrap;transition:all var(--transition)}
+    #theme-toggle:hover{border-color:var(--accent2)}
+    #print-btn{background:var(--accent);border:none;color:white;padding:6px 12px;border-radius:20px;cursor:pointer;font-size:.82rem;white-space:nowrap}
+
+    /* PROGRESS */
+    #progress-bar{position:fixed;top:var(--topbar-h);left:0;right:0;height:3px;background:var(--border);z-index:999}
+    #progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--gold));transition:width .2s ease}
+
+    /* SIDEBAR */
+    #sidebar{position:fixed;top:calc(var(--topbar-h) + 3px);left:0;width:var(--sidebar-w);height:calc(100vh - var(--topbar-h) - 3px);background:var(--bg2);border-right:1px solid var(--border);overflow-y:auto;z-index:900;transition:transform var(--transition);padding-bottom:40px}
+    #sidebar.collapsed{transform:translateX(-100%)}
+    #sidebar::-webkit-scrollbar{width:4px}
+    .sidebar-section{border-bottom:1px solid var(--border)}
+    .sidebar-header{padding:14px 16px 8px;font-family:"Syne",sans-serif;font-weight:700;font-size:.7rem;color:var(--text3);letter-spacing:.1em;text-transform:uppercase}
+    .sidebar-module-btn{width:100%;padding:11px 16px;display:flex;align-items:center;gap:10px;background:none;border:none;color:var(--text);font-family:"Syne",sans-serif;font-weight:600;font-size:.88rem;cursor:pointer;text-align:left;transition:background var(--transition)}
+    .sidebar-module-btn:hover{background:var(--bg3)}
+    .sidebar-module-btn .mod-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+    .sidebar-module-btn .arrow{margin-left:auto;transition:transform var(--transition);font-size:.75rem}
+    .sidebar-sub{max-height:0;overflow:hidden;transition:max-height .35s cubic-bezier(.4,0,.2,1)}
+    .sidebar-link{display:block;padding:6px 16px 6px 36px;font-size:.82rem;color:var(--text2);transition:all var(--transition);border-left:3px solid transparent;margin-left:8px}
+    .sidebar-link:hover{color:var(--text);background:var(--bg3);border-left-color:var(--accent)}
+    .sidebar-link.active{color:var(--accent2);border-left-color:var(--accent2);background:var(--bg3)}
+
+    /* MAIN */
+    #main{margin-left:var(--sidebar-w);margin-top:calc(var(--topbar-h) + 3px);padding:0 40px 80px;max-width:1100px;transition:margin-left var(--transition)}
+    #main.sidebar-collapsed{margin-left:auto;margin-right:auto}
+    .module-section{margin-bottom:60px}
+    .module-header{position:sticky;top:calc(var(--topbar-h) + 3px);z-index:50;background:var(--bg);padding:18px 0 12px;border-bottom:2px solid var(--border);margin-bottom:8px;display:flex;align-items:center;gap:14px}
+    .module-title{font-family:"Syne",sans-serif;font-size:1.5rem;font-weight:800;line-height:1.2}
+    .mod-badge{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:10px;font-size:.85rem;font-weight:800;font-family:'Syne',sans-serif;color:white;flex-shrink:0}
+    .module-title-group{display:flex;flex-direction:column}
+    .module-subtitle{font-size:.78rem;color:var(--text3);margin-top:2px}
+    .topic-section{margin-bottom:48px;scroll-margin-top:var(--local-scroll-margin,145px)}
+    .topic-title{font-family:"Syne",sans-serif;font-size:1.25rem;font-weight:700;color:var(--text);margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+    .sub-title{font-size:1rem;font-weight:600;color:var(--accent2);margin:18px 0 10px;font-family:"Syne",sans-serif}
+
+    /* BOXES */
+    .def-box{background:var(--bg3);border-left:4px solid var(--accent);padding:14px 18px;border-radius:0 var(--radius) var(--radius) 0;margin:14px 0;font-size:.93rem;box-shadow:0 2px 10px rgba(0,0,0,.13)}
+    .def-box strong{color:var(--accent2)}
+    .tip-box{background:var(--yellow);border-left:4px solid var(--yellow-border);padding:14px 18px;border-radius:0 var(--radius) var(--radius) 0;margin:14px 0;font-size:.9rem;color:var(--yellow-text);box-shadow:0 2px 10px rgba(0,0,0,.13)}
+    .tip-box .tip-title{font-weight:700;font-size:.95rem;margin-bottom:6px;color:var(--gold2)}
+    .pro-box{background:var(--green);border-left:4px solid var(--green-border);padding:14px 18px;border-radius:0 var(--radius) var(--radius) 0;margin:14px 0;font-size:.9rem;color:var(--green-text);box-shadow:0 2px 10px rgba(0,0,0,.13)}
+    .con-box{background:var(--red);border-left:4px solid var(--red-border);padding:14px 18px;border-radius:0 var(--radius) var(--radius) 0;margin:14px 0;font-size:.9rem;color:var(--red-text);box-shadow:0 2px 10px rgba(0,0,0,.13)}
+    .info-box{background:var(--purple);border-left:4px solid var(--purple-border);padding:14px 18px;border-radius:0 var(--radius) var(--radius) 0;margin:14px 0;font-size:.9rem;color:var(--purple-text);box-shadow:0 2px 10px rgba(0,0,0,.13)}
+    .teal-box{background:var(--teal);border-left:4px solid var(--teal-border);padding:14px 18px;border-radius:0 var(--radius) var(--radius) 0;margin:14px 0;font-size:.9rem;color:var(--teal-text);box-shadow:0 2px 10px rgba(0,0,0,.13)}
+    .formula-box{background:var(--bg4);border:1px solid var(--accent);border-radius:var(--radius);padding:14px 18px;margin:12px 0;font-family:"JetBrains Mono",monospace;font-size:.9rem;color:var(--accent2);text-align:center;letter-spacing:.02em;box-shadow:0 2px 10px rgba(0,0,0,.13)}
+
+    /* GRID */
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:14px 0}
+    .three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:14px 0}
+
+    /* TABLE */
+    .table-wrap{overflow-x:auto;margin:16px 0;border-radius:var(--radius);border:1px solid var(--border);box-shadow:var(--shadow)}
+    table{width:100%;border-collapse:collapse;font-size:.88rem}
+    th{background:var(--accent);color:white;padding:10px 14px;text-align:left;font-family:"Syne",sans-serif;font-weight:600}
+    td{padding:9px 14px;border-bottom:1px solid var(--border)}
+    tr:nth-child(even) td{background:var(--bg3)}
+    tr:last-child td{border-bottom:none}
+    tr:hover td{background:var(--bg4)}
+
+    /* LISTS */
+    ul.kp{list-style:none;padding:0;margin:10px 0}
+    ul.kp li{padding:5px 0 5px 22px;position:relative;font-size:.91rem;color:var(--text2);border-bottom:1px solid var(--border)}
+    ul.kp li:last-child{border-bottom:none}
+    ul.kp li::before{content:"\25B8";position:absolute;left:4px;color:var(--accent2)}
+    ul.kp li strong{color:var(--text)}
+    ol.steps{padding-left:22px;margin:10px 0}
+    ol.steps li{padding:5px 0;font-size:.91rem;color:var(--text2)}
+    ol.steps li strong{color:var(--text)}
+
+    /* DIAGRAM */
+    .diagram-wrap{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin:20px 0;overflow-x:auto;text-align:center;box-shadow:var(--shadow)}
+    .diagram-title{font-family:"Syne",sans-serif;font-size:.95rem;font-weight:600;color:var(--text3);margin-bottom:14px;text-align:center}
+    .diagram-wrap pre{font-family:"JetBrains Mono",monospace;color:var(--accent2);white-space:pre;font-size:.8rem;text-align:left;display:inline-block;line-height:1.6}
+
+    /* COLLAPSIBLE */
+    .collapsible-header{cursor:pointer;user-select:none;position:relative;padding-right:22px}
+    .collapsible-header::after{content:'▾';font-size:.85rem;color:var(--text3);transition:transform 0.35s cubic-bezier(0.4,0,0.2,1);transform:rotate(-90deg);position:absolute;right:2px;top:2px}
+    .collapsible-header.is-active::after{transform:rotate(0deg)}
+    .collapsible-header:hover{color:var(--accent2)}
+    .collapsible-body{overflow:hidden;max-height:0;opacity:0;transform:translateY(-6px);transition:max-height 0.42s cubic-bezier(0.4,0,0.2,1),opacity 0.35s cubic-bezier(0.4,0,0.2,1),transform 0.35s cubic-bezier(0.4,0,0.2,1)}
+    .collapsible-body.is-open{opacity:1;transform:translateY(0)}
+
+    /* BACK TO TOP */
+    #back-top{position:fixed;bottom:30px;right:30px;z-index:500;background:var(--accent);color:white;border:none;width:44px;height:44px;border-radius:50%;font-size:1.2rem;cursor:pointer;box-shadow:var(--shadow);opacity:0;transition:opacity var(--transition);display:flex;align-items:center;justify-content:center}
+    #back-top.show{opacity:1}
+
+    .highlight{background:#f1c40f;color:#000;border-radius:2px;padding:0 2px}
+
+    /* MODULE COLOR CLASSES */
+    .m1c{color:var(--m1)}.m2c{color:var(--m2)}.m3c{color:var(--m3)}.m4c{color:var(--m4)}.m5c{color:var(--m5)}.m6c{color:var(--m6)}.m7c{color:var(--m7)}
+    .m1b{background:var(--m1)}.m2b{background:var(--m2)}.m3b{background:var(--m3)}.m4b{background:var(--m4)}.m5b{background:var(--m5)}.m6b{background:var(--m6)}.m7b{background:var(--m7)}
+    .mqrc{color:var(--gold)}
+
+    /* PRIORITY CARD */
+    .priority-card{background:linear-gradient(135deg,var(--bg4),var(--card2));border:2px solid var(--gold);border-radius:var(--radius);padding:22px;margin:20px 0;box-shadow:var(--shadow)}
+    .priority-card h3{color:var(--gold2);margin-bottom:12px}
+
+    @media(max-width:900px){
+      #sidebar{transform:translateX(-100%)}
+      #sidebar.open{transform:translateX(0)}
+      #main{margin-left:0;padding:0 16px 60px}
+      .two-col,.three-col{grid-template-columns:1fr}
+      .topbar-subtitle{display:none}
+      #search-bar{max-width:160px}
+    }
+    @media print{
+      #topbar,#sidebar,#back-top,#progress-bar{display:none !important}
+      #main{margin:0;padding:10px;max-width:100%}
+      body{background:white;color:black}
+    }
+  </style>
+</head>
+<body>
+
+<div id="topbar">
+  <button id="hamburger" onclick="toggleSidebar()">☰</button>
+  <div>
+    <div class="topbar-title">BCSE318L — Data Privacy &amp; Anonymization</div>
+    <div class="topbar-subtitle">23BCE0737</div>
+  </div>
+  <input type="text" id="search-bar" placeholder="🔍 Search topics..." oninput="doSearch(this.value)">
+  <span class="search-count" id="search-count"></span>
+  <button id="theme-toggle" onclick="toggleTheme()">☀ Light</button>
+  <button id="print-btn" onclick="window.print()">🖨 Print</button>
+</div>
+
+<div id="progress-bar"><div id="progress-fill"></div></div>
+
+<nav id="sidebar">
+  <div class="sidebar-header">Modules</div>
+
+  <div class="sidebar-section">
+    <button class="sidebar-module-btn" onclick="toggleModule(this)">
+      <span class="mod-dot m1b"></span> Module 1: Overview &amp; Importance <span class="arrow">▶</span>
+    </button>
+    <div class="sidebar-sub">
+      <a class="sidebar-link" href="#m1-what">What is Data Privacy?</a>
+      <a class="sidebar-link" href="#m1-stakeholders">Stakeholders</a>
+      <a class="sidebar-link" href="#m1-sharing">Need for Sharing Data</a>
+      <a class="sidebar-link" href="#m1-methods">Methods of Protecting Data</a>
+      <a class="sidebar-link" href="#m1-balance">Balancing Privacy &amp; Utility</a>
+      <a class="sidebar-link" href="#m1-disclosure">Disclosure</a>
+      <a class="sidebar-link" href="#m1-tabular">Tabular Data</a>
+      <a class="sidebar-link" href="#m1-microdata">Microdata</a>
+      <a class="sidebar-link" href="#m1-sdc">Approaches to SDC</a>
+      <a class="sidebar-link" href="#m1-ethics">Ethics, Principles &amp; Regulations</a>
+    </div>
+  </div>
+
+  <div class="sidebar-section">
+    <button class="sidebar-module-btn" onclick="toggleModule(this)">
+      <span class="mod-dot m2b"></span> Module 2: Microdata <span class="arrow">▶</span>
+    </button>
+    <div class="sidebar-sub">
+      <a class="sidebar-link" href="#m2-intro">Introduction</a>
+      <a class="sidebar-link" href="#m2-disclosure">Disclosure Types</a>
+      <a class="sidebar-link" href="#m2-risk">Disclosure Risk</a>
+      <a class="sidebar-link" href="#m2-reident">Re-identification Risk</a>
+      <a class="sidebar-link" href="#m2-nonpert">Non-Perturbative Masking</a>
+      <a class="sidebar-link" href="#m2-pert">Perturbative Masking</a>
+      <a class="sidebar-link" href="#m2-infoloss">Information Loss</a>
+    </div>
+  </div>
+
+  <div class="sidebar-section">
+    <button class="sidebar-module-btn" onclick="toggleModule(this)">
+      <span class="mod-dot m3b"></span> Module 3: Static Anonymization <span class="arrow">▶</span>
+    </button>
+    <div class="sidebar-sub">
+      <a class="sidebar-link" href="#m3-class">Classification of Data</a>
+      <a class="sidebar-link" href="#m3-ei">Protecting Explicit Identifiers</a>
+      <a class="sidebar-link" href="#m3-qi">Protecting Quasi-Identifiers</a>
+      <a class="sidebar-link" href="#m3-sd">Protecting Sensitive Data</a>
+      <a class="sidebar-link" href="#m3-kanon">k-Anonymity</a>
+      <a class="sidebar-link" href="#m3-ldiv">l-Diversity</a>
+      <a class="sidebar-link" href="#m3-tclose">t-Closeness</a>
+    </div>
+  </div>
+
+  <div class="sidebar-section">
+    <button class="sidebar-module-btn" onclick="toggleModule(this)">
+      <span class="mod-dot m4b"></span> Module 4: Complex Data Structures <span class="arrow">▶</span>
+    </button>
+    <div class="sidebar-sub">
+      <a class="sidebar-link" href="#m4-graph">Privacy-Preserving Graph Data</a>
+      <a class="sidebar-link" href="#m4-graphmodel">Graph Privacy Model</a>
+      <a class="sidebar-link" href="#m4-timeseries">Privacy-Preserving Time Series</a>
+      <a class="sidebar-link" href="#m4-tsprotect">Time Series Protection Methods</a>
+      <a class="sidebar-link" href="#m4-longitudinal">Longitudinal Data</a>
+      <a class="sidebar-link" href="#m4-transaction">Transaction Data</a>
+    </div>
+  </div>
+
+  <div class="sidebar-section">
+    <button class="sidebar-module-btn" onclick="toggleModule(this)">
+      <span class="mod-dot m5b"></span> Module 5: Threats <span class="arrow">▶</span>
+    </button>
+    <div class="sidebar-sub">
+      <a class="sidebar-link" href="#m5-overview">Threats Overview</a>
+      <a class="sidebar-link" href="#m5-structures">Threats to Data Structures</a>
+      <a class="sidebar-link" href="#m5-techniques">Threats by Techniques</a>
+    </div>
+  </div>
+
+  <div class="sidebar-section">
+    <button class="sidebar-module-btn" onclick="toggleModule(this)">
+      <span class="mod-dot m6b"></span> Module 6: Dynamic Protection <span class="arrow">▶</span>
+    </button>
+    <div class="sidebar-sub">
+      <a class="sidebar-link" href="#m6-intro">Introduction</a>
+      <a class="sidebar-link" href="#m6-understand">Understanding Tokenization</a>
+      <a class="sidebar-link" href="#m6-usecases">Use Cases</a>
+      <a class="sidebar-link" href="#m6-benefits">Benefits of Tokenization</a>
+      <a class="sidebar-link" href="#m6-components">Components</a>
+    </div>
+  </div>
+
+  <div class="sidebar-section">
+    <button class="sidebar-module-btn" onclick="toggleModule(this)">
+      <span class="mod-dot m7b"></span> Module 7: Test Data &amp; Regulations <span class="arrow">▶</span>
+    </button>
+    <div class="sidebar-sub">
+      <a class="sidebar-link" href="#m7-fundamentals">Test Data Fundamentals</a>
+      <a class="sidebar-link" href="#m7-insufficiencies">Insufficiencies</a>
+      <a class="sidebar-link" href="#m7-ukdpa">UK Data Protection Act</a>
+      <a class="sidebar-link" href="#m7-swiss">Swiss FADP</a>
+      <a class="sidebar-link" href="#m7-hipaa">HIPAA</a>
+      <a class="sidebar-link" href="#m7-gdpr">GDPR</a>
+    </div>
+  </div>
+
+  <div class="sidebar-section">
+    <button class="sidebar-module-btn" onclick="toggleModule(this)">
+      <span class="mod-dot" style="background:var(--gold)"></span> ⚡ Quick Revision <span class="arrow">▶</span>
+    </button>
+    <div class="sidebar-sub">
+      <a class="sidebar-link" href="#qr-formulas">Key Formulas &amp; Definitions</a>
+      <a class="sidebar-link" href="#qr-compare">Comparisons</a>
+      <a class="sidebar-link" href="#qr-priority">30-Min Priority</a>
+    </div>
+  </div>
+</nav>
+
+<main id="main">
+
+<!-- ═══════════════════════ MODULE 1 ═══════════════════════ -->
+<section class="module-section" id="module1">
+  <div class="module-header">
+    <div class="mod-badge m1b">M1</div>
+    <div class="module-title-group">
+      <div class="module-title">Data Privacy and Importance</div>
+      <div class="module-subtitle">Overview · Disclosure · SDC · Ethics &amp; Regulations</div>
+    </div>
+  </div>
+
+  <div class="topic-section" id="m1-what">
+    <h3 class="topic-title collapsible-header" onclick="toggleCollapse(this)"><span class="m1c">●</span> What is Data Privacy?</h3>
+    <div class="collapsible-body">
+      <div class="def-box"><strong>Data Privacy</strong> is the protection of sensitive, personally identifiable information (PII) about individuals from unauthorized access, disclosure, or misuse. It governs how data are collected, stored, processed, and shared.</div>
+      <div class="two-col">
+        <div class="def-box"><strong>Privacy</strong> — We have knowledge of a person's identity, but NOT of an associated personal fact (e.g., we know who Alice is but not her illness).</div>
+        <div class="def-box"><strong>Anonymity</strong> — We have knowledge of a personal fact, but NOT of the associated person's identity (e.g., we know someone has cancer but not who).</div>
+      </div>
+      <div class="sub-title">Key Concepts</div>
+      <ul class="kp">
+        <li><strong>PII (Personally Identifiable Information)</strong> — Any data that can directly or indirectly identify an individual: name, SSN, DOB, address, phone, email, income</li>
+        <li><strong>Sweeney's Finding</strong> — ZIP code, date of birth, and gender are sufficient to uniquely identify 83% of the US population</li>
+        <li><strong>Anonymization</strong> — A two-step process: (1) Data Masking on EI, (2) De-identification on QI fields</li>
+        <li><strong>Data = Programs + Data + Documentation</strong> — Organizations holding customer data are its custodians and bear full legal responsibility</li>
+        <li><strong>D′ = T(DQI)</strong> — The transformation function T is applied only on QI; EI is masked, SD is left unchanged</li>
+      </ul>
+      <div class="tip-box">
+        <div class="tip-title">⭐ Exam Tip</div>
+        Anonymization ≠ Privacy. Anonymization protects identity (EI + QI). Privacy protects sensitive data (SD). Understand which stakeholder needs which type of protection.
+      </div>
+    </div>
+  </div>
+
+  <div class="topic-section" id="m1-stakeholders">
+    <h3 class="topic-title collapsible-header" onclick="toggleCollapse(this)"><span class="m1c">●</span> Stakeholders in Data Privacy</h3>
+    <div class="collapsible-body">
+      <div class="table-wrap">
+        <table>
+          <tr><th>Stakeholder</th><th>Role</th><th>Key Concern</th></tr>
+          <tr><td><strong>Company / Organization</strong></td><td>Custodian of customer data (bank, insurer, e-commerce, healthcare, social network)</td><td>Legal liability, reputation, financial penalties if data is lost</td></tr>
+          <tr><td><strong>Customer / Record Owner</strong></td><td>Individual or organization sharing PII with the company</td><td>Identity protection; PII like name, address, DOB, income must not be disclosed</td></tr>
+          <tr><td><strong>Government</strong></td><td>Defines and enforces data protection regulations</td><td>Compliance with HIPAA, EU DPA, Swiss FADP, GDPR is mandatory</td></tr>
+          <tr><td><strong>Data Anonymizer</strong></td><td>Person who anonymizes data for analysis or test use</td><td>Balancing privacy and utility in the transformation design</td></tr>
+          <tr><td><strong>Data Analyst</strong></td><td>Uses anonymized data for data mining, prediction, knowledge discovery</td><td>Anonymized data must support analytical operations; only anonymized data can be used per Data Moratorium Act</td></tr>
+          <tr><td><strong>Tester</strong></td><td>Uses anonymized production data for software testing</td><td>High-quality test data extracted and anonymized from production; regulatory compliance required</td></tr>
+          <tr><td><strong>Business Operations Employee (BPO)</strong></td><td>Accesses live production data at runtime to service customers</td><td>Dynamic protection (tokenization) required; static anonymization insufficient at runtime</td></tr>
+          <tr><td><strong>Adversary / Data Snooper</strong></td><td>Internal or external attacker attempting re-identification</td><td>Uses background knowledge + external data to link QI to record owners</td></tr>
+        </table>
+      </div>
+      <div class="tip-box">
+        <div class="tip-title">⭐ Exam Tip</div>
+        Testers and BPO employees both need anonymized data, but the type differs: Testers use <strong>static anonymization</strong> (data at rest); BPO employees need <strong>dynamic tokenization</strong> (data in motion / runtime).
+      </div>
+    </div>
+  </div>
+
+  <div class="topic-section" id="m1-sharing">
+    <h3 class="topic-title collapsible-header" onclick="toggleCollapse(this)"><span class="m1c">●</span> Need for Sharing Data</h3>
+    <div class="collapsible-body">
+      <div class="def-box">Organizations share data to gain valuable insights. A healthcare provider's database on patient drug reactions is useful to pharmaceutical companies. However, these data cannot be shared directly due to legal, financial, compliance, and moral issues. Data must be shared responsibly — without revealing PII.</div>
+      <div class="sub-title">Use Cases for Data Sharing</div>
+      <div class="three-col">
+        <div class="info-box"><strong>Data Mining &amp; Analysis</strong><br><br>Classification (predict defaults), Clustering (segment customers), Association (market basket analysis).<br><br>Anonymization must preserve correlation between QI and SD for useful mining results.</div>
+        <div class="info-box"><strong>Software Application Testing</strong><br><br>High-quality test data = from production systems. Must be anonymized before sharing with testers.<br><br>Outsourced testing is common — compliance mandatory across geographies.</div>
+        <div class="info-box"><strong>Business Operations (BPO)</strong><br><br>BPOs assist customers in real-time. Sensitive data (credit card numbers, account details) must be tokenized dynamically so the BPO employee cannot see original values.</div>
+      </div>
+      <div class="sub-title">Classification of Use Cases</div>
+      <div class="two-col">
+        <div class="pro-box"><strong>Privacy protection of data at rest (static)</strong><br>Data Mining &amp; Analysis, Software Testing — transform data offline before release</div>
+        <div class="con-box"><strong>Privacy protection of data in motion (runtime)</strong><br>Business Operations, Auditing &amp; Reporting — tokenize data at the point of access, dynamically</div>
+      </div>
+      <div class="tip-box">
+        <div class="tip-title">⭐ Exam Tip</div>
+        PII is found in ALL layers of enterprise architecture: business processes, applications, ODS, data warehouse, time-series databases, file servers, reports. An enterprise-wide privacy strategy is essential.
+      </div>
+    </div>
+  </div>
+
+  <div class="topic-section" id="m1-methods">
+    <h3 class="topic-title collapsible-header" onclick="toggleCollapse(this)"><span class="m1c">●</span> Methods of Protecting Data</h3>
+    <div class="collapsible-body">
+      <div class="table-wrap">
+        <table>
+          <tr><th>Method</th><th>How It Works</th><th>Key Properties</th><th>Limitation</th></tr>
+          <tr><td><strong>Cryptography</strong></td><td>Encrypts data using a key so only authorized parties can read it</td><td>Oldest, safest; protects both data in motion and at rest; encrypted data = unreadable</td><td>Key management is complex; any key compromise = complete loss of privacy; zero utility</td></tr>
+          <tr><td><strong>Anonymization</strong></td><td>Modifies original data so it doesn't resemble original values but maintains semantics/syntax</td><td>Regulatory compliance; can be shared freely; optimization problem (privacy vs utility trade-off); "shades of gray" unlike cryptography</td><td>Information loss; utility degradation; NP-hard optimal design</td></tr>
+          <tr><td><strong>Tokenization</strong></td><td>Replaces sensitive data with non-sensitive placeholders (tokens) of same format</td><td>Tokens have no relationship to original data; format-preserving; useless outside application context; reversible (two-way)</td><td>Security depends on token database safety; if vault is compromised, tokenization is broken</td></tr>
+        </table>
+      </div>
+      <div class="two-col">
+        <div class="def-box"><strong>Cryptography:</strong> Privacy = 1 (encrypted) or 0 (decrypted). Binary — either complete privacy or complete utility. No middle ground.</div>
+        <div class="def-box"><strong>Anonymization:</strong> Constrained optimization — produce a dataset with smallest distortion that satisfies privacy requirements. "Shades of gray" — controllable privacy/utility levels.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="topic-section" id="m1-balance">
+    <h3 class="topic-title collapsible-header" onclick="toggleCollapse(this)"><span class="m1c">●</span> Importance of Balancing Privacy and Utility</h3>
+    <div class="collapsible-body">
+      <div class="def-box"><strong>Privacy vs Utility Trade-off:</strong> Anonymizing data always reduces some utility. The challenge is to maximize privacy while preserving enough utility for the data to be useful. This is a constrained optimization problem with no universal solution.</div>
+      <div class="sub-title">Key Relationships</div>
+      <ul class="kp">
+        <li><strong>D = [DEI] [DQI] [DSD]</strong> — Original data is a matrix of Explicit Identifiers, Quasi-Identifiers, and Sensitive Data</li>
+        <li><strong>D′ = T(DQI)</strong> — Transformation applies only to QI; EI is masked, SD is unchanged</li>
+        <li><strong>QI ↔ SD Correlation</strong> — Strong correlation exists between QI and SD. If correlation is lost during anonymization, data becomes useless for analysis</li>
+        <li><strong>Measuring Privacy</strong> — Statistical approaches (variance of perturbed variables) and probabilistic methods (distribution knowledge + background info)</li>
+        <li><strong>Measuring Utility</strong> — Statistical distance between Q (QI distribution in D) and Q′ (QI distribution in D′)</li>
+      </ul>
+      <div class="tip-box">
+        <div class="tip-title">⭐ HIPAA Example — The Classic Trade-off</div>
+        HIPAA designates admission date as PII → must be anonymized. But without admission date, healthcare researchers cannot assess treatment efficacy over time. HIPAA protects privacy but impacts medical research. <strong>This demonstrates that there is no single privacy vs utility measure — it depends on application context.</strong>
+      </div>
+      <div class="sub-title">Anonymization Design Quality</div>
+      <div class="two-col">
+        <div class="pro-box"><strong>Good Design Example</strong><br>Names substituted, ZIP codes anonymized, gender preserved, income correlation maintained → Privacy gain with acceptable utility loss</div>
+        <div class="con-box"><strong>Bad Design Example</strong><br>All names = "XXXX", all ZIP codes = "56001", all genders = "Male" → High privacy but pathetically low utility — all correlation destroyed</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="topic-section" id="m1-disclosure">
+    <h3 class="topic-title collapsible-header" onclick="toggleCollapse(this)"><span class="m1c">●</span> Disclosure</h3>
+    <div class="collapsible-body">
+      <div class="def-box"><strong>Disclosure</strong> occurs when a person or organization recognizes or learns something they did not know already about another person or organization via released data.</div>
+      <div class="table-wrap">
+        <table>
+          <tr><th>Disclosure Type</th><th>Definition</th><th>Example</th></tr>
+          <tr><td><strong>Identity Disclosure</strong></td><td>A specific individual record can be recognized in released data — the respondent's identity is linked to a confidential data record</td><td>An attacker matches John Smith's record in anonymized hospital data using voters list</td></tr>
+          <tr><td><strong>Attribute Disclosure</strong></td><td>Sensitive information about an individual is revealed through release of the data file, even without identifying the person</td><td>Knowing that all records in a ZIP code have diabetes reveals an individual's condition without naming them</td></tr>
+          <tr><td><strong>Inference Disclosure</strong></td><td>One can determine the value of some characteristics of an individual from released data with more accuracy than otherwise possible</td><td>Knowing income bracket from ZIP code and employment status combinations</td></tr>
+        </table>
+      </div>
+      <div class="info-box">💡 <strong>Principle:</strong> Even if individual identity is not revealed, revealing that all records in an equivalence class share the same sensitive attribute constitutes attribute disclosure — this is the basis of the homogeneity attack on k-anonymity.</div>
+    </div>
+  </div>
+
+  <div class="topic-section" id="m1-tabular">
+    <h3 class="topic-title collapsible-header" onclick="toggleCollapse(this)"><span class="m1c">●</span> Tabular Data</h3>
+    <div class="collapsible-body">
+      <div class="def-box">Tabular data are the most common output form from statistical databases. Two main types exist, each requiring different SDC methods.</div>
+      <div class="two-col">
+        <div class="info-box"><strong>Magnitude Tables</strong><br><br>Each cell value = sum of a particular response across all respondents in that cell.<br><br>Commonly used for <strong>business/economic data</strong>.<br><br>Example: Total turnover of all businesses in an industry within a region.</div>
+        <div class="info-box"><strong>Frequency Tables</strong><br><br>Each cell value = count (number of respondents) falling into that cell.<br><br>Commonly used for <strong>Census/social data</strong>.<br><br>Example: Number of unemployed individuals within a region.</div>
+      </div>
+      <div class="tip-box">
+        <div class="tip-title">⭐ Exam Tip</div>
+        Small values in tabular output signal potential disclosure risk. Cells with very few respondents may directly identify individuals. SDC must suppress or merge such cells.
+      </div>
+    </div>
+  </div>
+
+  <div class="topic-section" id="m1-microdata">
+    <h3 class="topic-title collapsible-header" onclick="toggleCollapse(this)"><span class="m1c">●</span> Microdata</h3>
+    <div class="collapsible-body">
+      <div class="def-box"><strong>Microdata</strong> is a file with n records where each record contains m variables on an individual respondent (person or organization). It is the primary form in which data are stored and from which all other outputs are derived.</div>
+      <div class="sub-title">Classification by Sensitivity</div>
+      <div class="table-wrap">
+        <table>
+          <tr><th>Category</th><th>Definition</th><th>Examples</th><th>SDC Treatment</th></tr>
+          <tr><td><strong>Identifiers (EI)</strong></td><td>Unambiguously identify the respondent</td><td>Passport number, SSN, full name</td><td>Completely removed or encrypted in pre-processing</td></tr>
+          <tr><td><strong>Quasi-Identifiers (QI)</strong></td><td>In combination with external data, can re-identify respondents</td><td>Age, ZIP code, gender, date of birth</td><td>Anonymized (generalization, suppression) — cannot be removed entirely</td></tr>
+          <tr><td><strong>Confidential Outcome Variables (SD)</strong></td><td>Sensitive information about the respondent</td><td>Salary, religion, political affiliation, health condition</td><td>Left unchanged (needed for utility) unless exceptional case</td></tr>
+          <tr><td><strong>Non-Confidential Outcome Variables</strong></td><td>Non-sensitive information — but can be part of a QI combination</td><td>Town, country of residence</td><td>Must still be considered in SDC design</td></tr>
+        </table>
+      </div>
+      <div class="sub-title">Classification by Data Type</div>
+      <div class="three-col">
+        <div class="def-box"><strong>Continuous</strong><br>Numerical; arithmetic operations are valid.<br>Examples: Age, Income, Height</div>
+        <div class="def-box"><strong>Ordinal</strong><br>Ordered categories; ≤, max, min operators are meaningful.<br>Examples: Education level (HS &lt; Bachelor &lt; Master), Political preference (Left &lt; Center &lt; Right)</div>
+        <div class="def-box"><strong>Nominal</strong><br>Unordered categories; only equality comparison is valid.<br>Examples: Eye color (Brown, Blue, Green), City (Delhi, Mumbai)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="topic-section" id="m1-sdc">
+    <h3 class="topic-title collapsible-header" onclick="toggleCollapse(this)"><span class="m1c">●</span> Approaches to Statistical Disclosure Control (SDC)</h3>
+    <div class="collapsible-body">
+      <div class="def-box"><strong>SDC</strong> is the set of methods to reduce the risk of disclosing information on individuals, businesses, or other organizations while releasing as much information as possible.</div>
+      <ol class="steps">
+        <li><strong>Why is confidentiality protection needed?</strong> — Three reasons: (1) Fundamental principle for Official Statistics, (2) Public pledges to respondents, (3) Maintain trust and data quality</li>
+        <li><strong>Key characteristics and uses of data</strong> — Type (census/survey), sample design, quality assessment, variables (categorical/continuous), output type (microdata/tables)</li>
+        <li><strong>What disclosure risks need to be protected against?</strong> — Identify intruder scenarios: what info is available to attacker and how they would use it to identify an individual</li>
+        <li><strong>Disclosure control methods</strong> — Apply SDC methods to reduce risk to acceptable level; balance information loss against disclosure likelihood</li>
+        <li><strong>Implementation</strong> — Select software, parameters, options; document decisions; inform users about protection applied; be transparent but not enough to allow recovery of disclosive data</li>
+      </ol>
+      <div class="two-col">
+        <div class="pro-box"><strong>Perturbative Methods</strong><br>Falsify data before publication by introducing controlled error.<br>Examples: Additive noise, data swapping, PRAM, rounding, microaggregation</div>
+        <div class="con-box"><strong>Non-Perturbative Methods</strong><br>Reduce information by suppression or aggregation without distorting data structure.<br>Examples: Sampling, global recoding, top/bottom coding, local suppression</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="topic-section" id="m1-ethics">
+    <h3 class="topic-title collapsible-header" onclick="toggleCollapse(this)"><span class="m1c">●</span> Ethics, Principles, Guidelines and Regulations</h3>
+    <div class="collapsible-body">
+      <div class="sub-title">ISI Declaration on Professional Ethics (1985)</div>
+      <ul class="kp">
+        <li><strong>4.5 Maintaining confidentiality of records</strong> — Statistical data are collected to answer "how many?" not "who?" — identities should remain confidential regardless of explicit pledge</li>
+        <li><strong>4.6 Inhibiting disclosure of identities</strong> — Statisticians must take appropriate measures to prevent data from being released in forms that allow identity inference</li>
+        <li><strong>Anonymity</strong> — Most common method; prevents unwitting breaches; identifiable data should have "privileged" legal status</li>
+      </ul>
+      <div class="sub-title">New ISI Declaration — 3 Shared Professional Values</div>
+      <div class="three-col">
+        <div class="info-box"><strong>Respect</strong><br>• Respect privacy and promises of confidentiality<br>• Guard against misuse of results<br>• Do not suppress others' work</div>
+        <div class="info-box"><strong>Professionalism</strong><br>• Serve the common good<br>• Pursue highest data quality<br>• Obey the law; disclose conflicts of interest<br>• Continuously learn and develop new methods</div>
+        <div class="info-box"><strong>Truthfulness &amp; Integrity</strong><br>• Independence, objectivity, transparency<br>• Not influenced by political/funding pressure<br>• Present data honestly and openly<br>• Accountable for all actions</div>
+      </div>
+      <div class="sub-title">12 ISI Ethical Principles</div>
+      <div class="table-wrap">
+        <table>
+          <tr><th>#</th><th>Principle</th></tr>
+          <tr><td>1</td><td>Pursuing objectivity — present all findings openly, regardless of outcome</td></tr>
+          <tr><td>2</td><td>Clarifying obligations and roles — understand responsibilities clearly</td></tr>
+          <tr><td>3</td><td>Assessing alternatives impartially — provide unbiased comparison of methods</td></tr>
+          <tr><td>4</td><td>Conflicting interests — avoid assignments with financial/personal conflicts</td></tr>
+          <tr><td>5</td><td>Avoiding pre-empted outcomes — reject predetermined conclusions</td></tr>
+          <tr><td>6</td><td>Guarding privileged information — keep confidential data strictly protected</td></tr>
+          <tr><td>7</td><td>Exhibiting professional competence — continuously upgrade skills</td></tr>
+          <tr><td>8</td><td>Maintaining confidence in statistics — accurately describe results and their limits</td></tr>
+          <tr><td>9</td><td>Exposing and reviewing methods — provide enough info for independent assessment</td></tr>
+          <tr><td>10</td><td>Communicating ethical principles — ensure all collaborators share ethical values</td></tr>
+          <tr><td>11</td><td>Bearing responsibility for integrity — do not deceive or misrepresent</td></tr>
+          <tr><td>12</td><td>Protecting interests of subjects — based on freely given, informed consent; identities kept confidential</td></tr>
+        </table>
+      </div>
+      <div class="sub-title">European Statistics Code of Practice — Principle 5: Statistical Confidentiality</div>
+      <div class="teal-box">The privacy of data providers (households, enterprises, administrations) and the confidentiality of information they provide must be <strong>absolutely guaranteed</strong>. Indicators include: confidentiality guaranteed in law, legal penalties for breaches, written instructions on protection, and strict protocols for external users accessing microdata.</div>
+      <div class="sub-title">UNECE 4 Principles for Microdata Confidentiality</div>
+      <ul class="kp">
+        <li><strong>Principle 1</strong> — Microdata collected for official statistical purposes may be used for statistical analysis to support research, as long as confidentiality is protected</li>
+        <li><strong>Principle 2</strong> — Microdata should only be made available for statistical purposes</li>
+        <li><strong>Principle 3</strong> — Provision must be consistent with legal and administrative arrangements ensuring confidentiality</li>
+        <li><strong>Principle 4</strong> — Procedures for researcher access, and uses/users of microdata, must be transparent and publicly available</li>
+      </ul>
+      <div class="sub-title">European Laws — Key Regulations</div>
+      <div class="table-wrap">
+        <table>
+          <tr><th>Regulation</th><th>Key Purpose</th></tr>
+          <tr><td>Commission Regulation (EC) No. 831/2002</td><td>Access to confidential data for scientific purposes by universities and research organizations</td></tr>
+          <tr><td>Commission Regulation (EC) No. 223/2009</td><td>Legal framework for development, production, and dissemination of European statistics including confidentiality rules</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ MODULE 2 ═══════════════════════ -->
+<section class="module-section" id="module2">
+  <div class="module-header">
+    <div class="mod-badge m2b">M2</div>
+    <div class="module-title-group">
+      <div class="module-title">Microdata</div>
+      <div class="module-subtitle">Disclosure · Risk · Re-identification · Masking · Information Loss</div>
+    </div>
+  </div>
+
+  <div class="topic-section" id="m2-intro">
+    <h3 class="topic-title collapsible-header" onclick="toggleCollapse(this)"><span class="m2c">●</span> Introduction to SDC for Microdata</h3>
+    <div class="collapsible-body">
+      <div class="def-box">The purpose of SDC for microdata is to prevent confidential information from being linked to specific respondents when releasing a microdata file. Given an original microdata set V, the goal is to release a protected V′ such that: (1) <strong>Disclosure risk is low</strong>, and (2) <strong>User analyses on V and V′ yield similar results</strong>.</div>
+      <div class="sub-title">The 5-Stage SDC Process for Microdata</div>
+      <div class="table-wrap">
+        <table>
+          <tr><th>Stage</th><th>Input</th><th>Action / Output</th></tr>
+          <tr><td>1. Why is confidentiality protection needed?</td><td>Legal framework, regulations, data collection pledges</td><td>Justification document; identifies obligations</td></tr>
+          <tr><td>2. Key characteristics and uses of data</td><td>Survey design, variable types, intended users</td><td>Data profile; determines what matters most for utility</td></tr>
+          <tr><td>3. Disclosure risk definition &amp; assessment</td><td>Quasi-identifiers, intruder scenarios, population characteristics</td><td>Risk score per record; identification of at-risk combinations</td></tr>
+          <tr><td>4. Disclosure control methods</td><td>Risk assessment results, utility requirements</td><td>Selection of SDC methods (perturbative / non-perturbative)</td></tr>
+          <tr><td>5. Implementation</td><td>Chosen methods, parameters, software</td><td>Protected microdata file V′; documentation for users</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="topic-section" id="m2-disclosure">
+    <h3 class="topic-title collapsible-header" onclick="toggleCollapse(this)"><span class="m2c">●</span> Disclosure Types in Microdata</h3>
+    <div class="collapsible-body">
+      <div class="three-col">
+        <div class="con-box"><strong>Identity Disclosure</strong><br><br>A specific individual record can be recognized in a released microdata file.<br><br>Achieved by: correct record re-identification by matching a target in sample to an external list of units with identifiers like name and address.</div>
+        <div class="con-box"><strong>Attribute Disclosure</strong><br><br>Sensitive information about a specific individual is revealed through release of the file — even without linking to their name.<br><br>Example: All records in a group have the same disease → knowing someone is in that group reveals their disease.</div>
+        <div class="con-box"><strong>Inferential Disclosure</strong><br><br>One can determine the value of some characteristics of an individual <em>more accurately</em> than would otherwise have been possible from the released data.<br><br>Example: Estimating income bracket from occupation + neighborhood combination.</div>
+      </div>
+      <div class="sub-title">Disclosure Scenarios</div>
+      <div class="def-box">A <strong>disclosure scenario</strong> describes: (i) which information is potentially available to an intruder (quasi-identifiers from external archives), and (ii) how such information could be used to identify an individual (matching strategies). Common external archives: voters lists, social surveys, LinkedIn profiles, Facebook data.</div>
+    </div>
+  </div>
+
+  <div class="topic-section" id="m2-risk">
+    <h3 class="topic-title collapsible-header" onclick="toggleCollapse(this)"><span class="m2c">●</span> Definitions of Disclosure Risk</h3>
+    <div class="collapsible-body">
+      <div class="def-box">A unit is <strong>at risk of disclosure</strong> when it cannot be confused with several other units. Risk is measured at the record level and aggregated to give a global file-level risk.</div>
+      <div class="sub-title">Risk for Categorical Quasi-Identifiers</div>
+      <div class="teal-box">
+        <strong>Key Notation:</strong><br>
+        • K cells C₁,...,CK in the contingency table of quasi-identifiers (the "keys")<br>
+        • F = (F₁,...,FK) — population frequencies per cell (unknown)<br>
+        • f = (f₁,...,fK) — sample frequencies per cell (known)<br>
+        • Risk of re-identification for individual i in cell Ck = <strong>1/Fk</strong><br><br>
+        <strong>Global Risk Measures:</strong><br>
+        • τ₁ = (1/n) × Σᵢ (1/Fk(i)) — average individual risk<br>
+        • Focus on <strong>sample uniques</strong> (fk = 1) that are also <strong>population uniques</strong> (Fk = 1) — these are the highest-risk records
+      </div>
+      <div class="sub-title">Three Approaches to Re-identification Risk</div>
+      <ul class="kp">
+        <li><strong>Risk based on microdata to be released</strong> — Use only information in the sample itself</li>
+        <li><strong>Risk based on population characteristics</strong> — Use known or estimated population frequencies</li>
+        <li><strong>Risk based on real external files</strong> — Use actual external databases for record linkage</li>
+      </ul>
+      <div class="sub-title">Risk for Continuous Quasi-Identifiers</div>
+      <div class="three-col">
+        <div class="def-box"><strong>Outlier-based</strong><br>Records with extreme values are most at risk — they are uniquely identifiable even after perturbation</div>
+        <div class="def-box"><strong>Clustering-based</strong><br>Identify records that form isolated clusters — small or unique clusters are at higher risk</div>
+        <div class="def-box"><strong>Record Linkage-based</strong><br>A posteriori approach — attempt actual linking with external file, measure success rate</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="topic-section" id="m2-reident">
+    <h3 class="topic-title collapsible-header" onclick="toggleCollapse(this)"><span class="m2c">●</span> Estimating Re-identification Risk</h3>
+    <div class="collapsible-body">
+      <div class="def-box">Re-identification occurs when a link is established between a sample unit i and a population unit i* and i* is actually the individual from which i was derived (i.e., the match is correct).</div>
+      <div class="sub-title">Assumptions Made</div>
+      <ul class="kp">
+        <li>A sample s from population P is to be released; sampling weights are available</li>
+        <li>The external file covers the whole population P — so the matching unit i* always exists</li>
+        <li>The external file contains individual identifiers AND categorical quasi-identifiers also present in the sample</li>
+        <li>The intruder tries to match sample unit i with population unit i* by comparing quasi-identifier values</li>
+        <li>The intruder has no extra information beyond the external file</li>
+        <li>Units belonging to the same cell Ck are exchangeable for the intruder</li>
+      </ul>
+      <div class="formula-box">
+        Individual Risk: r(i) = 1/Fk(i) &nbsp;&nbsp; [where Fk = population count in cell of record i]<br>
+        Global Risk: τ₁ = (1/n) × Σᵢ 1/Fk(i) &nbsp;&nbsp; [average over all n sample records]<br>
+        Simplified Global Risk: τ₂ = #{i ∈ s : fk(i)=1 AND Fk(i)=1} &nbsp;&nbsp; [count of sample+population uniques]
+      </div>
+    </div>
+  </div>
+
+  <div class="topic-section" id="m2-nonpert">
+    <h3 class="topic-title collapsible-header" onclick="toggleCollapse(this)"><span class="m2c">●</span> Non-Perturbative Microdata Masking</h3>
+    <div class="collapsible-body">
+      <div class="def-box">Non-perturbative masking does <strong>not distort</strong> the original data. Instead, it reduces detail through partial suppressions or reductions. The data structure is preserved; only some information is withheld.</div>
+      <div class="table-wrap">
+        <table>
+          <tr><th>Method</th><th>How It Works</th><th>Example</th><th>Key Property</th></tr>
+          <tr><td><strong>Sampling</strong></td><td>Publish only a sample S of original records instead of the full dataset</td><td>Statistics Catalonia released a 4.06% sample (245,944 of 6M records) of 1991 census</td><td>Privacy by reducing chance of identifying specific individuals; statistical properties preserved if sample is representative</td></tr>
+          <tr><td><strong>Global Recoding</strong></td><td>Combine multiple categories into broader ones (categorical) or construct intervals (continuous)</td><td>Categorical: {Single, Married, Divorced, Widowed} → {Married, Other}; Continuous: Ages → [0–20], [21–40], [41–60]</td><td>Applied uniformly to whole dataset; reduces cardinality; may reduce utility</td></tr>
+          <tr><td><strong>Top and Bottom Coding</strong></td><td>Recode only the extreme top and/or bottom values of a distribution</td><td>Age: values &gt;85 → "85+" (top coded); Income: &lt;$10K → "&lt;$10K" (bottom coded)</td><td>Applicable only to ordinal/continuous variables; useful when outliers are the main risk</td></tr>
+          <tr><td><strong>Local Suppression</strong></td><td>Suppress (replace with missing value) specific values in individual variable cells that form unsafe combinations</td><td>A record with unique {ZIP=00001, Age=117, Gender=Male} → suppress ZIP or Age</td><td>Targets specific unsafe combinations; less aggressive than global recoding</td></tr>
+        </table>
+      </div>
+      <div class="tip-box">
+        <div class="tip-title">⭐ Exam Tip</div>
+        Non-perturbative methods do NOT add noise or change values — they suppress or generalize. Perturbative methods change values. This is the fundamental distinction.
+      </div>
+    </div>
+  </div>
+
+  <div class="topic-section" id="m2-pert">
+    <h3 class="topic-title collapsible-header" onclick="toggleCollapse(this)"><span class="m2c">●</span> Perturbative Microdata Masking</h3>
+    <div class="collapsible-body">
+      <div class="def-box">Perturbative methods allow the <strong>entire dataset to be released with altered values</strong> rather than suppressed values. An intruder is uncertain whether a match is correct. Most are based on the <strong>matrix masking principle</strong>.</div>
+      <div class="formula-box">Matrix Masking: Z = AXB + C<br>X = original data matrix &nbsp;&nbsp; A = record-transforming mask &nbsp;&nbsp; B = variable-transforming mask &nbsp;&nbsp; C = displacing mask / noise</div>
+      <div class="table-wrap">
+        <table>
+          <tr><th>Method</th><th>How It Works</th><th>Key Property</th></tr>
+          <tr><td><strong>Additive Noise</strong></td><td>Add random values (zero-mean noise) to original continuous variable values<br>Variants: uncorrelated, correlated, with linear transformation, with non-linear transformation</td><td>No exact matching with external files possible; correlated variant also preserves correlation coefficients</td></tr>
+          <tr><td><strong>Multiplicative Noise</strong></td><td>Multiply original data by random numbers with mean 1 and small variance (first form), or logarithmic transform + noise + antilog (second form)</td><td>Suitable for strictly positive continuous variables; does not preserve additive structure</td></tr>
+          <tr><td><strong>Microaggregation</strong></td><td>Partition records into groups of ≥k records; replace values with group centroid (average). Minimize within-group SSE.<br>SSEopt/SST = variability loss measure</td><td>Guarantees k-anonymity; lower SSE = better utility; optimal microaggregation is NP-hard</td></tr>
+          <tr><td><strong>Data Swapping</strong></td><td>Exchange values of confidential variables among records randomly (so low-order marginals are preserved)</td><td>Maintains marginal distributions; does NOT prevent attribute disclosure (highest value still detectable)</td></tr>
+          <tr><td><strong>Rank Swapping</strong></td><td>Rank values ascending; each ranked value swapped with another within ±p% of total records</td><td>Parameter p controls privacy/utility trade-off; same weakness as data swapping on attribute disclosure</td></tr>
+          <tr><td><strong>Rounding</strong></td><td>Replace original values with nearest rounding point from a predefined set {p₀, p₁,...,pr} where pᵢ = b×i</td><td>Suitable for continuous data; reduces precision without structural change</td></tr>
+          <tr><td><strong>Re-sampling</strong></td><td>Take t independent samples of variable Xᵢ (each size n); sort all samples by same criterion; masked value = average of ranked values across samples</td><td>Preserves rank ordering; marginal distribution preserved</td></tr>
+          <tr><td><strong>PRAM</strong></td><td>Post-randomisation method for <strong>categorical</strong> data. Each category value changed according to a Markov matrix P (transition probabilities)</td><td>Intentional misclassification; can be designed to preserve certain marginals</td></tr>
+          <tr><td><strong>MASSC</strong></td><td>4 steps: (1) Micro-agglomeration, (2) Probabilistic Substitution, (3) Sub-sampling, (4) Calibration</td><td>Comprehensive; combines multiple techniques; preserves estimates for critical outcome variables</td></tr>
+        </table>
+      </div>
+      <div class="sub-title">Microaggregation Example</div>
+      <div class="diagram-wrap">
+        <div class="diagram-title">Microaggregation with k=3 — 3-Anonymous Result</div>
+        <pre>
+Original:   Group records into clusters of ≥3 by proximity
+            → Replace each record's value with group centroid (mean)
+            → All records in a group now share the same value
+
+SSEopt = Within-group sum of squares (lower = better utility)
+SST    = Total sum of squares (baseline variability)
+Information Loss = SSEopt / SST  (lower ratio = better)
+
+Example: SSEopt = 7.484, SST = 22 → Loss = 0.34 (34% variability lost)</pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="topic-section" id="m2-infoloss">
+    <h3 class="topic-title collapsible-header" onclick="toggleCollapse(this)"><span class="m2c">●</span> Information Loss in Microdata</h3>
+    <div class="collapsible-body">
+      <div class="def-box">Information loss is the difference between the utility of original data D and the protected data D′. A protected microdata set is <strong>analytically valid</strong> if it approximately preserves means, covariance, marginal values for key tabulations, and at least one distributional characteristic.</div>
+      <div class="sub-title">Information Loss Measures for Continuous Data</div>
+      <div class="two-col">
+        <div class="info-box"><strong>Unbounded Measures</strong><br><br>Based on Mean Square Error (MSE), Mean Absolute Error (MAE), or Mean Variation between matrices computed on original (X) and protected (X′) data.<br><br>Matrices compared: Covariance (V vs V′), Correlation (R vs R′), Principal Component loadings (F vs F′), Communality (C vs C′)<br><br>Not bounded in [0,1] — hard to compare across methods.</div>
+        <div class="info-box"><strong>Bounded Measures</strong><br><br>Probability-based, bounded in [0,1].<br><br>Convenient for comparing against disclosure risk (also bounded in [0,1]).<br><br>Enables explicit optimization: minimize information loss subject to maximum disclosure risk constraint.</div>
+      </div>
+      <div class="formula-box">
+        MSE = (1/cells) × Σ(Xᵢⱼ − X′ᵢⱼ)²<br>
+        MAE = (1/cells) × Σ|Xᵢⱼ − X′ᵢⱼ|<br>
+        Mean Variation = (1/cells) × Σ|(Xᵢⱼ − X′ᵢⱼ)/Xᵢⱼ| × 100%
+      </div>
+      <div class="sub-title">Information Loss Measures for Categorical Data</div>
+      <div class="three-col">
+        <div class="def-box"><strong>Direct Comparison</strong><br>Categorical distance between original and protected values.<br>Nominal: dV(c,c′) = 0 if c=c′, else 1<br>Ordinal: dV(c,c′) = |categories between c and c′| / |D(V)|</div>
+        <div class="def-box"><strong>Contingency Table Comparison (CTBIL)</strong><br>Compare contingency tables of original and protected data.<br>CTBIL = Σ |xsubscripts − x′subscripts| / n<br>Higher CTBIL = more distortion of variable relationships</div>
+        <div class="def-box"><strong>Entropy-based (EBIL)</strong><br>Model protection as noise over information channel.<br>Uses Shannon's entropy on PRAM Markov matrix.<br>Measures uncertainty of original value given protected value</div>
+      </div>
+      <div class="tip-box">
+        <div class="tip-title">⭐ Exam Tip</div>
+        Key tradeoff: Higher privacy → higher information loss. Optimal SDC = find the method and parameters that minimize information loss while satisfying the disclosure risk threshold. Both measures must be computed and balanced.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ MODULE 3 ═══════════════════════ -->
+<section class="module-section" id="module3">
+  <div class="module-header">
+    <div class="mod-badge m3b">M3</div>
+    <div class="module-title-group">
+      <div class="module-title">Static Data Anonymization on Multidimensional Data</div>
+      <div class="module-subtitle">k-Anonymity · l-Diversity · t-Closeness · Classification of Data</div>
+    </div>
+  </div>
+
+  <div class="topic-section" id="m3-class">
+    <h3 class="topic-title collapsible-header" onclick="toggleCollapse(this)"><span class="m3c">●</span> Classification of Data in a Multidimensional Dataset</h3>
+    <div class="collapsible-body">
+      <div class="def-box">A multidimensional dataset D consists of four disjoint sets: <strong>EI</strong> (Explicit Identifiers), <strong>QI</strong> (Quasi-Identifiers), <strong>SD</strong> (Sensitive Data), and <strong>NSD</strong> (Non-Sensitive Data).</div>
+      <div class="table-wrap">
+        <table>
+          <tr><th>Data Type</th><th>Description</th><th>Examples</th><th>Treatment</th></tr>
+          <tr><td><strong>EI (Explicit Identifiers)</strong></td><td>Directly identify a record owner — any identifier that explicitly maps to one person</td><td>SSN, VIN, passport number, driver's license, tax number, full name</td><td>Completely masked using tokenization or substitution</td></tr>
+          <tr><td><strong>QI (Quasi-Identifiers)</strong></td><td>Categorical attributes also available in external databases — in combination, can re-identify a person</td><td>Age, date of birth, address, phone, ZIP code, gender, education</td><td>Anonymized via generalization/suppression (non-perturbative)</td></tr>
+          <tr><td><strong>SD (Sensitive Data)</strong></td><td>Numerical or string data that are sensitive and must be protected from disclosure</td><td>Salary, diagnosis, treatment, credit score, political affiliation</td><td>Left in original form for utility; rarely perturbed</td></tr>
+          <tr><td><strong>NSD (Non-Sensitive Data)</strong></td><td>Non-sensitive data with no direct disclosure risk</td><td>Product category, membership type</td><td>Minimal treatment; monitor for QI combinations</td></tr>
+        </table>
+      </div>
+      <div class="tip-box">
+        <div class="tip-title">⭐ Activity Examples — Hospital, University, Mall</div>
+        <strong>Hospital:</strong> EI=Patient_No, Name | QI=Age, ZIP | SD=Diagnosis, Medication | NSA=Room#<br>
+        <strong>University:</strong> EI=Roll_No, Name | QI=Age, City, Dept | SD=GPA, Scholarship | NSA=Clubs<br>
+        <strong>Mall:</strong> EI=CustomerID, Name | QI=Age, City | SD=Credit Score, Purchase Amount, Last Purchase | NSA=Category
+      </div>
+    </div>
+  </div>
+
+  <div class="topic-section" id="m3-ei">
+    <h3 class="topic-title collapsible-header" onclick="toggleCollapse(this)"><span class="m3c">●</span> Protecting Explicit Identifiers</h3>
+    <div class="collapsible-body">
+      <div class="def-box">EI must be <strong>completely masked</strong>. Two critical aspects must be addressed: (1) <strong>Referential integrity</strong> — foreign key relationships in downstream databases must remain valid, and (2) <strong>Consistent masking across databases</strong> — the same EI in multiple systems must produce the same masked value.</div>
+      <div class="sub-title">Tokenization for EI Protection</div>
+      <div class="two-col">
+        <div class="info-box"><strong>One-Way Tokenization</strong><br><br>Generates unique tokens from which the original data <em>cannot</em> be recovered.<br><br>Input: 12345 → Token: 40011 (irreversible)<br><br>Used for static anonymization — test data, analytics.<br><br>Stronger security; token has no relationship to original.</div>
+        <div class="teal-box"><strong>Two-Way Tokenization</strong><br><br>Every input is mapped to a unique token. During a transaction, original data can be recovered from the mapping.<br><br>Used for dynamic/runtime protection (BPO, credit card industry).<br><br>Token database (vault) maintains the mapping securely.<br><br>Extensively used in credit card industry — first 5 and last 4 digits preserved (format-preserving).</div>
+      </div>
+      <div class="def-box"><strong>Substitution:</strong> Replace original data with alternative values from an external data source. Example: Names in North American dataset replaced with culturally similar names from a names database. Preserves format and demographic plausibility.</div>
+      <div class="teal-box">
+        <strong>Tokenization vs Randomization:</strong><br>
+        • Randomization: transformed data are related to original via the randomization function (weaker)<br>
+        • Tokenization: token has NO relationship to original data (stronger)<br>
+        • Prior knowledge of randomization method helps identify original data; tokenization is immune to this<br>
+        • Additive noise: has similar statistical properties to original; a well-designed token does NOT
+      </div>
+    </div>
+  </div>
+
+  <div class="topic-section" id="m3-qi">
+    <h3 class="topic-title collapsible-header" onclick="toggleCollapse(this)"><span class="m3c">●</span> Protecting Quasi-Identifiers</h3>
+    <div class="collapsible-body">
+      <div class="def-box">Masking EI alone is insufficient. An adversary can still use QI for <strong>record linkage</strong> — linking a record in the anonymized database to a record in an external data source (voters list, social network). QI attributes are categorical nominal — no arithmetic operations are possible.</div>
+      <div class="sub-title">5 Key Challenges in Anonymizing QI</div>
+      <div class="table-wrap">
+        <table>
+          <tr><th>Challenge</th><th>Description</th><th>Example</th></tr>
+          <tr><td><strong>High Dimensionality</strong></td><td>A personal loan application may have 200+ QI fields — k-anonymization becomes ineffective with very high dimensions (PPDM is exploratory in nature)</td><td>Medical records with hundreds of attributes</td></tr>
+          <tr><td><strong>Background Knowledge</strong></td><td>Unknown in advance — adversary may be a colleague, neighbor, or HR employee with partial knowledge about individuals</td><td>HR employee knows someone's salary range from direct experience</td></tr>
+          <tr><td><strong>External Knowledge Availability</strong></td><td>Social networks (Facebook, LinkedIn, Twitter) expose vast amounts of personal QI data publicly</td><td>LinkedIn shows job title, location, employer — all QI attributes</td></tr>
+          <tr><td><strong>Correlation with SD</strong></td><td>QI and SD are correlated (e.g., age and insurance premium). Anonymizing QI weakens this correlation, reducing analytical utility</td><td>Age (QI) vs Premium (SD): higher age = higher premium — correlation must be preserved</td></tr>
+          <tr><td><strong>Maintaining Analytical Utility</strong></td><td>Anonymized QI must still support all queries the original supported — e.g., "How many employees with Education=Doctorate?"</td><td>If education is generalized to "Higher Education," the specific query fails</td></tr>
+        </table>
+      </div>
+      <div class="info-box">💡 <strong>Key Insight:</strong> Non-perturbative techniques (generalization) preserve the truth in the data and are preferred for QI anonymization. Perturbative techniques (masking) eliminate the truth and reduce utility. This is why anonymization ≠ masking for QI.</div>
+    </div>
+  </div>
+
+  <div class="topic-section" id="m3-sd">
+    <h3 class="topic-title collapsible-header" onclick="toggleCollapse(this)"><span class="m3c">●</span> Protecting Sensitive Data</h3>
+    <div class="collapsible-body">
+      <div class="def-box">SD is typically left in original form for analysis. However, numerical SD provides an easy re-identification avenue for adversaries with background knowledge. In exceptional cases, SD must also be protected.</div>
+      <div class="teal-box">
+        <strong>When SD Must Be Protected:</strong><br>
+        • Perturbation with additive noise while ensuring mean and covariance of original and perturbed tables remain the same<br>
+        • This preserves utility (mean and covariance unchanged) while providing privacy (exact values altered)<br>
+        • Example: Employee salary database — random perturbation applied but statistical properties (mean, σ²) preserved<br><br>
+        <strong>D′ = T(DQI)</strong> — under standard PPDM, only QI is transformed. SD stays unchanged. Under exceptional scenarios (outliers, rare diseases), selective SD protection may be applied.
+      </div>
+    </div>
+  </div>
+
+  <div class="topic-section" id="m3-kanon">
+    <h3 class="topic-title collapsible-header" onclick="toggleCollapse(this)"><span class="m3c">●</span> k-Anonymity</h3>
+    <div class="collapsible-body">
+      <div class="def-box"><strong>k-Anonymity</strong> is a technique that makes each record of a table identical to at least k–1 other records over a set of QI attributes. It works on the principle of <strong>indistinguishability</strong> — an adversary cannot identify which of k records corresponds to the target individual.</div>
+      <div class="formula-box">
+        k-Anonymous: P(identify record owner from QI) ≤ 1/k<br>
+        Higher k → Higher privacy → Lower utility
+      </div>
+      <div class="sub-title">Why k-Anonymization?</div>
+      <ul class="kp">
+        <li><strong>Record linkage prevention</strong> — k indistinguishable records means linking probability ≤ 1/k</li>
+        <li><strong>Utility preservation</strong> — Non-perturbative generalization preserves truth in data (vs perturbation which destroys it)</li>
+        <li><strong>Outlier protection</strong> — Generalization handles outliers that additive noise cannot mask effectively</li>
+        <li><strong>QI–SD correlation preservation</strong> — The association between QI and SD must be maintained</li>
+      </ul>
+      <div class="sub-title">Generalization and Suppression</div>
+      <div class="two-col">
+        <div class="def-box"><strong>Suppression:</strong> Remove a data field from the table entirely. High information loss. Used when a record cannot be generalized sufficiently.</div>
+        <div class="def-box"><strong>Generalization:</strong> Replace more specific values with generic, semantically similar values. Uses Domain Generalization Hierarchy (DGH) and Value Generalization Hierarchy (VGH). Operates at cell, tuple, or attribute level.</div>
+      </div>
+      <div class="diagram-wrap">
+        <div class="diagram-title">Generalization Hierarchies Example</div>
+        <pre>
+EDUCATION Domain Generalization Hierarchy:
+E0: {PhD, Masters, Bachelors, High School}
+E1: {Graduate, Undergraduate}          (PhD+Masters → Graduate; Bachelors+HS → Undergraduate)
+E2: {Any}                              (Full suppression)
+
+ZIP CODE Domain Generalization Hierarchy:
+Z0: {56001, 56002, 56003, 56004}       (exact codes)
+Z1: {5600*}                            (first 4 digits)
+Z2: {560**}                            (first 3 digits)
+Z3: {*****}                            (any)
+
+Node <Z1, E1> in the lattice = minimal generalization satisfying k-anonymity</pre>
+      </div>
+      <div class="sub-title">Samarati's Algorithm</div>
+      <div class="teal-box">
+        <strong>AG-TS (Attribute Generalization + Tuple Suppression)</strong><br>
+        1. Build DGH lattice combining all QI attributes<br>
+        2. Most specific node = &lt;Z0, E0&gt; (no generalization)<br>
+        3. Search the lattice using binary search: try h, h/2, h/4,... to find minimal generalization satisfying k-anonymity<br>
+        4. Select node &lt;Zi, Ej&gt; closest to most specific node that satisfies k-anonymity<br>
+        Higher lattice nodes = higher generalization = higher privacy but lower utility
+      </div>
+      <div class="sub-title">Quality Dimensions of k-Anonymization</div>
+      <div class="table-wrap">
+        <table>
+          <tr><th>Quality Dimension</th><th>Details</th></tr>
+          <tr><td><strong>Provable Privacy</strong></td><td>P(identify via QI) ≤ 1/k — provable bound on identity disclosure</td></tr>
+          <tr><td><strong>Efficiency</strong></td><td>Optimal k-anonymization is NP-hard — heuristics are used in practice</td></tr>
+          <tr><td><strong>Scalability</strong></td><td>Inherent problem with high-dimensional data and large record counts</td></tr>
+          <tr><td><strong>Robustness</strong></td><td>Effective against linkage attacks but <strong>susceptible to homogeneity attacks</strong></td></tr>
+          <tr><td><strong>Utility (CM)</strong></td><td>Classification Metric: CM = (rows suppressed + rows with wrong majority class label) / N. CM = 0 is perfect; higher CM = more information loss</td></tr>
+        </table>
+      </div>
+      <div class="sub-title">k-Anonymization: Value of k</div>
+      <div class="formula-box">k = f(PR, UR, CR, GL, C)<br>PR=Privacy Requirement | UR=Utility Requirement | CR=Compliance Requirement | GL=Generalization Level | C=Constraints</div>
+      <div class="sub-title">Drawbacks of k-Anonymization</div>
+      <div class="con-box">
+        ❌ Not robust against <strong>homogeneity attacks</strong> — if all k records have the same SD value, knowing QI reveals SD<br>
+        ❌ Optimal k-anonymization is <strong>NP-hard</strong><br>
+        ❌ Inherent problem with <strong>high-dimensional data</strong> (curse of dimensionality)<br>
+        ❌ No scientific method to determine optimal k — higher k = higher privacy but lower utility<br>
+        ❌ Suppression leads to high information loss; generalization alone leads to highly generic table
+      </div>
+    </div>
+  </div>
+
+  <div class="topic-section" id="m3-ldiv">
+    <h3 class="topic-title collapsible-header" onclick="toggleCollapse(this)"><span class="m3c">●</span> l-Diversity</h3>
+    <div class="collapsible-body">
+      <div class="def-box"><strong>l-Diversity</strong> ensures that each equivalence class (group of k-anonymous records) contains at least <strong>l different values</strong> for the sensitive attribute. This prevents attribute disclosure even when k-anonymity is satisfied — it addresses the homogeneity attack.</div>
+      <div class="info-box">
+        <strong>The Homogeneity Attack on k-Anonymity:</strong><br>
+        A 4-anonymous group where all 4 records have Diagnosis = "Cancer" → knowing someone is in this group immediately reveals their disease. k-anonymity satisfied but attribute disclosure occurs.<br><br>
+        <strong>l-Diversity Fix:</strong> Ensure each group has ≥ l distinct SD values (e.g., l=3: {Cancer, Flu, Diabetes}). An attacker can only narrow down to 1-in-l probability at best.
+      </div>
+      <div class="sub-title">Drawbacks of l-Diversity</div>
+      <div class="table-wrap">
+        <table>
+          <tr><th>Attack/Weakness</th><th>Description</th><th>Example</th></tr>
+          <tr><td><strong>Skewness Attack</strong></td><td>If global distribution is highly skewed (e.g., 95% Flu, 5% Sinus), a group with {Flu, Sinus} still reveals high probability of Flu</td><td>95% of population has Flu — l-diverse group {Flu, Sinus} still means ~95% chance target has Flu</td></tr>
+          <tr><td><strong>Similarity Attack</strong></td><td>Distinct values may be semantically similar — diversity in values but not in meaning</td><td>Group has {Stomach Cancer, Lung Cancer, Breast Cancer} — l=3 but all are "Cancer" semantically</td></tr>
+          <tr><td><strong>Sensitive vs Non-sensitive Pair</strong></td><td>l-diversity cannot handle cases where one value in a pair is sensitive and one is not</td><td>HIV test: {Positive, Negative} — Positive is sensitive, Negative is not. Group with both violates privacy intent.</td></tr>
+          <tr><td><strong>Semantic Closeness</strong></td><td>l-diversity does not ensure semantic distance between replacement values</td><td>{Flu, Cold, AIDS} — l=3 but replacing "AIDS" with "Flu" changes meaning dramatically</td></tr>
+          <tr><td><strong>Utility Impact</strong></td><td>Changing SD to achieve l-diversity distorts the truth in the dataset</td><td>A regional disease cluster cannot be detected if diseases are artificially diversified</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="topic-section" id="m3-tclose">
+    <h3 class="topic-title collapsible-header" onclick="toggleCollapse(this)"><span class="m3c">●</span> t-Closeness</h3>
+    <div class="collapsible-body">
+      <div class="def-box"><strong>t-Closeness</strong> requires that the distribution of a sensitive attribute in every equivalence class is close to its distribution in the whole table — the distance must be no more than threshold t.</div>
+      <div class="teal-box">
+        <strong>Belief Model:</strong><br>
+        • B0 = Prior belief about an individual's sensitive attribute (before seeing any data)<br>
+        • B1 = Belief after observing the overall dataset distribution Q (global)<br>
+        • B2 = Belief after observing the equivalence class distribution P (local)<br><br>
+        <strong>t-Closeness condition:</strong> D[P, Q] ≤ t<br>
+        where D[P, Q] is the Earth Mover's Distance (EMD) between equivalence class distribution P and overall distribution Q<br><br>
+        Table satisfies t-closeness if <strong>all equivalence classes</strong> satisfy t-closeness.
+      </div>
+      <div class="sub-title">Distance Metrics</div>
+      <div class="two-col">
+        <div class="info-box"><strong>Numerical (Ordered) Attributes</strong><br>Use Earth Mover's Distance (EMD) — the minimum work to transform one distribution into another.<br><br>Intuitively: how much "earth" needs to be moved and how far to make the distributions identical.</div>
+        <div class="info-box"><strong>Categorical Attributes</strong><br>Equal Distance: all categorical values are equally distant from each other.<br><br>Hierarchical Distance: uses domain knowledge taxonomy — distance = path to common parent / height of tree.</div>
+      </div>
+      <div class="sub-title">Comparison: k-Anonymity vs l-Diversity vs t-Closeness</div>
+      <div class="table-wrap">
+        <table>
+          <tr><th>Property</th><th>k-Anonymity</th><th>l-Diversity</th><th>t-Closeness</th></tr>
+          <tr><td>Protects against</td><td>Identity disclosure (record linkage)</td><td>Attribute disclosure (homogeneity attack)</td><td>Attribute disclosure (skewness + similarity attacks)</td></tr>
+          <tr><td>Requirement</td><td>Each equivalence class has ≥k records with identical QI</td><td>Each equivalence class has ≥l distinct SD values</td><td>SD distribution in each class ≈ overall SD distribution (within t)</td></tr>
+          <tr><td>Addresses homogeneity</td><td>❌ No</td><td>✅ Yes</td><td>✅ Yes (better)</td></tr>
+          <tr><td>Addresses skewness</td><td>❌ No</td><td>❌ No</td><td>✅ Yes</td></tr>
+          <tr><td>Semantic closeness</td><td>❌ No</td><td>❌ No</td><td>✅ Partially</td></tr>
+          <tr><td>Utility impact</td><td>Moderate</td><td>Higher (changes SD values)</td><td>Best balance (controls distribution)</td></tr>
+          <tr><td>Combined with</td><td>Can combine with l-diversity or t-closeness</td><td>Usually combined with k-anonymity</td><td>Best when combined with k-anonymity</td></tr>
+        </table>
+      </div>
+      <div class="tip-box">
+        <div class="tip-title">⭐ Exam Tip — The Gold Standard Combination</div>
+        k-Anonymity + t-Closeness = best-quality anonymized dataset for most application domains including test data creation and data mining. t-Closeness operates on maintaining both privacy AND utility in sensitive data.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ MODULE 4 ═══════════════════════ -->
+<section class="module-section" id="module4">
+  <div class="module-header">
+    <div class="mod-badge m4b">M4</div>
+    <div class="module-title-group">
+      <div class="module-title">Anonymization on Complex Data Structures</div>
+      <div class="module-subtitle">Graph · Time Series · Longitudinal · Transaction Data</div>
+    </div>
+  </div>
+
+  <div class="topic-section" id="m4-graph">
+    <h3 class="topic-title collapsible-header" onclick="toggleCollapse(this)"><span class="m4c">●</span> Privacy-Preserving Graph Data</h3>
+    <div class="collapsible-body">
+      <div class="def-box">Graph data structures are common in healthcare, finance, electronics, social networks, and more. A graph G(V, E) consists of a set of vertices V and edges E (vertex pairs). Social networks like Facebook, Twitter, LinkedIn involve graph data that companies analyze to understand customer behavior.</div>
+      <div class="sub-title">Structure of Graph Data</div>
+      <div class="table-wrap">
+        <table>
+          <tr><th>Graph Element</th><th>Description</th><th>Privacy Risk</th></tr>
+          <tr><td>Vertex Properties</td><td>Attributes of nodes (age, gender, location, preferences)</td><td>Direct re-identification via EI/QI on nodes</td></tr>
+          <tr><td>Vertex Labels</td><td>Unique identifiers for nodes</td><td>Identity disclosure if not anonymized</td></tr>
+          <tr><td>Link/Edge Relationships</td><td>Connections between nodes (friend, colleague, patient-doctor)</td><td>Sensitive relationships revealed by edge existence</td></tr>
+          <tr><td>Graph Metrics</td><td>Degree centrality, betweenness, closeness, reachability, path length</td><td>Structural fingerprinting — unique graph signature re-identifies nodes</td></tr>
+        </table>
+      </div>
+      <div class="info-box">💡 <strong>Key Challenge:</strong> A graph is a highly interconnected structure. Any change in nodes or edges affects the characteristics and utility of the entire anonymized graph. More dimensions = more attack surfaces than relational data.</div>
+    </div>
+  </div>
+
+  <div class="topic-section" id="m4-graphmodel">
+    <h3 class="topic-title collapsible-header" onclick="toggleCollapse(this)"><span class="m4c">●</span> Graph Privacy Model</h3>
+    <div class="collapsible-body">
+      <div class="sub-title">Identity Protection Methods</div>
+      <div class="three-col">
+        <div class="def-box"><strong>Naïve Anonymization</strong><br>Replace unique node identifier with a random number. Simple, high utility, but low privacy — adversaries with structural knowledge can re-identify using node degree, neighborhood, or graph metrics.</div>
+        <div class="def-box"><strong>Graph Modification (k-degree anonymous)</strong><br>For every node v, ensure at least k–1 other nodes share the same degree.<br><br>Prevents re-identification by adversaries knowing node degree.<br><br>G → G′ by adding/removing edges until degree sequences satisfy k-anonymity.</div>
+        <div class="def-box"><strong>Clustering</strong><br>Partition nodes; publish a generalized graph (supernodes + superedges).<br><br>Superedges report edge density between partitions.<br><br>Sampled graphs from generalized description retain key properties: degree distribution, path lengths, transitivity.</div>
+      </div>
+      <div class="sub-title">Content Protection</div>
+      <div class="def-box">Content (node attributes) in graph data is protected like relational data — using randomization, k-anonymity, l-diversity, and t-closeness applied to vertex attributes.</div>
+      <div class="sub-title">Link Protection Methods</div>
+      <div class="three-col">
+        <div class="def-box"><strong>Naïve Anonymization</strong><br>Remove sensitive edges Es from edge set E. Simple but links can be re-identified through other edges remaining in the graph.</div>
+        <div class="def-box"><strong>Random Perturbation</strong><br>Construct G′ from G through m random edge deletions + m random edge insertions. Vertices unchanged. High privacy (adversary must consider all possible worlds) but high utility cost.</div>
+        <div class="def-box"><strong>Clustering Method</strong><br>Cluster nodes by same degree → equivalence classes. Edges connecting ECs are also clustered. Prevents both node and link disclosure through group indistinguishability.</div>
+      </div>
+      <div class="sub-title">Graph Metrics — Definitions and Formulas</div>
+      <div class="table-wrap">
+        <table>
+          <tr><th>Metric</th><th>Definition</th><th>Formula</th></tr>
+          <tr><td><strong>Degree Centrality</strong></td><td>Number of edges a node has — indicates importance/influence in network</td><td>DC(v) = degree(v) / (n–1)  [normalized by max possible degree]</td></tr>
+          <tr><td><strong>Betweenness Centrality</strong></td><td>Number of shortest paths between other node pairs that pass through v</td><td>BC(v) = Σ_{s≠v≠t} σ(s,t|v) / σ(s,t)  [fraction of shortest paths through v]</td></tr>
+          <tr><td><strong>Closeness Centrality</strong></td><td>Sum of metric distances from v to all its neighboring/reachable nodes — how quickly v can reach others</td><td>CC(v) = (n–1) / Σ d(v,u)  [multiply by n–1 to normalize]</td></tr>
+          <tr><td><strong>Reachability</strong></td><td>In undirected graph: whether a path exists from node a to node b</td><td>Boolean: R(a,b) = 1 if path exists, 0 otherwise</td></tr>
+        </table>
+      </div>
+      <div class="con-box"><strong>Effects of Anonymization on Graph Metrics:</strong><br>
+      Random perturbation (edge insertions/deletions) → changes reachability, closeness, degree centrality<br>
+      Clustering → changes neighboring nodes → affects betweenness and closeness<br>
+      Result: Any analysis on modified graph data yields orthogonal (incorrect) results vs original data → utility loss</div>
+    </div>
+  </div>
+
+  <div class="topic-section" id="m4-timeseries">
+    <h3 class="topic-title collapsible-header" onclick="toggleCollapse(this)"><span class="m4c">●</span> Privacy-Preserving Time Series Data</h3>
+    <div class="collapsible-body">
+      <div class="def-box">A <strong>time series</strong> is a sequence of observations indexed by the time of each observation. Examples: stock prices, fund NAV, interest rates, patient health parameters over time, vehicular traffic counts.</div>
+      <div class="sub-title">Characteristics of Time Series Data</div>
+      <ul class="kp">
+        <li><strong>Univariate vs Multivariate</strong> — Single dependent variable vs multiple variables with respect to time</li>
+        <li><strong>High Dimensionality</strong> — 500 time points = 500 dimensions</li>
+        <li><strong>Time Domain and Frequency Domain</strong> — Data represented in both domains; frequency domain shows spectrum of frequencies in signal</li>
+        <li><strong>Temporal Evolution</strong> — New data stream appended over time; patterns evolve</li>
+        <li><strong>Pattern</strong> — Values at consecutive time instants exhibit a pattern (seasonal, cyclical, trend)</li>
+      </ul>
+      <div class="sub-title">5 Challenges in Privacy Preservation of Time Series</div>
+      <div class="table-wrap">
+        <table>
+          <tr><th>Challenge</th><th>Description</th></tr>
+          <tr><td><strong>High Dimensionality</strong></td><td>500+ dimensions make effective anonymization extremely difficult; curse of dimensionality worsens with unknown adversary background knowledge</td></tr>
+          <tr><td><strong>Background Knowledge</strong></td><td>Cannot model all adversary knowledge; may lead to under-protection or over-protection</td></tr>
+          <tr><td><strong>Pattern Preservation</strong></td><td>Anonymized data must preserve patterns (peaks, troughs, seasonal trends) for forecasting to remain valid</td></tr>
+          <tr><td><strong>Statistical Properties</strong></td><td>Mean, variance, autocorrelation of the series must be maintained in the anonymized set</td></tr>
+          <tr><td><strong>Frequency-Domain Properties</strong></td><td>The frequency spectrum of the time series must be preserved for valid frequency-domain analysis</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="topic-section" id="m4-tsprotect">
+    <h3 class="topic-title collapsible-header" onclick="toggleCollapse(this)"><span class="m4c">●</span> Time Series Data Protection Methods</h3>
+    <div class="collapsible-body">
+      <div class="def-box">Time series data classified into EI (masked), QI (anonymized), and SD (left unchanged). Two broad categories of anonymization for the QI component:</div>
+      <div class="two-col">
+        <div>
+          <div class="info-box"><strong>1. White Noise Perturbation</strong><br><br>Add high-frequency white (random) noise to the original time series.<br><br>✅ Good utility — preserves statistical properties, pattern, frequency domain<br>❌ Weak privacy — easy to attack<br><br><strong>Attack: Filtering</strong> — white noise is high-frequency; a low-pass filter removes it, recovering near-original values.<br><strong>Attack: Regression</strong> — ineffective when noise is independent.</div>
+        </div>
+        <div>
+          <div class="info-box"><strong>2. Correlated Noise Perturbation</strong><br><br>Add noise correlated with the original time series.<br><br>✅ Higher privacy — cannot be removed by simple filtering<br>❌ Changes both pattern and frequency — affects utility<br><br><strong>Attack: Regression</strong> — adversary with background knowledge can implement linear regression to recover original values.<br>Filtering cannot remove correlated noise (no simple separation in frequency domain).</div>
+        </div>
+      </div>
+      <div class="sub-title">3. k-Anonymization for Time Series</div>
+      <div class="def-box">Apply k-anonymization to QI attributes of time series — generalize values so each record is indistinguishable from k–1 others. Challenge: Higher generalization distorts the pattern of the anonymized time series, reducing forecasting accuracy.</div>
+      <div class="formula-box">
+        Mean of discrete time series: μ = (1/n) × Σ xᵢ<br>
+        Variance: σ² = (1/n) × Σ(xᵢ − μ)²<br>
+        Both must be preserved in the anonymized series for valid statistical analysis
+      </div>
+    </div>
+  </div>
+
+  <div class="topic-section" id="m4-longitudinal">
+    <h3 class="topic-title collapsible-header" onclick="toggleCollapse(this)"><span class="m4c">●</span> Privacy Preservation of Longitudinal Data</h3>
+    <div class="collapsible-body">
+      <div class="def-box"><strong>Longitudinal data</strong> tracks the same subjects over a period of time, collecting multiple observations at different points. Examples: patient health trajectories, economic shocks on companies, attitude changes over time in social science.</div>
+      <div class="sub-title">Key Characteristics of Longitudinal Data</div>
+      <ul class="kp">
+        <li><strong>Clustered structure</strong> — Repeated measurements from the same patient form a cluster</li>
+        <li><strong>Records are classified</strong> into EI, QI, and SD — same as relational data</li>
+        <li><strong>Strong intra-cluster correlation</strong> — Records within a cluster are not independent (unlike multidimensional data)</li>
+        <li><strong>Temporal order within clusters</strong> — Pattern reflects response to treatment; must be preserved</li>
+        <li><strong>Records cannot be treated independently</strong> — Unlike relational data where each tuple is processed independently</li>
+      </ul>
+      <div class="sub-title">Anonymization Challenges</div>
+      <div class="table-wrap">
+        <table>
+          <tr><th>Challenge</th><th>Description</th></tr>
+          <tr><td>Identity disclosure</td><td>Prevent record linkage using QI values across multiple time points</td></tr>
+          <tr><td>Attribute disclosure</td><td>Prevent sensitive data linkage (e.g., health measurements reveal condition)</td></tr>
+          <tr><td>Intra-cluster correlation</td><td>Any change to values within a cluster breaks the correlation structure</td></tr>
+          <tr><td>Pattern disruption</td><td>The temporal pattern (treatment response) must not be disturbed — losing pattern = losing clinical utility</td></tr>
+          <tr><td>Unknown adversary background knowledge</td><td>Adversary may know some patient values from prior contact or records</td></tr>
+        </table>
+      </div>
+      <div class="tip-box">
+        <div class="tip-title">⭐ Key Insight</div>
+        Longitudinal data = simple structure but complex intra-cluster correlation. Any anonymization must preserve: (1) temporal pattern within cluster, (2) correlation between measurements, and (3) identity/attribute disclosure protection simultaneously.
+      </div>
+    </div>
+  </div>
+
+  <div class="topic-section" id="m4-transaction">
+    <h3 class="topic-title collapsible-header" onclick="toggleCollapse(this)"><span class="m4c">●</span> Privacy Preservation of Transaction Data</h3>
+    <div class="collapsible-body">
+      <div class="def-box"><strong>Transaction data</strong> are complex records of customer purchases. Used extensively in retail/e-commerce. Each row is a customer; each column is a product (value = 1 if purchased, 0 otherwise). Characterized by <strong>high dimensionality</strong> (thousands of products) and <strong>sparsity</strong> (each customer buys very few products).</div>
+      <div class="sub-title">Structure of Transaction Data</div>
+      <ul class="kp">
+        <li><strong>EI</strong> — Customer ID and Name (not shown in transaction table; removed in pre-processing)</li>
+        <li><strong>QI</strong> — Large set of non-sensitive transactions (bread, milk, common items) — very high dimensions</li>
+        <li><strong>SD</strong> — Sensitive transactions (expensive products, specific medicines, budget meal plans) — must be protected</li>
+        <li><strong>No fixed length</strong> for QI and SD — unlike relational data with fixed schema</li>
+      </ul>
+      <div class="sub-title">Why Transaction Data is Hard to Anonymize</div>
+      <div class="con-box">
+        ❌ <strong>High Dimensionality</strong> — Thousands of columns; anonymization methods scale poorly<br>
+        ❌ <strong>Sparsity</strong> — Each customer's record is unique (very few non-zero entries) → increases re-identification probability<br>
+        ❌ <strong>Sparsity reduces background knowledge needed</strong> for re-identification (attacker needs fewer known transactions to identify a person)<br>
+        ❌ <strong>Difficult privacy-utility balance</strong> — Suppressing sensitive transactions directly destroys association rule mining utility<br>
+        ❌ <strong>Association mining use case</strong> — Bread → Butter, Medicine → Supplement associations are the entire purpose of collecting this data
+      </div>
+      <div class="sub-title">Privacy Protection Methods for Transaction Data</div>
+      <div class="two-col">
+        <div class="def-box"><strong>Generalization / l-Diversity</strong> — Applied to fixed schema tables. Result: very high information loss due to sparsity making generalization impractical.</div>
+        <div class="def-box"><strong>k-Anonymity, l-Diversity, Randomization</strong> — Applied to relational representation of transaction tables. Each combination of techniques offers different privacy-utility trade-offs.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ MODULE 5 ═══════════════════════ -->
+<section class="module-section" id="module5">
+  <div class="module-header">
+    <div class="mod-badge m5b">M5</div>
+    <div class="module-title-group">
+      <div class="module-title">Threats to Anonymized Data</div>
+      <div class="module-subtitle">Threat Models · Data Structure Threats · Technique Vulnerabilities</div>
+    </div>
+  </div>
+
+  <div class="topic-section" id="m5-overview">
+    <h3 class="topic-title collapsible-header" onclick="toggleCollapse(this)"><span class="m5c">●</span> Threats Overview</h3>
+    <div class="collapsible-body">
+      <div class="def-box">Anonymized datasets are released for testing, analysis, and knowledge discovery. Identifying threats is key to building appropriate protection. Threat models examine a broad range of de-anonymization attacks.</div>
+      <div class="sub-title">Three Levels of Threat Analysis</div>
+      <div class="three-col">
+        <div class="info-box"><strong>Location &amp; User Complexity (Adversary)</strong><br>Background knowledge and external knowledge — both are a function of the location and relationship of the adversary to the organization.</div>
+        <div class="info-box"><strong>Data Structure Complexity</strong><br>Dimensionality, sparsity, clusters — more complex structures provide more attack surfaces ("larger surface area").</div>
+        <div class="info-box"><strong>Anonymization Algorithm</strong><br>Each technique has specific vulnerabilities — randomization, k-anonymization, l-diversity, t-closeness each have known attack patterns.</div>
+      </div>
+      <div class="sub-title">Adversary Knowledge Dimensions</div>
+      <div class="two-col">
+        <div class="teal-box"><strong>External Knowledge</strong><br>Acquired from public databases, social networking sites (Facebook, LinkedIn, Twitter, matrimonial sites), biometric data.<br><br>India: matrimonial sites post salary, workplace, health issues — all QI attributes available publicly.</div>
+        <div class="teal-box"><strong>Background Knowledge</strong><br>Information an adversary has about specific individuals: statistical distribution of QI (number of Asians in DB), statistical properties of SD (clusters of sensitive data), who the adversary is (HR vs external).</div>
+      </div>
+      <div class="tip-box">
+        <div class="tip-title">⭐ PRINCIPLE 8</div>
+        Understand the sensitivity of data and disclosure risk for a given environment and setting. The anonymization design must account for: adversary location (offshore vs onshore vs internal), their background and external knowledge, and the specific data structure being protected.
+      </div>
+    </div>
+  </div>
+
+  <div class="topic-section" id="m5-structures">
+    <h3 class="topic-title collapsible-header" onclick="toggleCollapse(this)"><span class="m5c">●</span> Threats to Data Structures</h3>
+    <div class="collapsible-body">
+      <div class="sub-title">Multidimensional Data Threats</div>
+      <div class="table-wrap">
+        <table>
+          <tr><th>Attack Type</th><th>Target</th><th>Description</th></tr>
+          <tr><td><strong>Record Linkage Attack</strong></td><td>QI (Identity)</td><td>Link QI values to external database (voters list, social network) to re-identify record owner</td></tr>
+          <tr><td><strong>Homogeneity Attack</strong></td><td>SD (Attribute)</td><td>All records in an equivalence class share the same SD value — knowing QI reveals SD (k-anonymity failure)</td></tr>
+          <tr><td><strong>Background Knowledge Attack</strong></td><td>Both</td><td>Adversary uses prior knowledge about the target to narrow down which record belongs to them</td></tr>
+          <tr><td><strong>Composition Attack</strong></td><td>Both</td><td>Combine multiple separately anonymized releases of the same data to increase re-identification probability</td></tr>
+        </table>
+      </div>
+      <div class="sub-title">Longitudinal Data Threats</div>
+      <div class="table-wrap">
+        <table>
+          <tr><th>Attack Type</th><th>Description</th></tr>
+          <tr><td><strong>Temporal Linkage</strong></td><td>Adversary tracks changes in correlated measurements over time to identify the patient</td></tr>
+          <tr><td><strong>Pattern Matching</strong></td><td>Unique treatment response pattern (shape of measurements over time) is used to re-identify</td></tr>
+          <tr><td><strong>Cluster Correlation Attack</strong></td><td>Adversary exploits the strong intra-cluster correlation structure to narrow down identity</td></tr>
+        </table>
+      </div>
+      <div class="sub-title">Graph Data Threats</div>
+      <div class="table-wrap">
+        <table>
+          <tr><th>Attack Type</th><th>What is Attacked</th></tr>
+          <tr><td><strong>Vertex Re-identification</strong></td><td>Node attributes (QI, labels) linked to external social network profile</td></tr>
+          <tr><td><strong>Edge Disclosure</strong></td><td>Sensitive relationships between nodes inferred from graph structure</td></tr>
+          <tr><td><strong>Structural Fingerprinting</strong></td><td>Unique combination of degree, betweenness, closeness used to uniquely identify a node</td></tr>
+          <tr><td><strong>Subgraph Attack</strong></td><td>Adversary knows a unique subgraph surrounding the target (e.g., knows the target's specific cluster of friends)</td></tr>
+        </table>
+      </div>
+      <div class="sub-title">Time Series Data Threats</div>
+      <div class="table-wrap">
+        <table>
+          <tr><th>Attack</th><th>Method</th></tr>
+          <tr><td>Identity Attack on Time Series</td><td>Identify the record owner by matching time series pattern against known patterns in external data</td></tr>
+          <tr><td>Pattern Re-identification</td><td>Unique temporal pattern acts as a fingerprint (like a signature)</td></tr>
+          <tr><td>Filtering Attack (on white noise)</td><td>Low-pass filter removes high-frequency white noise, recovering near-original values</td></tr>
+          <tr><td>Regression Attack (on correlated noise)</td><td>Background knowledge + regression model recovers original values from correlated noise</td></tr>
+        </table>
+      </div>
+      <div class="sub-title">Transaction Data Threats</div>
+      <div class="table-wrap">
+        <table>
+          <tr><th>Attack</th><th>Description</th></tr>
+          <tr><td>Sparsity-Based Re-identification</td><td>Sparsity means each customer's purchase pattern is unique — very few known transactions are sufficient to identify a customer</td></tr>
+          <tr><td>Sensitive Transaction Discovery</td><td>Adversary identifies which transactions are sensitive (medicine, expensive items) and targets those records specifically</td></tr>
+          <tr><td>Association Rule Attack</td><td>Mining association rules on sparse data can reveal sensitive purchase patterns of identifiable customers</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="topic-section" id="m5-techniques">
+    <h3 class="topic-title collapsible-header" onclick="toggleCollapse(this)"><span class="m5c">●</span> Threats by Anonymization Techniques</h3>
+    <div class="collapsible-body">
+      <div class="table-wrap">
+        <table>
+          <tr><th>Technique</th><th>Specific Attacks</th><th>Why It Fails</th><th>Mitigation</th></tr>
+          <tr><td><strong>Randomization (White Noise)</strong></td><td><strong>Interval Attack:</strong> If adversary knows a few original SD values (via background/external knowledge), they calculate the noise offset and estimate the range for all other values. Exact value not recovered but interval is known.</td><td>White noise has fixed statistical properties — offset can be estimated from known anchor points</td><td>Use correlated noise (harder to filter); add higher noise amplitude at cost of utility</td></tr>
+          <tr><td><strong>Randomization (Correlated Noise)</strong></td><td><strong>Regression Attack:</strong> Adversary with background knowledge on original values builds a regression model to predict other original values from correlated noise</td><td>Correlated noise preserves linear relationships — regression exploits these relationships</td><td>No perfect defense; increase correlation complexity; use non-linear correlated noise</td></tr>
+          <tr><td><strong>k-Anonymization</strong></td><td><strong>Homogeneity Attack:</strong> If all k records in an equivalence class have the same SD value, QI reveals SD with certainty. No diversity = no protection for attribute disclosure.</td><td>k-anonymity only guarantees QI indistinguishability, NOT SD diversity</td><td>Apply l-diversity or t-closeness in addition to k-anonymity</td></tr>
+          <tr><td><strong>l-Diversity</strong></td><td><strong>Skewness Attack:</strong> Global SD distribution is heavily skewed (95% Flu, 5% Sinus) — l-diverse group still reveals high-probability disease. <strong>Similarity Attack:</strong> l distinct values that are semantically similar (3 types of cancer) reveal a class of diseases.</td><td>l-diversity ignores global distribution and semantic relationships between values</td><td>Apply t-closeness which explicitly considers global distribution</td></tr>
+          <tr><td><strong>t-Closeness</strong></td><td><strong>Predictability Issue:</strong> Knowing t-closeness is applied tells adversary that SD distribution in every class ≈ global distribution — narrows guessing space. <strong>Semantic Replacement Weakness:</strong> Replacement values are semantically similar to originals (severe disease replaced with another severe disease) — adversary infers disease class.</td><td>t-closeness tries to replace with semantically similar values — this very similarity is exploitable</td><td>Combine with k-anonymity; use larger t values carefully; consider semantic diversity constraints</td></tr>
+        </table>
+      </div>
+      <div class="tip-box">
+        <div class="tip-title">⭐ Exam Tip — Attack Summary</div>
+        <strong>Randomization:</strong> Interval attack (white noise) | Regression attack (correlated noise)<br>
+        <strong>k-Anonymity:</strong> Homogeneity attack<br>
+        <strong>l-Diversity:</strong> Skewness attack | Similarity attack<br>
+        <strong>t-Closeness:</strong> Predictability | Semantic replacement weakness
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ MODULE 6 ═══════════════════════ -->
+<section class="module-section" id="module6">
+  <div class="module-header">
+    <div class="mod-badge m6b">M6</div>
+    <div class="module-title-group">
+      <div class="module-title">Dynamic Data Protection</div>
+      <div class="module-subtitle">Tokenization · Use Cases · Benefits · Components</div>
+    </div>
+  </div>
+
+  <div class="topic-section" id="m6-intro">
+    <h3 class="topic-title collapsible-header" onclick="toggleCollapse(this)"><span class="m6c">●</span> Introduction to Dynamic Data Protection</h3>
+    <div class="collapsible-body">
+      <div class="def-box"><strong>Tokenization</strong> is a technique where sensitive data are replaced with a <strong>token having the same format</strong> as the sensitive data. Used extensively in the Payment Card Industry (PCI). Ideal for protecting sensitive identification information: credit card numbers, SSNs, account numbers.</div>
+      <div class="sub-title">Anonymization vs Privacy — The Key Distinction</div>
+      <div class="two-col">
+        <div class="info-box"><strong>Static Anonymization (at rest)</strong><br>Focuses on protecting IDENTITY of customer.<br>Anonymizes EI and QI; leaves SD in original form.<br>Used for: data mining, analysis, testing.</div>
+        <div class="teal-box"><strong>Dynamic Privacy (at runtime)</strong><br>Focuses on protecting SD of customer.<br>Leaves identification data in original form; protects sensitive transactions.<br>Used for: business operations, real-time transactions.</div>
+      </div>
+      <div class="info-box">
+        <strong>Critical Insight:</strong> Anonymity ≠ Privacy.<br>
+        Example: An adversary may not know an individual's exact salary, but knowing they are in the "high-income group" is itself a loss of privacy for the individual. Static anonymization alone cannot solve runtime privacy problems.
+      </div>
+      <div class="sub-title">Who Needs What Protection?</div>
+      <div class="table-wrap">
+        <table>
+          <tr><th>Role</th><th>Protection Type Needed</th><th>Reason</th></tr>
+          <tr><td>BPO Employee</td><td>SD protection (tokenization of CC numbers, account numbers)</td><td>Needs to know customer identity to service them; does NOT need sensitive transaction details</td></tr>
+          <tr><td>Data Analyst</td><td>QI generalization (k-anonymity/t-closeness)</td><td>Needs SD for analysis; QI can be generalized to provide overall profile</td></tr>
+          <tr><td>Record Owner</td><td>Full authentication → original data display</td><td>After proper authentication, original data should be accessible</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="topic-section" id="m6-understand">
+    <h3 class="topic-title collapsible-header" onclick="toggleCollapse(this)"><span class="m6c">●</span> Understanding Tokenization</h3>
+    <div class="collapsible-body">
+      <div class="sub-title">Tokenization vs Other Methods</div>
+      <div class="table-wrap">
+        <table>
+          <tr><th>Feature</th><th>Masking</th><th>Encryption</th><th>Tokenization</th></tr>
+          <tr><td>Reversibility</td><td>Irreversible (one-way)</td><td>Reversible (with key)</td><td>Reversible (two-way) or irreversible (one-way)</td></tr>
+          <tr><td>Relationship to original</td><td>No relationship</td><td>Derived from original (via key)</td><td>Independent of original (strongest)</td></tr>
+          <tr><td>Format preservation</td><td>May or may not preserve</td><td>Does not preserve (ciphertext is different format)</td><td>Always format-preserving</td></tr>
+          <tr><td>Utility within app</td><td>Low — destroys utility</td><td>Zero (encrypted data not readable)</td><td>High — token usable in place of original within app</td></tr>
+          <tr><td>Strength</td><td>Weak</td><td>Strong (key-dependent)</td><td>Very strong (token has no mathematical relationship to original)</td></tr>
+        </table>
+      </div>
+      <div class="sub-title">Types of Tokenization</div>
+      <div class="two-col">
+        <div class="def-box"><strong>Dependent Tokenization</strong><br>Token is generated based on original data (random number, hash, or encrypted value).<br>The token has some mathematical relationship to the original.<br>Prior knowledge of tokenization method can help in reverse-engineering.<br>Weaker than independent tokenization.</div>
+        <div class="def-box"><strong>Independent Tokenization</strong><br>Tokens generated entirely independent of original data.<br>Unique token for every data element; tokens have NO relationship to original.<br>Token database maintains the mapping (original → token).<br>Most secure form — like one-way tokenization for static, two-way for runtime.</div>
+      </div>
+      <div class="diagram-wrap">
+        <div class="diagram-title">Credit Card Tokenization Example (16-digit, format-preserving)</div>
+        <pre>
+Original Credit Card:  4532 0123 4567 8901
+
+Tokenization Process:
+  First 6 digits (BIN): 453201  →  preserved (identifies card network/bank)
+  Last 4 digits:         8901   →  preserved (customer reference)
+  Middle 6 digits:       234567 →  replaced with random token: 408921
+
+Tokenized Result:       4532 0140 8921 8901  ←  same format, different middle digits
+                                               ←  token has no mathematical relationship
+                                               ←  completely useless outside application
+Token Database:         453201_234567_8901  →  408921  (secure mapping)</pre>
+      </div>
+      <div class="tip-box">
+        <div class="tip-title">⭐ Key Point</div>
+        Tokenization ≠ Additive noise. Additive noise preserves similar statistical properties to the original data. A well-designed token does NOT preserve any statistical properties of the original — this makes it stronger.
+      </div>
+    </div>
+  </div>
+
+  <div class="topic-section" id="m6-usecases">
+    <h3 class="topic-title collapsible-header" onclick="toggleCollapse(this)"><span class="m6c">●</span> Use Cases for Dynamic Data Protection</h3>
+    <div class="collapsible-body">
+      <div class="two-col">
+        <div class="info-box"><strong>Business Process Outsourcing (BPO)</strong><br><br>Large companies (banks, insurers, manufacturers) outsource customer operations to BPOs in India, China, Brazil.<br><br>Problem: EU DPA, Swiss FADP forbid customer-sensitive data from crossing geographical boundaries.<br><br>Solution: Tokenize sensitive data (credit card numbers, account numbers) at runtime → BPO employees see tokens, not originals → compliance achieved + operations continue.<br><br>BPO associate cannot differentiate token from original → privacy preserved automatically.</div>
+        <div class="info-box"><strong>Ad Hoc Reports for Regulatory Compliance</strong><br><br>US companies must comply with the Sarbanes-Oxley Act (SOX).<br><br>External auditors generate ad hoc reports to check compliance.<br><br>Reports contain sensitive customer data that must be protected.<br><br>Tokenization ensures all sensitive data in reports are replaced with tokens → disclosure risk eliminated → compliance with SOX and other regulations.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="topic-section" id="m6-benefits">
+    <h3 class="topic-title collapsible-header" onclick="toggleCollapse(this)"><span class="m6c">●</span> Benefits of Tokenization Compared to Other Methods</h3>
+    <div class="collapsible-body">
+      <div class="table-wrap">
+        <table>
+          <tr><th>Benefit</th><th>Description</th></tr>
+          <tr><td><strong>1. Consistency</strong></td><td>In a networked set of applications, the same data element appearing in multiple apps is transformed consistently — all systems see the same token for the same input</td></tr>
+          <tr><td><strong>2. Format Preserving</strong></td><td>Tokens have the same format as sensitive data (same length, same character set) — applications do not need to be modified to handle tokens; minimal development cost</td></tr>
+          <tr><td><strong>3. Supporting Different Data Types</strong></td><td>Initially used for numerical credit card numbers; now extended to support strings, dates, and other data types across all industry verticals</td></tr>
+          <tr><td><strong>4. Strength</strong></td><td>Tokens are generated independent of sensitive data — no mathematical relationship. The only weakness: if the token database (vault) is compromised, tokenization is broken</td></tr>
+          <tr><td><strong>5. Reversible</strong></td><td>Two-way tokenization allows recovery of original data when needed (e.g., when BPO needs to process actual credit card transaction)</td></tr>
+          <tr><td><strong>6. Cost Efficiency</strong></td><td>Simpler to implement than full static data anonymization; overall cost is relatively less; no complex anonymization algorithm design needed</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="topic-section" id="m6-components">
+    <h3 class="topic-title collapsible-header" onclick="toggleCollapse(this)"><span class="m6c">●</span> Components for Tokenization</h3>
+    <div class="collapsible-body">
+      <div class="def-box">Tokenization has emerged as a popular mechanism due to flexibility in implementation. Its key components form an ecosystem for secure token lifecycle management.</div>
+      <div class="table-wrap">
+        <table>
+          <tr><th>Component</th><th>Role</th><th>Key Challenges</th></tr>
+          <tr><td><strong>Data Store (Token Vault)</strong></td><td>Collection of tokens available for replacement. For each application request, a token is picked based on predetermined logic (e.g., random selection). Maintains the mapping between original data and token in <strong>encrypted format</strong>. Keys managed within enterprise key management environment.</td><td>Security of the data store (if hacked, all tokenization broken), high volumes, tokens of different sizes, performance, scalability</td></tr>
+          <tr><td><strong>Tokenization Server</strong></td><td>Receives requests from applications. Two modes: (1) Persistence request — receives original data, returns a token after storing pair in data store; (2) Retrieval request — receives token, retrieves original value for transaction processing.</td><td>High throughput, low latency, availability, secure communication channels</td></tr>
+        </table>
+      </div>
+      <div class="diagram-wrap">
+        <div class="diagram-title">Tokenization Architecture Flow</div>
+        <pre>
+Application            Tokenization Server         Token Vault (Data Store)
+     |                        |                           |
+     |--- Sensitive Data --→  |                           |
+     |                        |--- Generate Token ------→ |
+     |                        |←-- Token Returned ------  |
+     |←--- Token ------------ |                           |
+     |                        |                           |
+     |   (Token used in       |                           |
+     |    application)        |                           |
+     |                        |                           |
+     |--- Token ----------→   |                           |
+     |                        |--- Lookup Original -----→ |
+     |                        |←-- Original Data --------  |
+     |←--- Original Data ---- |                           |
+     |   (Used for actual                                  |
+     |    transaction)                                     |
+
+Token Vault stores: Original_Data ↔ Token  (encrypted, secure)</pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ MODULE 7 ═══════════════════════ -->
+<section class="module-section" id="module7">
+  <div class="module-header">
+    <div class="mod-badge m7b">M7</div>
+    <div class="module-title-group">
+      <div class="module-title">Privacy-Preserving Test Data &amp; Privacy Regulations</div>
+      <div class="module-subtitle">Test Data Fundamentals · UK DPA · Swiss FADP · HIPAA · GDPR</div>
+    </div>
+  </div>
+
+  <div class="topic-section" id="m7-fundamentals">
+    <h3 class="topic-title collapsible-header" onclick="toggleCollapse(this)"><span class="m7c">●</span> Test Data Fundamentals</h3>
+    <div class="collapsible-body">
+      <div class="def-box"><strong>Test Data</strong> are data that invoke pieces of code to satisfy successful execution of a test case or test script. High-quality testing requires high-quality test data. The best source = production data. Problem = privacy. Test data contain PII and must be protected.</div>
+      <div class="sub-title">Testing Phases and Data Requirements</div>
+      <div class="table-wrap">
+        <table>
+          <tr><th>Phase</th><th>Type</th><th>Data Needed</th><th>Privacy Approach</th></tr>
+          <tr><td><strong>System Testing</strong></td><td>Functional</td><td>Good volume, high quality matching production — all positive scenarios; some synthetic for alternate flows</td><td>Anonymized production data + synthetic data</td></tr>
+          <tr><td><strong>System Integration Testing</strong></td><td>Functional</td><td>Rarely voluminous; message files containing sensitive data; virtualizing calls across modules</td><td>Anonymization + service virtualization</td></tr>
+          <tr><td><strong>Performance/Stress Testing</strong></td><td>Non-functional</td><td>Production data scaled manifolds to create workload</td><td>Anonymized + scaled data</td></tr>
+          <tr><td><strong>Security Testing</strong></td><td>Non-functional</td><td>Slice of data representing all roles and user groups</td><td>Anonymized subset</td></tr>
+          <tr><td><strong>Regression Testing</strong></td><td>Both</td><td>Previous dataset + δ (data for new functionality Δ)</td><td>Incremental refresh of anonymized data</td></tr>
+        </table>
+      </div>
+      <div class="sub-title">Software Reliability Bathtub Curve and Test Data</div>
+      <div class="table-wrap">
+        <table>
+          <tr><th>Phase</th><th>Software State</th><th>Test Data Approach</th></tr>
+          <tr><td><strong>Early Failure</strong></td><td>Many defects uncovered; high failure rate initially</td><td>Anonymized production data + synthetic data for alternate flows; service virtualization for integration; security slice for security tests</td></tr>
+          <tr><td><strong>Random Failure (Steady State)</strong></td><td>Software stabilizes; intermittent random defects</td><td>Regression testing — existing dataset + δ for new feature Δ; no full data refresh needed</td></tr>
+          <tr><td><strong>Wear-Out</strong></td><td>Defects increase; legacy code patched</td><td>Drastically changing test data to accommodate evolving system; resembles early failure phase</td></tr>
+        </table>
+      </div>
+      <div class="sub-title">Test Data Management (TDM)</div>
+      <div class="two-col">
+        <div class="def-box"><strong>Data Masking Techniques:</strong> Substitution, shuffling, scrambling, randomization, blurring — core TDM algorithms. The practitioner must exercise good judgment about which technique to use in which context.</div>
+        <div class="def-box"><strong>Subset Capability:</strong> Reduce data based on rows, columns, and relationships. A subset is a sample that represents entire data in syntax, semantics, and statistics. Goal: comparable test coverage to production data.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="topic-section" id="m7-insufficiencies">
+    <h3 class="topic-title collapsible-header" onclick="toggleCollapse(this)"><span class="m7c">●</span> Insufficiencies of Anonymized Test Data</h3>
+    <div class="collapsible-body">
+      <div class="def-box">Anonymization is a good approach for regulatory compliance, but certain circumstances exist where it is evidenced to be inadequate.</div>
+      <div class="table-wrap">
+        <table>
+          <tr><th>Insufficiency</th><th>Problem</th><th>Solution</th></tr>
+          <tr><td><strong>Negative Testing</strong></td><td>Original anonymized data only presents "happy conditions" (valid data). Alternate flows require: wrong inputs, exception-producing data, outliers, boundary values, invalid attribute values. These are absent in anonymized production data.</td><td>Synthetic data generation (SDG) / data manufacturing to create invalid, boundary, and exception scenarios</td></tr>
+          <tr><td><strong>Sensitive Domains</strong></td><td>Complex medical records and national security documents — anonymized data not sufficient to advocate data sharing in highly confidential domains. Access privileges + roles govern access.</td><td>Data security mechanisms (not anonymization); access control + role-based permissions</td></tr>
+          <tr><td><strong>Nonfunctional Testing</strong></td><td>NFRs require performance benchmarking, security role testing, reliability testing (MTBF, MTTR) — data for these cannot come from anonymized production data alone. Scaled data, activity logs, etc. needed.</td><td>Synthetic data generation; data scaling; activity log simulation</td></tr>
+          <tr><td><strong>Regression Testing</strong></td><td>Multiple data refreshes needed during steady state. Anonymization depends on production data access (slow, permission-intensive). Refresh cycle is slow and cumbersome.</td><td>Synthetic data factories that can generate fresh data on demand without production data access</td></tr>
+          <tr><td><strong>Trust Deficit</strong></td><td>Some organizations refuse to share original data for anonymization — prefer data generated ground-up rather than risk original data exposure even for anonymization.</td><td>Synthetic data generation (SDG) — no relationship to original data; zero trust risk</td></tr>
+        </table>
+      </div>
+      <div class="tip-box">
+        <div class="tip-title">⭐ Real-World Examples of Anonymization Insufficiency</div>
+        • Massachusetts governor's medical records re-identified from anonymized hospital discharge data + voters rolls (Sweeney)<br>
+        • Netflix prize dataset re-identified by cross-referencing movie ratings with IMDB public data<br>
+        • Unique employee (only female software engineer over 60) identifiable from anonymized employee records<br>
+        • Treatment correlations in clinical data → infer patient background or condition<br>
+        • Comparing two anonymized dataset versions released at different times → track changes → reveal identity
+      </div>
+    </div>
+  </div>
+
+  <div class="topic-section" id="m7-ukdpa">
+    <h3 class="topic-title collapsible-header" onclick="toggleCollapse(this)"><span class="m7c">●</span> UK Data Protection Act 1998 (DPA)</h3>
+    <div class="collapsible-body">
+      <div class="def-box">The <strong>UK Data Protection Act 1998 (DPA)</strong> is an Act of Parliament that lays down guidelines on how personal data are to be processed. Not introduced as a privacy law per se, but defines rules for handling personal data. Compliance regulated by the <strong>Information Commissioner's Office (ICO)</strong>.</div>
+      <div class="sub-title">Key Definitions</div>
+      <div class="three-col">
+        <div class="info-box"><strong>Data Controller</strong><br>Person who determines the purposes for which and the manner in which personal data are processed (alone or with others).</div>
+        <div class="info-box"><strong>Data Processor</strong><br>Person external to the data controller who processes data on behalf of the data controller.</div>
+        <div class="info-box"><strong>Data Subject</strong><br>The individual who is the subject of personal data.</div>
+      </div>
+      <div class="sub-title">8 Principles of the UK DPA</div>
+      <div class="table-wrap">
+        <table>
+          <tr><th>#</th><th>Principle</th></tr>
+          <tr><td>1</td><td>Personal data shall be processed fairly and lawfully</td></tr>
+          <tr><td>2</td><td>Obtained only for specified and lawful purposes; not processed in incompatible manner</td></tr>
+          <tr><td>3</td><td>Adequate, relevant, and not excessive relative to purpose</td></tr>
+          <tr><td>4</td><td>Accurate and, where necessary, kept up to date</td></tr>
+          <tr><td>5</td><td>Not kept longer than necessary for the purpose</td></tr>
+          <tr><td>6</td><td>Processed in accordance with the rights of data subjects</td></tr>
+          <tr><td>7</td><td>Appropriate technical and organizational security measures</td></tr>
+          <tr><td>8</td><td>Not transferred to countries outside EEA without adequate protection</td></tr>
+        </table>
+      </div>
+      <div class="sub-title">Problems with the UK DPA</div>
+      <div class="con-box">
+        ❌ Enacted in 1998 — outsourcing as a business model was not widespread; most data sharing provisions do not directly address outsourcing<br>
+        ❌ Loose definition of personal data — no specific guidelines for attributes like name, address, postal code, national insurance number<br>
+        ❌ Does not address the new global marketplace where companies buy behavioral/psychographic data from agencies<br>
+        ❌ Sensitive personal data shared across India, China, Russia with service partners poses serious security and privacy threats — not adequately covered
+      </div>
+    </div>
+  </div>
+
+  <div class="topic-section" id="m7-swiss">
+    <h3 class="topic-title collapsible-header" onclick="toggleCollapse(this)"><span class="m7c">●</span> Swiss Federal Act on Data Protection (FADP) 1992</h3>
+    <div class="collapsible-body">
+      <div class="def-box">The <strong>Swiss FADP (Federal Act on Data Protection)</strong>, first enacted in 1992, aims to protect privacy and fundamental rights of people when their data are processed. Applicable to both individuals and federal bodies.</div>
+      <div class="sub-title">Key Provisions</div>
+      <ul class="kp">
+        <li><strong>Personal data</strong> = all information relating to an identified or identifiable person</li>
+        <li><strong>Sensitive personal data</strong> — same as UK DPA: ethnicity, beliefs, health, legal standing are specially protected</li>
+        <li><strong>Article 6 (Cross-Border Disclosure)</strong> — Personal data may be disclosed abroad ONLY if sufficient safeguards (e.g., contractual clauses) ensure adequate protection level. Safeguards must be informed to the Federal Data Protection and Information Commissioner.</li>
+        <li><strong>Article 7</strong> — Proper authorization and detailed minimum standards for data security</li>
+        <li><strong>Article 10a</strong> — Third-party data processing: the instructing party (data controller) is responsible for ensuring compliance and security by the processor</li>
+      </ul>
+      <div class="sub-title">FADP in Practice — Three Use Cases</div>
+      <div class="table-wrap">
+        <table>
+          <tr><th>Use Case</th><th>FADP Requirement</th><th>Anonymization Design</th></tr>
+          <tr><td>Storing patient records in cloud</td><td>Cloud provider must be in Switzerland; contractual guarantee that records won't leave country; sharing for statistics = "totally anonymous" (EI + QI concealed)</td><td>Mask EI, anonymize QI; outlier records (e.g., Ebola) → generalize to "Infectious Viral Disease"</td></tr>
+          <tr><td>Health questionnaires for job applicants</td><td>Questionnaire must be specific to job; responses assessed by medical practitioner only; employer only receives fitness determination (not diagnosis)</td><td>Data minimization; only share aggregated outcome with employer</td></tr>
+          <tr><td>Transferring pseudonymized bank data outside Switzerland</td><td>Pseudonymization defined as replacing identifiers with neutral identifiers stored in a separate correspondence table. Authorized users can correlate data with subject.</td><td>Two-way tokenization mechanism; token vault maintained within Switzerland; authorized access only</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="topic-section" id="m7-hipaa">
+    <h3 class="topic-title collapsible-header" onclick="toggleCollapse(this)"><span class="m7c">●</span> HIPAA — Health Insurance Portability and Accountability Act (1996)</h3>
+    <div class="collapsible-body">
+      <div class="def-box">HIPAA privacy rule ensures individuals' health information is properly protected while allowing flow of information for high-quality healthcare. <strong>Protected Health Information (PHI)</strong> = health condition (past/present/future), healthcare provisioned, payment information for healthcare.</div>
+      <div class="sub-title">Two De-identification Methods</div>
+      <div class="two-col">
+        <div class="info-box"><strong>Expert Determination Method</strong><br>Covered entity removes all direct identifiers AND reduces dimensionality AND restricts distribution through a data use agreement (DUA).<br><br>A qualified statistical expert certifies that re-identification risk is very small.</div>
+        <div class="info-box"><strong>Safe Harbor Method</strong><br>18 specific attributes must be removed:<br>Name, Geographic data (zip code, state), Dates (except year), Phone, Fax, Email, SSN, Medical record number, Health plan beneficiary number, Account number, Certificate/license number, Vehicle identifiers, Device identifiers, Web URLs, IP address, Biometric identifiers, Full-face photographs, Any unique identifying number/code</div>
+      </div>
+      <div class="sub-title">Effects of HIPAA Protection</div>
+      <div class="table-wrap">
+        <table>
+          <tr><th>Impact</th><th>Description</th></tr>
+          <tr><td>✅ Re-identification Difficulty</td><td>HIPAA-compliant data is hard to re-identify — privacy is enhanced</td></tr>
+          <tr><td>❌ Loss of Analytical Capability</td><td>Suppressing zip codes makes it impossible to correlate illnesses with geographic locations</td></tr>
+          <tr><td>❌ Impact on Health Hazard Detection</td><td>If a zip code shows concentration of bronchitis/lung cancer cases, this signals local health hazard. Suppressing zip codes removes this critical insight.</td></tr>
+          <tr><td>❌ Loss of Cluster Analysis</td><td>Data clustering based on illness + geography not possible after de-identification</td></tr>
+          <tr><td>❌ Negative Research Impact</td><td>Jeopardizes drug safety studies, hinders medical device validation, affects disease prediction and prevention research</td></tr>
+        </table>
+      </div>
+      <div class="sub-title">Three Perspectives on HIPAA Anonymization</div>
+      <div class="three-col">
+        <div class="con-box"><strong>Record Owner's View</strong><br>• k-Anonymity on QI — probability 1/k of re-identification<br>• Risk from external data (social networks, blogs)<br>• Neighbor/acquaintance background knowledge attack<br>• Geo-spatial data + health records = complete patient profile for marketing</div>
+        <div class="pro-box"><strong>Business Associate's View</strong><br>• Illness data relationships with location, ethnicity, age are vital<br>• Ability to query like original data is important<br>• Correlation within data must not be altered<br>• Zip code suppression removes valuable geo-spatial analytical insight</div>
+        <div class="info-box"><strong>Adversary's View</strong><br>• Seeks slightest possibility to combine multiple data sources<br>• Voter list + hospital data = re-identify individuals (Sweeney's Massachusetts governor example)<br>• Any anomalous record is a high-value target</div>
+      </div>
+      <div class="tip-box">
+        <div class="tip-title">⭐ HIPAA Anonymization Design Guidelines</div>
+        1. Correct classification of all attributes (EI, QI, SD, NSD) — context-dependent<br>
+        2. Value-based anonymization — "EBOLA" and "AIDS" are more identifying than "FLU" — selectively suppress rare diseases<br>
+        3. Gender-specific illnesses cannot be randomly assigned to different gender rows<br>
+        4. Date of birth = QI; Date of admission = SD (same attribute category, different classification based on context)
+      </div>
+    </div>
+  </div>
+
+  <div class="topic-section" id="m7-gdpr">
+    <h3 class="topic-title collapsible-header" onclick="toggleCollapse(this)"><span class="m7c">●</span> GDPR — General Data Protection Regulation (EU, 2018)</h3>
+    <div class="collapsible-body">
+      <div class="def-box">The <strong>General Data Protection Regulation (GDPR)</strong>, effective 25 May 2018, is the most comprehensive data protection law in the world. It applies to all organizations processing personal data of EU residents, regardless of where the organization is based (extra-territorial reach). It replaced the EU Data Protection Directive 95/46/EC.</div>
+      <div class="sub-title">7 Core Principles of GDPR (Article 5)</div>
+      <div class="table-wrap">
+        <table>
+          <tr><th>#</th><th>Principle</th><th>Meaning</th></tr>
+          <tr><td>1</td><td><strong>Lawfulness, Fairness &amp; Transparency</strong></td><td>Data must be processed lawfully (with consent or legitimate basis), fairly, and in a transparent manner</td></tr>
+          <tr><td>2</td><td><strong>Purpose Limitation</strong></td><td>Data collected for specified, explicit, legitimate purposes — cannot be used for incompatible purposes</td></tr>
+          <tr><td>3</td><td><strong>Data Minimisation</strong></td><td>Collect only what is adequate, relevant, and limited to what is necessary for the purpose</td></tr>
+          <tr><td>4</td><td><strong>Accuracy</strong></td><td>Personal data must be accurate; inaccurate data erased or rectified without delay</td></tr>
+          <tr><td>5</td><td><strong>Storage Limitation</strong></td><td>Data kept only as long as necessary for the stated purpose; must define retention periods</td></tr>
+          <tr><td>6</td><td><strong>Integrity &amp; Confidentiality</strong></td><td>Appropriate security: protection against unauthorised access, accidental loss, destruction, or damage</td></tr>
+          <tr><td>7</td><td><strong>Accountability</strong></td><td>Controller must be able to demonstrate compliance with all principles — document, audit, and prove</td></tr>
+        </table>
+      </div>
+      <div class="sub-title">Key Rights of Data Subjects</div>
+      <div class="three-col">
+        <div class="info-box"><strong>Right of Access</strong><br>Data subjects can request a copy of their personal data and how it is being used (Article 15).</div>
+        <div class="info-box"><strong>Right to Erasure ("Right to be Forgotten")</strong><br>Data subjects can request deletion of personal data in certain circumstances (Article 17).</div>
+        <div class="info-box"><strong>Right to Data Portability</strong><br>Data subjects can receive their data in a structured, machine-readable format and transfer it (Article 20).</div>
+      </div>
+      <div class="three-col">
+        <div class="teal-box"><strong>Right to Rectification</strong><br>Correct inaccurate or incomplete personal data (Article 16).</div>
+        <div class="teal-box"><strong>Right to Restriction of Processing</strong><br>Request restriction of processing in specific circumstances (Article 18).</div>
+        <div class="teal-box"><strong>Right to Object</strong><br>Object to processing for direct marketing or where legitimate interests are cited (Article 21).</div>
+      </div>
+      <div class="sub-title">Lawful Bases for Processing (Article 6)</div>
+      <div class="table-wrap">
+        <table>
+          <tr><th>Lawful Basis</th><th>When Applicable</th></tr>
+          <tr><td><strong>Consent</strong></td><td>Data subject has given freely given, specific, informed, unambiguous consent</td></tr>
+          <tr><td><strong>Contract</strong></td><td>Processing is necessary for performance of a contract with the data subject</td></tr>
+          <tr><td><strong>Legal Obligation</strong></td><td>Processing is necessary for compliance with a legal obligation of the controller</td></tr>
+          <tr><td><strong>Vital Interests</strong></td><td>Processing is necessary to protect someone's life</td></tr>
+          <tr><td><strong>Public Task</strong></td><td>Processing is necessary for a task carried out in public interest or official authority</td></tr>
+          <tr><td><strong>Legitimate Interests</strong></td><td>Processing is necessary for legitimate interests of controller, unless overridden by data subject's rights</td></tr>
+        </table>
+      </div>
+      <div class="sub-title">GDPR vs Previous Directives — Key Improvements</div>
+      <div class="two-col">
+        <div class="pro-box"><strong>New Rights &amp; Obligations</strong><br>• Explicit consent requirement (not assumed)<br>• Right to be forgotten (Article 17)<br>• Privacy by design and by default<br>• Data Protection Impact Assessment (DPIA) for high-risk processing<br>• Data Protection Officer (DPO) mandatory for some organizations<br>• Breach notification: 72-hour window to notify supervisory authority</div>
+        <div class="con-box"><strong>Severe Penalties</strong><br>• Tier 1: Up to €10M or 2% of global annual turnover<br>• Tier 2: Up to €20M or 4% of global annual turnover (for most serious violations)<br>• Applies globally — even non-EU organizations must comply if they process EU residents' data<br>• Extra-territorial scope is the biggest change from Directive 95/46/EC</div>
+      </div>
+      <div class="sub-title">GDPR and Anonymization</div>
+      <div class="def-box">GDPR does NOT apply to <strong>truly anonymized data</strong> — if data is properly anonymized (irreversible, cannot be linked back to a natural person), it falls outside the scope of GDPR. However, pseudonymized data (tokenized with recoverable mapping) is still considered personal data under GDPR. This distinction is critical for compliance design.</div>
+      <div class="sub-title">GDPR vs UK DPA vs Swiss FADP vs HIPAA — Comparison</div>
+      <div class="table-wrap">
+        <table>
+          <tr><th>Feature</th><th>UK DPA 1998</th><th>Swiss FADP 1992</th><th>HIPAA 1996</th><th>GDPR 2018</th></tr>
+          <tr><td>Jurisdiction</td><td>UK</td><td>Switzerland</td><td>USA (healthcare)</td><td>EU (global reach)</td></tr>
+          <tr><td>Scope</td><td>Any personal data</td><td>Any personal data</td><td>Protected Health Information only</td><td>Any personal data of EU residents</td></tr>
+          <tr><td>Extra-territorial</td><td>Limited</td><td>Limited (Article 6)</td><td>USA-based entities primarily</td><td>Yes — applies globally</td></tr>
+          <tr><td>Consent requirement</td><td>Implied/explicit</td><td>Explicit for sensitive data</td><td>Authorization for PHI sharing</td><td>Freely given, specific, informed, unambiguous</td></tr>
+          <tr><td>Data breach notification</td><td>Not explicitly mandated</td><td>Not explicitly mandated</td><td>60-day notification to individuals</td><td>72-hour notification to supervisory authority</td></tr>
+          <tr><td>Penalties</td><td>Limited</td><td>Limited</td><td>Up to $1.9M per violation category</td><td>Up to €20M or 4% of global turnover</td></tr>
+          <tr><td>Right to be forgotten</td><td>Limited</td><td>Limited</td><td>Not applicable</td><td>Explicit (Article 17)</td></tr>
+          <tr><td>DPO requirement</td><td>No</td><td>No</td><td>Privacy Officer (some)</td><td>Yes (for certain processing types)</td></tr>
+        </table>
+      </div>
+      <div class="tip-box">
+        <div class="tip-title">⭐ GDPR Exam Tips</div>
+        • GDPR = most comprehensive data privacy law globally — came into effect 25 May 2018<br>
+        • Pseudonymization ≠ Anonymization under GDPR — pseudonymized data is still personal data<br>
+        • 7 principles: Lawfulness, Purpose Limitation, Data Minimisation, Accuracy, Storage Limitation, Integrity &amp; Confidentiality, Accountability<br>
+        • Maximum fine: €20M or 4% global annual turnover (whichever is higher)<br>
+        • Breach notification: 72 hours to supervisory authority; "without undue delay" to data subjects if high risk<br>
+        • Applies to any organization globally that processes EU residents' data
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ QUICK REVISION ═══════════════════════ -->
+<section class="module-section" id="quickrevision">
+  <div class="module-header">
+    <div class="mod-badge" style="background:var(--gold)">⚡</div>
+    <div class="module-title-group">
+      <div class="module-title">Quick Revision</div>
+      <div class="module-subtitle">Key Definitions · Comparisons · 30-Min Priority Guide</div>
+    </div>
+  </div>
+
+  <div class="topic-section" id="qr-formulas">
+    <h3 class="topic-title"><span class="mqrc">●</span> 📐 Key Formulas &amp; Definitions</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Topic</th><th>Formula / Key Fact</th></tr>
+        <tr><td>Data Matrix</td><td><code>D = [DEI] [DQI] [DSD]</code> — Explicit Identifiers, Quasi-Identifiers, Sensitive Data</td></tr>
+        <tr><td>Anonymized Data</td><td><code>D′ = T(DQI)</code> — Transformation only on QI; EI masked, SD unchanged</td></tr>
+        <tr><td>Re-identification Risk</td><td><code>r(i) = 1/Fk(i)</code> — Individual risk for record i in cell Ck with Fk population members</td></tr>
+        <tr><td>Global Risk</td><td><code>τ₁ = (1/n) × Σᵢ (1/Fk(i))</code> — Average individual risk across all n records</td></tr>
+        <tr><td>Matrix Masking</td><td><code>Z = AXB + C</code> — General perturbative masking formula</td></tr>
+        <tr><td>Microaggregation Loss</td><td><code>SSEopt/SST</code> — Information loss ratio; lower = better utility</td></tr>
+        <tr><td>k-Anonymity Privacy</td><td><code>P(identify) ≤ 1/k</code> — Probability of identifying record owner from QI</td></tr>
+        <tr><td>CM (Classification Metric)</td><td><code>CM = (suppressed rows + wrong-majority rows) / N</code> — 0 = perfect utility</td></tr>
+        <tr><td>t-Closeness Condition</td><td><code>D[P, Q] ≤ t</code> — EMD distance between class distribution P and global distribution Q</td></tr>
+        <tr><td>MSE</td><td><code>MSE = (1/cells) × Σ(Xᵢⱼ − X′ᵢⱼ)²</code></td></tr>
+        <tr><td>MAE</td><td><code>MAE = (1/cells) × Σ|Xᵢⱼ − X′ᵢⱼ|</code></td></tr>
+        <tr><td>GDPR Max Fine</td><td>€20M or 4% of global annual turnover (whichever is higher) — Tier 2</td></tr>
+        <tr><td>GDPR Breach Notification</td><td>72 hours to supervisory authority</td></tr>
+        <tr><td>Sweeney's Finding</td><td>ZIP code + DOB + Gender → uniquely identifies 83% of US population</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="topic-section" id="qr-compare">
+    <h3 class="topic-title"><span class="mqrc">●</span> ⚡ Key Comparisons</h3>
+    <div class="sub-title">k-Anonymity vs l-Diversity vs t-Closeness</div>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Feature</th><th>k-Anonymity</th><th>l-Diversity</th><th>t-Closeness</th></tr>
+        <tr><td>Protects against</td><td>Record linkage / identity disclosure</td><td>Homogeneity attack / attribute disclosure</td><td>Skewness + similarity attacks</td></tr>
+        <tr><td>Requirement</td><td>≥k identical QI records in each group</td><td>≥l distinct SD values in each group</td><td>SD distribution in each group ≈ global (within t)</td></tr>
+        <tr><td>Key Weakness</td><td>Homogeneity attack</td><td>Skewness + similarity attacks</td><td>Predictability; semantic replacement</td></tr>
+        <tr><td>Best Use</td><td>Preventing re-identification via QI</td><td>Combined with k-anonymity</td><td>Best combined with k-anonymity for balanced privacy</td></tr>
+      </table>
+    </div>
+    <div class="sub-title">Perturbative vs Non-Perturbative SDC Methods</div>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Feature</th><th>Perturbative</th><th>Non-Perturbative</th></tr>
+        <tr><td>Data Modification</td><td>Alters (perturbs) values — introduces error</td><td>Reduces detail — suppresses or aggregates without distorting</td></tr>
+        <tr><td>Examples</td><td>Additive noise, PRAM, microaggregation, data swapping, rounding</td><td>Sampling, global recoding, top/bottom coding, local suppression</td></tr>
+        <tr><td>Uncertainty created</td><td>Yes — adversary uncertain if match is correct</td><td>No new values — uncertainty from reduced information only</td></tr>
+        <tr><td>Attribute disclosure risk</td><td>Data swapping/rank swapping: YES (still reveals SD distribution)</td><td>Lower if suppression applied correctly</td></tr>
+        <tr><td>Best for</td><td>Continuous variables (noise), categorical (PRAM)</td><td>Categorical variables, outlier values</td></tr>
+      </table>
+    </div>
+    <div class="sub-title">Anonymization vs Privacy vs Tokenization</div>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Feature</th><th>Anonymization</th><th>Privacy (Tokenization)</th><th>Encryption</th></tr>
+        <tr><td>Data Type Protected</td><td>EI and QI (identity fields)</td><td>SD (sensitive transactions)</td><td>Any data</td></tr>
+        <tr><td>Used When</td><td>Data at rest (testing, analytics)</td><td>Data in motion (BPO, runtime)</td><td>Data in transit or at rest</td></tr>
+        <tr><td>Reversibility</td><td>Not reversible (one-way)</td><td>Two-way (original recoverable)</td><td>Reversible (with key)</td></tr>
+        <tr><td>Format Preserving</td><td>No</td><td>Yes (token = same format)</td><td>No</td></tr>
+        <tr><td>Utility</td><td>Partial (correlation preserved)</td><td>Full within app context</td><td>Zero (unreadable)</td></tr>
+        <tr><td>Security Dependency</td><td>Algorithm design quality</td><td>Token vault security</td><td>Key management</td></tr>
+      </table>
+    </div>
+    <div class="sub-title">Privacy Regulations Comparison</div>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Feature</th><th>UK DPA 1998</th><th>Swiss FADP 1992</th><th>HIPAA 1996</th><th>GDPR 2018</th></tr>
+        <tr><td>Region/Scope</td><td>UK — all personal data</td><td>Switzerland — all personal data</td><td>USA — health data only (PHI)</td><td>EU — all personal data (global reach)</td></tr>
+        <tr><td>Key Strength</td><td>8 processing principles; ICO oversight</td><td>Strong cross-border transfer controls (Article 6)</td><td>Safe harbor de-identification; 18-identifier removal</td><td>Comprehensive rights; DPIA; right to erasure; 72h breach notification; €20M fine</td></tr>
+        <tr><td>Cross-border transfer</td><td>Addressed in Principle 8</td><td>Article 6 — safeguards required</td><td>USA-centric; Business Associate Agreements</td><td>Standard Contractual Clauses; Adequacy Decisions</td></tr>
+        <tr><td>Anonymized data exemption</td><td>Partial</td><td>Yes (fully anonymous)</td><td>Yes (safe harbor / expert determination)</td><td>Yes — GDPR does not apply to truly anonymous data</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="topic-section" id="qr-priority">
+    <h3 class="topic-title"><span class="mqrc">●</span> 🔥 30-Minute Priority Guide</h3>
+    <div class="priority-card">
+      <h3>⚡ Must Know Before Exam — High Yield Topics</h3>
+      <div class="two-col">
+        <div>
+          <div class="sub-title" style="margin-top:0">📐 Must-Know Formulas</div>
+          <ul class="kp">
+            <li><strong>Re-identification risk:</strong> r(i) = 1/Fk(i)</li>
+            <li><strong>Anonymized data:</strong> D′ = T(DQI)</li>
+            <li><strong>Matrix masking:</strong> Z = AXB + C</li>
+            <li><strong>Microagg. loss:</strong> SSEopt/SST</li>
+            <li><strong>k-Anonymity:</strong> P(identify) ≤ 1/k</li>
+            <li><strong>t-Closeness:</strong> D[P,Q] ≤ t (EMD)</li>
+          </ul>
+          <div class="sub-title">🧠 Memory Tricks</div>
+          <ul class="kp">
+            <li><strong>D = EI + QI + SD</strong> — Every dataset has three parts</li>
+            <li><strong>Non-Pert = No change</strong> — Suppress / aggregate only</li>
+            <li><strong>Pert = Perturb</strong> — Noise / swap / alter values</li>
+            <li><strong>k → identity; l → attribute; t → distribution</strong></li>
+            <li><strong>GDPR 4 words:</strong> Rights, 72h, 4%, Accountability</li>
+            <li><strong>Sweeney:</strong> ZIP + DOB + Gender = 83% unique ID</li>
+          </ul>
+        </div>
+        <div>
+          <div class="sub-title" style="margin-top:0">🎯 Guaranteed High-Scoring Topics</div>
+          <ul class="kp">
+            <li><strong>Module 1:</strong> Disclosure types (Identity, Attribute, Inference) + all stakeholders</li>
+            <li><strong>Module 2:</strong> Non-perturbative vs Perturbative methods — examples of each</li>
+            <li><strong>Module 3:</strong> k-Anonymity algorithm + l-Diversity drawbacks + t-Closeness definition</li>
+            <li><strong>Module 4:</strong> Graph metrics (degree, betweenness, closeness) + time series challenges</li>
+            <li><strong>Module 5:</strong> ALL attacks mapped to techniques — homogeneity, skewness, similarity, filtering, regression</li>
+            <li><strong>Module 6:</strong> Tokenization types (one-way vs two-way) + benefits table</li>
+            <li><strong>Module 7:</strong> 8 UK DPA principles + GDPR 7 principles + HIPAA safe harbor 18 identifiers + insufficiencies table</li>
+          </ul>
+          <div class="sub-title">📋 Quick Answer Reference</div>
+          <ul class="kp">
+            <li><strong>What is disclosure?</strong> → Person learns what they didn't know about another via released data</li>
+            <li><strong>Best anonymization combo?</strong> → k-Anonymity + t-Closeness</li>
+            <li><strong>Attack on k-anonymity?</strong> → Homogeneity attack</li>
+            <li><strong>Attack on l-diversity?</strong> → Skewness + similarity attacks</li>
+            <li><strong>GDPR effective date?</strong> → 25 May 2018</li>
+            <li><strong>GDPR max fine?</strong> → €20M or 4% global turnover</li>
+            <li><strong>HIPAA identifiers removed?</strong> → 18 (safe harbor method)</li>
+            <li><strong>Static vs Dynamic?</strong> → Static = at rest (testing/mining); Dynamic = runtime (BPO/tokenization)</li>
+            <li><strong>Tokenization strength?</strong> → Token has NO relationship to original data (strongest protection for SD)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="priority-card" style="border-color:var(--green-border);margin-top:20px">
+      <h3 style="color:var(--green-text)">✅ 10-Mark Answer Checklist</h3>
+      <div class="three-col">
+        <div class="pro-box"><strong>For Anonymization Methods:</strong><br>✓ Definition<br>✓ Why needed (threat it prevents)<br>✓ How it works (algorithm/steps)<br>✓ Formal property / formula<br>✓ Example<br>✓ Drawbacks / attacks on it</div>
+        <div class="info-box"><strong>For Privacy Regulations:</strong><br>✓ Full name + year + jurisdiction<br>✓ Key definitions (controller, processor, subject)<br>✓ List all principles (numbered)<br>✓ Rights of data subjects<br>✓ Cross-border transfer rules<br>✓ Penalties / enforcement</div>
+        <div class="teal-box"><strong>For Complex Data Structures:</strong><br>✓ Define the structure<br>✓ Why it's complex (dimensionality, sparsity, etc.)<br>✓ Specific challenges for that structure<br>✓ Protection methods available<br>✓ Threats / attacks specific to it<br>✓ Trade-off: privacy vs utility</div>
+      </div>
+    </div>
+
+    <div class="tip-box" style="margin-top:20px">
+      <div class="tip-title">⭐ Final Exam Strategy</div>
+      Start with disclosure types (guaranteed question) → k-Anonymity algorithm with example → comparison table (k vs l vs t) → tokenization benefits → GDPR principles (7) → HIPAA safe harbor → graph metrics definitions → time series challenges. Always draw examples: hospital dataset activity (EI/QI/SD classification) earns marks. Structure every 10-mark answer: <strong>Definition + Why Needed + How It Works + Example + Drawbacks</strong>.
+    </div>
+  </div>
+</section>
+
+</main>
+
+<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+/* ═══ THEME ═══ */
+function toggleTheme(){const h=document.documentElement,b=document.getElementById('theme-toggle');if(h.getAttribute('data-theme')==='dark'){h.setAttribute('data-theme','light');b.textContent='🌙 Dark';localStorage.setItem('theme','light');}else{h.setAttribute('data-theme','dark');b.textContent='☀ Light';localStorage.setItem('theme','dark');}}
+(function(){const s=localStorage.getItem('theme');if(s==='light'){document.documentElement.setAttribute('data-theme','light');const b=document.getElementById('theme-toggle');if(b)b.textContent='🌙 Dark';}})();
+
+/* ═══ SIDEBAR ═══ */
+function toggleSidebar(){const sb=document.getElementById('sidebar'),main=document.getElementById('main');if(window.innerWidth<=900){sb.classList.toggle('open');}else{sb.classList.toggle('collapsed');main.classList.toggle('sidebar-collapsed');}}
+function openSub(sub){if(!sub)return;sub.classList.add('open');sub.style.maxHeight=sub.scrollHeight+'px';const btn=sub.previousElementSibling;if(btn){btn.classList.add('open');const a=btn.querySelector('.arrow');if(a)a.style.transform='rotate(90deg)';}}
+function closeSub(sub){if(!sub)return;sub.classList.remove('open');sub.style.maxHeight='0px';const btn=sub.previousElementSibling;if(btn){const a=btn.querySelector('.arrow');if(a)a.style.transform='rotate(0deg)';btn.classList.remove('open');}}
+function toggleModule(btn){const sub=btn.nextElementSibling;const isOpen=sub.classList.contains('open');document.querySelectorAll('.sidebar-sub').forEach(s=>closeSub(s));if(!isOpen)openSub(sub);}
+(function(){setTimeout(()=>{const firstSub=document.querySelector('.sidebar-sub');if(firstSub)openSub(firstSub);},50);})();
+
+/* ═══ ACTIVE SIDEBAR LINK ═══ */
+const topicSections=document.querySelectorAll('.topic-section[id]');
+const sidebarLinks=document.querySelectorAll('.sidebar-link');
+let ticking=false,lastOpenSub=null;
+window.addEventListener('scroll',function(){
+  if(!ticking){
+    requestAnimationFrame(function(){
+      const topbarH=document.getElementById('topbar').offsetHeight;
+      let current='';
+      if(window.scrollY<100){
+        current=topicSections[0].id;
+        const firstSub=document.querySelector('.sidebar-sub');
+        if(firstSub&&!firstSub.classList.contains('open')){document.querySelectorAll('.sidebar-sub').forEach(s=>closeSub(s));openSub(firstSub);lastOpenSub=firstSub;}
+      }else{
+        let closestDist=Infinity;
+        topicSections.forEach(sec=>{
+          const scrollMargin=parseFloat(getComputedStyle(sec).scrollMarginTop)||(topbarH+90);
+          const rect=sec.getBoundingClientRect();
+          if(rect.top<=scrollMargin+10){const dist=scrollMargin-rect.top;if(dist<closestDist){closestDist=dist;current=sec.id;}}
+        });
+        if(!current&&topicSections.length)current=topicSections[0].id;
+      }
+      let found=false;
+      sidebarLinks.forEach(link=>{
+        link.classList.remove('active');
+        if(!found&&link.getAttribute('href')==='#'+current){
+          link.classList.add('active');found=true;
+          const sub=link.closest('.sidebar-sub');
+          if(sub&&sub!==lastOpenSub){document.querySelectorAll('.sidebar-sub').forEach(s=>{if(s!==sub)closeSub(s);});openSub(sub);lastOpenSub=sub;}
+        }
+      });
+      ticking=false;
+    });
+    ticking=true;
+  }
+});
+
+/* ═══ COLLAPSIBLE ═══ */
+function getExtraContent(h,b){
+  const extras=[];
+  const topicSection=h.closest('.topic-section');
+  if(topicSection){
+    let sib=b.nextElementSibling;
+    while(sib){extras.push(sib);sib=sib.nextElementSibling;}
+    let tsib=topicSection.nextElementSibling;
+    while(tsib&&!tsib.classList.contains('topic-section')&&!tsib.classList.contains('module-section')){extras.push(tsib);tsib=tsib.nextElementSibling;}
+  }
+  return extras;
+}
+function setExtras(extras,open){
+  if(!extras.length)return;
+  extras.forEach(el=>{
+    if(open){el.style.transition='max-height 0.42s cubic-bezier(0.4,0,0.2,1),opacity 0.35s cubic-bezier(0.4,0,0.2,1)';el.style.overflow='hidden';el.style.maxHeight=el.scrollHeight+'px';el.style.opacity='1';el.addEventListener('transitionend',function done(e){if(e.propertyName!=='max-height')return;el.style.maxHeight='none';el.style.overflow='visible';el.removeEventListener('transitionend',done)});}
+    else{el.style.transition='max-height 0.42s cubic-bezier(0.4,0,0.2,1),opacity 0.35s cubic-bezier(0.4,0,0.2,1)';el.style.maxHeight=el.scrollHeight+'px';el.offsetHeight;requestAnimationFrame(()=>{el.style.maxHeight='0px';el.style.opacity='0';el.style.overflow='hidden';});}
+  });
+}
+function toggleCollapse(h){
+  const b=h.nextElementSibling;
+  if(!b||!b.classList.contains('collapsible-body'))return;
+  const extras=getExtraContent(h,b);
+  const isOpen=b.classList.contains('is-open');
+  if(isOpen){
+    b.style.maxHeight=b.scrollHeight+'px';b.offsetHeight;
+    requestAnimationFrame(()=>{b.style.maxHeight='0px';b.style.overflow='hidden';b.classList.remove('is-open');h.classList.remove('is-active');});
+    setExtras(extras,false);
+  }else{
+    b.style.overflow='hidden';b.style.maxHeight=b.scrollHeight+'px';b.classList.add('is-open');h.classList.add('is-active');
+    b.addEventListener('transitionend',function done(e){if(e.propertyName!=='max-height')return;if(b.classList.contains('is-open')){b.style.maxHeight='none';b.style.overflow='visible';}b.removeEventListener('transitionend',done);});
+    setExtras(extras,true);
+  }
+}
+window.addEventListener('load',()=>{
+  document.querySelectorAll('.collapsible-body').forEach(b=>{
+    b.classList.add('is-open');b.style.maxHeight='none';b.style.overflow='visible';
+    const h=b.previousElementSibling;
+    if(h){h.classList.add('is-active');getExtraContent(h,b).forEach(el=>{el.style.maxHeight='none';el.style.overflow='visible';el.style.opacity='1';});}
+  });
+});
+
+/* ═══ PROGRESS + BACK TO TOP ═══ */
+window.addEventListener('scroll',()=>{
+  const t=window.scrollY,d=document.body.scrollHeight-window.innerHeight;
+  document.getElementById('progress-fill').style.width=(d>0?(t/d)*100:0)+'%';
+  const btn=document.getElementById('back-top');
+  t>400?btn.classList.add('show'):btn.classList.remove('show');
+});
+
+/* ═══ SEARCH ═══ */
+let st;
+function doSearch(q){
+  clearTimeout(st);
+  st=setTimeout(()=>{
+    document.querySelectorAll('.highlight').forEach(el=>{const p=el.parentNode;p.replaceChild(document.createTextNode(el.textContent),el);p.normalize();});
+    const ce=document.getElementById('search-count');
+    if(!q||q.trim().length<2){ce.textContent='';return;}
+    const main=document.getElementById('main');let cnt=0;
+    const rx=new RegExp('('+q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','gi');
+    function walk(node){
+      if(node.nodeType===3){const txt=node.textContent;if(!rx.test(txt)){rx.lastIndex=0;return;}rx.lastIndex=0;const f=document.createDocumentFragment();let li=0,m;while((m=rx.exec(txt))!==null){if(m.index>li)f.appendChild(document.createTextNode(txt.slice(li,m.index)));const sp=document.createElement('span');sp.className='highlight';sp.textContent=m[0];f.appendChild(sp);cnt++;li=rx.lastIndex;}if(li<txt.length)f.appendChild(document.createTextNode(txt.slice(li)));node.parentNode.replaceChild(f,node);return;rx.lastIndex=0;}
+      else if(node.nodeType===1&&!['SCRIPT','STYLE','INPUT','BUTTON','SELECT'].includes(node.tagName)){Array.from(node.childNodes).forEach(walk);}
+    }
+    walk(main);
+    ce.textContent=cnt>0?cnt+' matches':'No matches';
+    const first=document.querySelector('.highlight');
+    if(first)first.scrollIntoView({behavior:'smooth',block:'center'});
+  },300);
+}
+
+/* ═══ DYNAMIC SCROLL MARGINS ═══ */
+function updateScrollMargins(){
+  const topbar=document.getElementById('topbar');
+  const topbarH=topbar?topbar.offsetHeight:56;
+  document.querySelectorAll('.module-section').forEach(mod=>{
+    const header=mod.querySelector('.module-header');
+    if(header)mod.style.setProperty('--local-scroll-margin',(topbarH+3+header.offsetHeight+8)+'px');
+  });
+}
+window.addEventListener('resize',updateScrollMargins);
+window.addEventListener('DOMContentLoaded',updateScrollMargins);
+window.addEventListener('load',updateScrollMargins);
+setTimeout(updateScrollMargins,500);
+setTimeout(updateScrollMargins,1500);
+
+/* ═══ SMOOTH ANCHOR SCROLL ═══ */
+document.addEventListener('click',function(e){
+  const link=e.target.closest('a[href^="#"]');
+  if(!link)return;
+  const id=link.getAttribute('href').slice(1);
+  const target=document.getElementById(id);
+  if(!target)return;
+  e.preventDefault();
+  target.scrollIntoView({behavior:'smooth'});
+});
+</script>
+</body>
+</html>
