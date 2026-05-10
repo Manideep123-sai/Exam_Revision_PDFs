@@ -7,7 +7,7 @@ from pptx.enum.shapes import MSO_SHAPE_TYPE
 # CONFIG
 # =========================
 
-folder_path = r"C:\Users\ASUS\Desktop\Exam"
+folder_path = r"add the folder address here"
 
 output_file = os.path.join(folder_path, "combined_output.txt")
 image_folder = os.path.join(folder_path, "images")
