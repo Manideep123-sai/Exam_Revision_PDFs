@@ -37,6 +37,7 @@ The repository also includes automation tools for content extraction:
 - **TxtandImgextractor.py**: A Python utility designed to process PDF and PPTX files.
   - **Text Extraction**: Consolidates text from multiple documents into a single `combined_output.txt`.
   - **Image Extraction**: Automatically extracts and saves all images from documents into a dedicated `images` folder.
+  - **Configuration**: The script is pre-configured to process files located in `C:\Users\ASUS\Desktop\Exam`. Ensure your source documents are placed in this folder before running.
   - **Dependencies**: Requires `PyMuPDF` (fitz) and `python-pptx`.
 
 ## Technical Details
