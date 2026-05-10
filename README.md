@@ -29,6 +29,16 @@ The repository includes the following subjects and materials:
 ### Software Engineering
 - **Software Engineering.html**: Principles, methodologies, and best practices in software development.
 
+## Utility Scripts
+
+The repository also includes automation tools for content extraction:
+
+### Text and Image Extractor
+- **TxtandImgextractor.py**: A Python utility designed to process PDF and PPTX files.
+  - **Text Extraction**: Consolidates text from multiple documents into a single `combined_output.txt`.
+  - **Image Extraction**: Automatically extracts and saves all images from documents into a dedicated `images` folder.
+  - **Dependencies**: Requires `PyMuPDF` (fitz) and `python-pptx`.
+
 ## Technical Details
 
 All resources are provided as standalone HTML files. These documents feature:
